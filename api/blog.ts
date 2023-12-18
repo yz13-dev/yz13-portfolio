@@ -3,7 +3,23 @@ import { authorizationHeader } from "@/helpers/headers"
 import { DocPost, Post } from "@/types/post"
 
 export const blog = {
-    getLast: async() => {},
+    getLast: async() => {
+        try {
+            const headers = new Headers()
+            const authHeader = authorizationHeader()
+            headers.append('authorization', authHeader || '')
+            const url = `${api_host}/portfolio/last?limit=5`
+            const res = await fetch(url, { method: "GET", headers: headers })
+            if (res.ok) {
+                const posts = await res.json() as DocPost[]
+                return posts
+            }
+            return []
+        } catch(e) {
+            console.log(e)
+            return []
+        }
+    },
     getById: async(postId: string) => {
         try {
             const headers = new Headers()
@@ -12,6 +28,20 @@ export const blog = {
             const url = `${api_host}/portfolio/${postId}`
             const res = await fetch(url, { method: "GET", headers: headers })
             if (res.ok) return await res.json() as DocPost | null
+            return null
+        } catch(e) {
+            console.log(e)
+            return null
+        }
+    },
+    deleteOne: async(postId: string): Promise<true | null> => {
+        try {
+            const headers = new Headers()
+            const authHeader = authorizationHeader()
+            headers.append('authorization', authHeader || '')
+            const url = `${api_host}/portfolio/${postId}`
+            const res = await fetch(url, { method: "DELETE", headers: headers })
+            if (res.ok) return await res.json() as true | null
             return null
         } catch(e) {
             console.log(e)

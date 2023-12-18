@@ -1,4 +1,4 @@
-import PostForm from '../../_components/Post'
+import PostForm from '../../../_components/Post'
 
 const page = () => {
     return (
