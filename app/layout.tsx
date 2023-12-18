@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${first_font.className} ${first_font.variable} ${second_font.variable}`}>
-      <body className='dark'>{children}</body>
+      <body className='min-h-screen dark'>{children}</body>
     </html>
   )
 }

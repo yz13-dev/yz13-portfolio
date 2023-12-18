@@ -7,6 +7,6 @@ export type Post = {
     authorId: string | string[]
     createdAt: number
     content: string // used in markdown
-    thumbnail?: string
+    thumbnail?: string // image .png .jpg .webp
     tags?: string[]
 }
