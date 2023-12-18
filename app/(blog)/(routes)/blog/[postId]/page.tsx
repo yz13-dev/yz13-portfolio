@@ -2,6 +2,7 @@ import { blog } from '@/api/blog'
 import PostAuthor from '../../../_components/Post/post-author'
 import { Markdown } from '@/components/shared/markdown'
 import PostControls from '@/app/(blog)/_components/Post/post-controls'
+import { Metadata } from 'next'
 // import React from 'react'
 
 type Props = {
@@ -9,13 +10,26 @@ type Props = {
         postId: string
     }
 }
+
+export const generateMetadata = async({ params }: Props): Promise<Metadata> => {
+    const post = await blog.getById(params.postId)
+    if (!post) return {
+        title: 'Not Found'
+    }
+    return {
+        title: post.name,
+        description: post.description,
+    }
+
+}
+
 const page = async({ params }: Props) => {
     const post = await blog.getById(params.postId)
     if (!post) return null
     return (
         <>
             <div className="w-full p-6 border-b h-fit bg-gradient-to-b from-muted to-transparent">
-                <div className="flex flex-col items-start w-full mx-auto max-w-7xl h-fit">
+                <div className="flex flex-col items-start w-full max-w-5xl mx-auto h-fit">
                     <PostControls author={post.authorId} postId={post.doc_id} />
                     <div className="flex flex-col items-center justify-center w-full gap-4 py-12">
                         <h1 className='text-3xl font-semibold text-center normal-case text-accent-foreground'>{post.name}</h1>
@@ -32,7 +46,7 @@ const page = async({ params }: Props) => {
 
             </div>
             <div className="w-full p-6 h-fit">
-                <div className="w-full mx-auto max-w-7xl">
+                <div className="w-full max-w-5xl mx-auto">
                     <Markdown pageMode>{post.content}</Markdown>
                 </div>
             </div>

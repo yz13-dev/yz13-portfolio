@@ -27,7 +27,7 @@ const UserDropdown = ({ user }: Props) => {
                 {
                     haveAccessToPublish &&
                     <>
-                        <DropdownMenuItem asChild><Link href='/blog/constructor'>Опубликовать пост</Link></DropdownMenuItem>
+                        <DropdownMenuItem asChild><Link href='/upload/post'>Опубликовать пост</Link></DropdownMenuItem>
                         <DropdownMenuSeparator />
                     </>
                 }

@@ -1,7 +1,7 @@
 'use client'
 import { file } from '@/api/file'
 import Image, { ImageProps } from 'next/image'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type VariantProps = { dark: string, light: string, size?: number }
 type RemoteLogoProps = VariantProps & Partial<ImageProps>

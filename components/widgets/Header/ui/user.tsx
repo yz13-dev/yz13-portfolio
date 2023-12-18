@@ -7,7 +7,7 @@ import UserDropdown from "./user-dropdown"
 
 const User = () => {
     const [user, loading] = useAuthState(auth)
-    if (loading) return null
+    if (loading) return <div className="rounded-full w-9 h-9 bg-muted animate-pulse shrink-0" />
     if (!user) return <Button size='sm' asChild variant='outline'>
         <Link href='/login'>Войти</Link>
     </Button>
