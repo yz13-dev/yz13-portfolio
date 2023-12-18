@@ -13,12 +13,11 @@ const GoogleLogin = () => {
         })
         .catch(err => console.log(err))
     }
-    console.log(error)
     return (
-        <Button disabled={loading} onClick={getSignIn} className="h-12 gap-2 text-base rounded-lg">
+        <Button disabled={loading || user !== undefined} onClick={getSignIn} className="h-12 gap-2 text-base rounded-lg">
             { 
                 loading  
-                ? <BiLoaderAlt />
+                ? <BiLoaderAlt className='animate-spin' />
                 : <BiLogoGoogle />
             }
             Войти через Google

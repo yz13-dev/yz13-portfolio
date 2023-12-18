@@ -5,7 +5,7 @@ type Props = {
     rowSpan?: string
 }
 const GridItem = ({ colSpan, rowSpan }: Props) => {
-    const className = `w-full h-full md:min-h-full min-h-[24rem] relative ${rowSpan || ''} ${colSpan || ''} cursor-pointer row-span-3 border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
+    const className = `w-full h-full md:min-h-full min-h-[24rem] relative ${rowSpan || ''} ${colSpan || ''} cursor-pointer border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
     return (
         <div className={className}>
             <div className="absolute top-0 left-0 w-full h-full transition-opacity duration-500 rounded-md bg-gradient-to-t from-background to-transparent group-hover:opacity-50" />

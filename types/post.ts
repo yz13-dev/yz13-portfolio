@@ -10,3 +10,5 @@ export type Post = {
     thumbnail?: string // image .png .jpg .webp
     tags?: string[]
 }
+
+export type DocPost = { doc_id: string } & Post
