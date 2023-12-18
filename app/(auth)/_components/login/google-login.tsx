@@ -9,7 +9,7 @@ const GoogleLogin = () => {
     const getSignIn = () => {
         signInWithGoogle()
         .then(res => {
-            console.log(res)
+            // console.log(res)
         })
         .catch(err => console.log(err))
     }

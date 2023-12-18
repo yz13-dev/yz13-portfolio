@@ -5,7 +5,6 @@ import Header from "@/components/widgets/Header"
 
 const Home = async () => {
     const posts = await blog.getLast()
-    console.log(posts)
     return (
       <>
         <header className="flex items-center justify-between w-full h-16 px-6 shrink-0">
