@@ -1,7 +1,7 @@
 import { blog } from '@/api/blog'
 import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
-const PostPage = dynamic(() => import('@/app/(blog)/_components/Post/page'), {
+const PostPage = dynamic(() => import('@/app/(blog)/_components/post/page'), {
     loading: () => <Loading />
 }) 
 import { Suspense } from 'react'

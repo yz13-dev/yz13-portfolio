@@ -1,4 +1,4 @@
-import GroupPostAuthorsMini from "@/app/(blog)/_components/Post/post-author-group-mini"
+import GroupPostAuthorsMini from "@/app/(blog)/_components/post/post-author-group-mini"
 import { DocPost } from "@/types/post"
 import { DateTime } from "luxon"
 import Link from "next/link"

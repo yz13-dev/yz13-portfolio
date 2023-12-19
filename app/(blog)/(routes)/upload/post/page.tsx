@@ -1,10 +1,15 @@
 import { blog } from '@/api/blog'
-import PostForm from '../../../_components/Post'
+import PostForm from '../../../_components/post'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { compareAuthor } from '@/helpers/author'
 import { have_access } from '@/const/access-to-publish'
-
+import { Suspense } from 'react'
+import HeaderSkeleton from '@/components/skeletons/header'
+import dynamic from 'next/dynamic'
+const Header = dynamic(() => import("@/components/widgets/Header"), {
+    loading: () => <HeaderSkeleton />
+})
 type Props = {
     searchParams: {
         postId?: string
@@ -22,9 +27,16 @@ const page = async ({ searchParams }: Props) => {
     if (uid && post && postId && compareAuthor(uid, post.authorsId) === false) redirect('/upload/post')
     if (uid && !have_access.includes(uid)) redirect('/')
     return (
-        <div className='w-full h-full max-w-5xl px-6 mx-auto'>
-            <PostForm preloadPost={post} postId={postId} />
-        </div>
+        <>
+            <header className='w-full h-16 px-6 border-b shrink-0'>
+                <Suspense fallback={<HeaderSkeleton />}>
+                    <Header />
+                </Suspense>
+            </header>
+            <div className='w-full h-full max-w-5xl px-6 mx-auto'>
+                <PostForm preloadPost={post} postId={postId} />
+            </div>
+        </>
     )
 }
 

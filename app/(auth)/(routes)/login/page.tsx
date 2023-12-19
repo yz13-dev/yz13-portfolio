@@ -25,7 +25,7 @@ const page = () => {
                     </Suspense>
                 </div>
                 <Separator />
-                <Button variant='link'>Войти через почту</Button>
+                <Button disabled variant='link'>Войти через почту</Button>
             </section>
         </div>
     )

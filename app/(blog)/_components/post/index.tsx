@@ -18,7 +18,7 @@ type Props = {
     preloadPost: PartialDocPost | null
     postId: string | undefined
 }
-const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
+const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
     const post = preloadPost
     const [user] = useAuthState(auth)
     const [name, setName] = useState<string>(post ? post.name : '')

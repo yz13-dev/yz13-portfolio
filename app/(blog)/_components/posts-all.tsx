@@ -1,5 +1,5 @@
 import { blog } from "@/api/blog"
-import GroupPostAuthorsMini from "./Post/post-author-group-mini"
+import GroupPostAuthorsMini from "./post/post-author-group-mini"
 import { DateTime } from "luxon"
 import Link from "next/link"
 
