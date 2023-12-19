@@ -3,7 +3,7 @@ const nextConfig = {
     experimental: {
         optimizeServerReact: true,
         serverMinification: true,
-        optimizePackageImports: [ 'react-icons', 'react' ]
+        optimizePackageImports: [ 'react-icons', 'react', 'next' ]
     },
     images: {
         domains: ['cdn.darkmaterial.space']

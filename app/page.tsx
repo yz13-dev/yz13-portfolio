@@ -2,6 +2,8 @@ import { Suspense } from "react"
 import LastPostsSkeleton from "@/components/skeletons/posts-last"
 import dynamic from "next/dynamic"
 import HeaderSkeleton from "@/components/skeletons/header"
+import AllPosts from "./(blog)/_components/posts-all"
+import Footer from "@/components/shared/footer"
 const LastPosts = dynamic(() => import("./(blog)/_components/posts-last"), {
   loading: () => <LastPostsSkeleton />
 })
@@ -17,9 +19,13 @@ const Home = async () => {
               <Header />
           </Suspense>
         </header>
-        <Suspense fallback={<LastPostsSkeleton />}>
-          <LastPosts />
-        </Suspense>
+        <div style={{ height: 'calc(100dvh - 64px)' }}>
+          <Suspense fallback={<LastPostsSkeleton />}>
+            <LastPosts />
+          </Suspense>
+        </div>
+        <AllPosts />
+        <Footer />
       </>
     )
 }

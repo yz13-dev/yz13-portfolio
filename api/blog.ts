@@ -20,6 +20,23 @@ export const blog = {
             return []
         }
     },
+    getAll: async() => {
+        try {
+            const headers = new Headers()
+            const authHeader = authorizationHeader()
+            headers.append('authorization', authHeader || '')
+            const url = `${api_host}/portfolio/all`
+            const res = await fetch(url, { method: "GET", headers: headers, cache: 'no-store' })
+            if (res.ok) {
+                const posts = await res.json() as DocPost[]
+                return posts
+            }
+            return []
+        } catch(e) {
+            console.log(e)
+            return []
+        }
+    },
     getById: async(postId: string) => {
         try {
             const headers = new Headers()

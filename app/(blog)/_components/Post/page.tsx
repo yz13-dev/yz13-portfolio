@@ -19,7 +19,7 @@ const PostPage = async({ postId }: Props) => {
     if (!post) return null
     return (
         // max-w-7xl
-        <div style={{ height: 'calc(100dvh - 64px)' }} className='w-full mx-auto'>
+        <>
             {/* bg-gradient-to-b from-muted to-transparent */}
             <div className="relative w-full min-h-[30vh] h-fit pt-6">
                 { 
@@ -55,7 +55,7 @@ const PostPage = async({ postId }: Props) => {
                     <Markdown pageMode>{post.content}</Markdown>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

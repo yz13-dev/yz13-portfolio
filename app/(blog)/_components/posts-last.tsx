@@ -5,7 +5,7 @@ import GridTemplate from '@/components/shared/grid/grid-template'
 const LastPosts = async() => {
     const posts = await blog.getLast()
     return (
-      <div className="w-full max-w-5xl px-6 mx-auto">
+      <div className="w-full max-w-5xl p-6 mx-auto">
         <div className="w-full py-6">
           <h1 className="text-3xl font-bold">Последние посты</h1>
         </div>
