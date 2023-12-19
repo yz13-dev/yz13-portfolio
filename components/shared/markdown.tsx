@@ -25,10 +25,10 @@ const Markdown = ({ children, className, pageMode=false }: Props) => {
                     before:content-['–'] before:text-muted-foreground before:-left-3 before:absolute text-accent-foreground`}>{children}</li>,
                     blockquote: ({ node, children }) => <blockquote className="p-2 my-2 rounded-lg h-fit bg-card">{children}</blockquote>,
                     mark: ({ node, children }) => <mark className="px-2 py-1 rounded-md text-primary-foreground bg-primary">{children}</mark>, 
-                    span: ({ node, children }) => <span className={`shrink-0 ${ pageMode ? 'text-base' : 'text-sm' }  text-muted-foreground`}>{children}</span>,
-                    text: ({ node, children }) => <span className={`shrink-0 ${ pageMode ? 'text-base' : 'text-sm' }  text-muted-foreground`}>{children}</span>,
+                    span: ({ node, children }) => <span className={`shrink-0 ${ pageMode ? 'text-base' : 'text-sm' } font-light text-secondary-foreground`}>{children}</span>,
+                    text: ({ node, children }) => <span className={`shrink-0 ${ pageMode ? 'text-base' : 'text-sm' } font-light text-secondary-foreground`}>{children}</span>,
                     strong: ({ node, children }) => <strong className={`shrink-0 font-bold  text-accent-foreground`}>{children}</strong>,
-                    p: ({ node, children }) => <p className={`shrink-0  ${ pageMode ? 'text-base' : 'text-sm' } text-muted-foreground`}>{children}</p>,
+                    p: ({ node, children }) => <p className={`shrink-0  ${ pageMode ? 'text-base' : 'text-sm' } font-light text-secondary-foreground`}>{children}</p>,
                     a: ({ node, href, children }) => <Link className='underline text-accent-foreground' href={href || '/'}>{children}</Link>
                 }}
             >{children.replace(/\n/gi, "&nbsp; \n")}</ReactMarkdown>

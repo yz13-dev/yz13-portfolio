@@ -6,7 +6,7 @@ import Textarea from "@/components/shared/textarea"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Post } from "@/types/post"
+import { PartialDocPost, Post } from "@/types/post"
 import { auth } from "@/utils/app"
 import { DateTime } from "luxon"
 import { useRouter } from "next/navigation"
@@ -14,11 +14,16 @@ import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { BiLoaderAlt } from "react-icons/bi"
 
-const PostForm = () => {
+type Props = {
+    preloadPost: PartialDocPost | null
+    postId: string | undefined
+}
+const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
+    const post = preloadPost
     const [user] = useAuthState(auth)
-    const [name, setName] = useState<string>('')
+    const [name, setName] = useState<string>(post ? post.name : '')
     const [preview, setPreview] = useState<boolean>(false)
-    const [content, setContent] = useState<string>('')
+    const [content, setContent] = useState<string>(post ? post.content : '')
     const [loading, setLoading] = useState<boolean>(false)
     const { push } = useRouter()
     const regEx = /[\w\[\]`!@#$%\^&*()={}:;<>+'-]*/g
@@ -44,12 +49,31 @@ const PostForm = () => {
                 createdAt: DateTime.now().toSeconds(),
                 content: content,
             }
-            const createdPost = await blog.addOne(postId, post)
-            if (createdPost) {
-                setLoading(false)
-                clearForm()
-                push(`/blog/${createdPost.doc_id}`)
-            } else setLoading(false)
+            if (preloadPost) {
+                const targetPath = providedPostId
+                delete preloadPost.doc_id
+                const postForUpdate: Post = {
+                    ...preloadPost,
+                    ...post,
+                    authorId: preloadPost.authorId,
+                    createdAt: preloadPost.createdAt,
+                    updatedAt: DateTime.now().toSeconds()
+                }
+                const isUpdated = await blog.updateOne(postId, postForUpdate)
+                if (isUpdated) {
+                    setLoading(false)
+                    clearForm()
+                    push(`/blog/${targetPath}`)
+                } else setLoading(false)
+
+            } else {
+                const createdPost = await blog.addOne(postId, post)
+                if (createdPost) {
+                    setLoading(false)
+                    clearForm()
+                    push(`/blog/${createdPost.doc_id}`)
+                } else setLoading(false)
+            }
         }
     }
     return (
@@ -59,14 +83,14 @@ const PostForm = () => {
                     { process.env.NODE_ENV === 'development' ? <span className="text-muted-foreground">Пост будет доступен по id: {postId}</span> : <div></div> }
                     <div className="flex items-center gap-2 w-fit h-fit">
                         <Button onClick={() => setPreview(!preview)} variant={preview ? 'default' : 'outline'}>Предпросмотр</Button>
-                        <Button onClick={createPost} disabled={!name || !validPostName || !user} className="gap-2">
+                        <Button onClick={createPost} disabled={loading || !name || !validPostName || !user} className="gap-2">
                             { loading && <BiLoaderAlt className='animate-spin' /> }
-                            Опубликовать
+                            { post ? 'Обновить пост' : 'Опубликовать'}
                         </Button>
                     </div>
                 </div>
                 <Input placeholder='Введите название поста' className="px-0 text-3xl border-0 h-fit !ring-0"
-                value={name} onChange={ e => setName(e.target.value ) } />
+                disabled={!!post} value={name} onChange={ e => setName(e.target.value ) } />
                 <Separator />
                 {
                     preview

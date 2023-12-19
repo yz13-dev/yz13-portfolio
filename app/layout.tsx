@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Spectral, Geologica } from 'next/font/google'
-const first_font = Geologica({ subsets: ['latin', 'cyrillic'], weight: ['600', '500', '400'], variable: '--root-font' })
+const first_font = Geologica({ subsets: ['latin', 'cyrillic'], weight: ['600', '500', '400', '300', '200'], variable: '--root-font' })
 const second_font = Spectral({ subsets: ['latin', 'cyrillic'], weight: ['600', '400'], variable: '--second-font' })
 import './globals.css'
 

@@ -18,6 +18,7 @@ export const file = {
                         const content_type = res.headers.get('content-type')
                         if (file.value && content_type) {
                             const base64String = btoa(String.fromCharCode(...new Uint8Array(file.value)))
+                            if (!base64String) throw new Error('Error')
                             const result = `data:${content_type};base64,${base64String}`
                             return result
                         } else throw new Error('Error')

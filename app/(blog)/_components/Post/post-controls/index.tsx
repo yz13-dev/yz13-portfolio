@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { BiLeftArrowAlt, BiLoaderAlt, BiTrashAlt } from 'react-icons/bi'
+import { BiLeftArrowAlt, BiLoaderAlt, BiPencil, BiTrashAlt } from 'react-icons/bi'
 
 type Props = {
     postId: DocPost['doc_id']
@@ -26,23 +26,32 @@ const PostControls = ({ postId, author }: Props) => {
             push('/')
         }
     }
+    const editPost = () => {
+        push(`/upload/post?postId=${postId}`)
+    }
     return (
-        <div className="flex items-center justify-between w-full h-fit">
-            <Button variant='link' asChild className='px-0 text-muted-foreground hover:text-accent-foreground hover:no-underline'>
-                <Link href='/' className='flex items-center gap-2'><BiLeftArrowAlt />Вернуться на главную</Link>
-            </Button>
-            <div className="flex items-center gap-2 w-fit h-fit">
-                {
-                    isAuthor &&
-                    <Button onClick={deletePost} disabled={!user} variant='destructive' size='icon'>
+        <div className="flex items-center gap-2 w-fit h-fit">
+            {
+                isAuthor &&
+                <>
+                    <Button disabled={loading || !user} className='gap-2' size='sm' variant='outline' onClick={editPost}>
+                        {
+                            loading
+                            ? <BiLoaderAlt className='animate-spin' />
+                            : <BiPencil />
+                        }
+                        <span>Редактировать</span>
+                    </Button>
+                    <Button disabled={loading || !user} className='gap-2' size='sm' variant='destructive' onClick={deletePost}>
                         {
                             loading
                             ? <BiLoaderAlt className='animate-spin' />
                             : <BiTrashAlt />
                         }
+                        <span>Удалить</span>
                     </Button>
-                }
-            </div>
+                </>
+            }
         </div>
     )
 }
