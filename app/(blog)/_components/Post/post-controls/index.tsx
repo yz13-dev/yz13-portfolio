@@ -11,12 +11,12 @@ import { BiLeftArrowAlt, BiLoaderAlt, BiPencil, BiTrashAlt } from 'react-icons/b
 
 type Props = {
     postId: DocPost['doc_id']
-    author: DocPost['authorId']
+    author: DocPost['authorsId']
 }
 const PostControls = ({ postId, author }: Props) => {
     const [user] = useAuthState(auth)
     const [loading, setLoading] = useState<boolean>(false)
-    const isAuthor = user ? typeof author === 'string' ? author === user.uid : author.includes(user.uid) : false
+    const isAuthor = user ? author.includes(user.uid) : false
     const { push } = useRouter()
     const deletePost = async() => {
         if (user) {

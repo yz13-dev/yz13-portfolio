@@ -9,7 +9,7 @@ export const blog = {
             const authHeader = authorizationHeader()
             headers.append('authorization', authHeader || '')
             const url = `${api_host}/portfolio/last?limit=5`
-            const res = await fetch(url, { method: "GET", headers: headers })
+            const res = await fetch(url, { method: "GET", headers: headers, cache: 'no-store' })
             if (res.ok) {
                 const posts = await res.json() as DocPost[]
                 return posts
@@ -26,7 +26,7 @@ export const blog = {
             const authHeader = authorizationHeader()
             headers.append('authorization', authHeader || '')
             const url = `${api_host}/portfolio/${postId}`
-            const res = await fetch(url, { method: "GET", headers: headers })
+            const res = await fetch(url, { method: "GET", headers: headers, cache: 'no-store' })
             if (res.ok) return await res.json() as DocPost | null
             return null
         } catch(e) {

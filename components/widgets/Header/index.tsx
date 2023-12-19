@@ -1,4 +1,3 @@
-import React from 'react'
 import YZ13Mark from '../../shared/yz13-mark'
 import User from './ui/user'
 import Link from 'next/link'

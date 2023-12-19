@@ -4,13 +4,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 type Props = {
     uid: string
     hideName?: boolean
+    className?: string
 }
-const PostAuthor = async({ uid, hideName=false }: Props) => {
+const PostAuthor = async({ uid, hideName=false, className }: Props) => {
     const user = await userAPI.byId.short(uid)
     if (!user) return null
     return (
       <div className="relative flex items-center gap-2 w-fit h-fit">
-        <Avatar className="w-9 h-9">
+        <Avatar className={className ? className : "w-9 h-9"}>
           <AvatarImage src={user.photoUrl} alt={'@' + user.displayName} />
           <AvatarFallback>{user.displayName ? user.displayName?.slice(0, 2) : 'UR'}</AvatarFallback>
         </Avatar>

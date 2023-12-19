@@ -45,7 +45,7 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
             setLoading(true)
             const post: Post = {
                 name: name,
-                authorId: user.uid,
+                authorsId: [user.uid],
                 createdAt: DateTime.now().toSeconds(),
                 content: content,
             }
@@ -55,7 +55,7 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 const postForUpdate: Post = {
                     ...preloadPost,
                     ...post,
-                    authorId: preloadPost.authorId,
+                    authorsId: preloadPost.authorsId,
                     createdAt: preloadPost.createdAt,
                     updatedAt: DateTime.now().toSeconds()
                 }

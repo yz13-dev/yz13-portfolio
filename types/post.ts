@@ -4,7 +4,7 @@ export type Post = {
     name: string // can used as id
     description?: string
     category?: string
-    authorId: string | string[]
+    authorsId: string[]
     createdAt: number
     updatedAt?: number
     content: string // used in markdown
