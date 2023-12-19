@@ -64,8 +64,8 @@ const page = async({ params }: Props) => {
                     <PostControls author={post.authorId} postId={post.doc_id} />
                 </div>
             </div>
-            <div className="w-full h-full flex mx-auto max-w-7xl lg:flex-row-reverse py-6 flex-col">
-                <div className="flex lg:w-1/4 w-full items-start flex-col px-6 py-6 gap-2 mx-auto h-fit">
+            <div className="w-full h-full flex mx-auto max-w-7xl lg:flex-row-reverse flex-col">
+                <div className="flex lg:w-1/4 w-full items-start flex-col px-6 pt-6 gap-2 mx-auto h-fit">
                     <span className='text-muted-foreground'>Под авторством</span>
                     { 
                         isAuthorsGroup
