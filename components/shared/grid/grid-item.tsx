@@ -1,5 +1,7 @@
 import { file } from "@/api/file"
 import GroupPostAuthorsMini from "@/app/(blog)/_components/post/post-author-group-mini"
+import { getCategoryName } from "@/const/categories"
+import { Categories } from "@/types/common"
 import { DocPost } from "@/types/post"
 import { DateTime } from "luxon"
 import Image from "next/image"
@@ -18,10 +20,16 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
     const className = `relative w-full h-full md:min-h-full min-h-[24rem] shrink-0 overflow-hidden relative ${rowSpan || ''} ${colSpan || ''} cursor-pointer border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
     return (
         <Link href={`/blog/${post.doc_id}`} className={className}>
-            {
-                isRecent &&
-                <span className="absolute z-20 w-fit h-fit top-3 right-3 px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">Новое!</span>
-            }
+            <div className="w-fit gap-2 h-fit z-20 flex items-center justify-end top-3 right-3 absolute">
+                {
+                    isRecent &&
+                    <span className="w-fit h-fit  px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">Новое!</span>
+                }
+                {
+                    post.category &&
+                    <span className="w-fit h-fit  px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">{getCategoryName(post.category as keyof Categories)}</span>
+                }
+            </div>
             <div className="relative w-full h-full rounded-md flex items-center justify-center">
                 { 
                     thumbnail && 

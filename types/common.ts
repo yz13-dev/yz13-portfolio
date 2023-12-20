@@ -3,3 +3,30 @@ export type ChunkResponse<T> = {
     data: T
     next: string
 }
+
+
+export type Categories = {
+    "all": string,
+    "dev": string,
+    "community": string,
+    "projects": string,
+    "YZ13": string,
+    "updates": string,
+    "other": string,
+}
+
+
+
+export type PickedCategory<T extends keyof Categories> = Categories[T]
+
+// + "all",
+// - "dev",
+// - "community",
+// - "projects",
+// - "YZ13",
+// - "updates",
+// - "other"
+
+export type AllPostsRatio = `${number}-${number}-${number}-${number}-${number}`
+
+

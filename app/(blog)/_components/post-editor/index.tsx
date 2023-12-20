@@ -12,19 +12,22 @@ import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { BiHide, BiLoaderAlt, BiShow } from "react-icons/bi"
-import GroupPostAuthors from "./post-author-group"
+import GroupPostAuthors from "../post/post-author-group"
+import PostCategory from "./post-category"
+import { categories } from "@/const/categories"
 
 type Props = {
     preloadPost: PartialDocPost | null
     postId: string | undefined
 }
-const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
+const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
     const post = preloadPost
     const [user] = useAuthState(auth)
     const [name, setName] = useState<string>(post ? post.name : '')
     const [description, setDescription] = useState<string>(post && post.description ? post.description : '')
     const [preview, setPreview] = useState<boolean>(false)
     const [content, setContent] = useState<string>(post ? post.content : '')
+    const [category, setCategory] = useState<string>(post && post.category ? post.category : categories[categories.length - 3])
     const [loading, setLoading] = useState<boolean>(false)
     const authors: string[] = useMemo(() => {
         return post ? post.authorsId : user ? [user.uid] : []
@@ -54,6 +57,7 @@ const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 createdAt: DateTime.now().toSeconds(),
                 description: description,
                 content: content,
+                category: category
             }
             if (preloadPost) {
                 const targetPath = providedPostId
@@ -61,7 +65,6 @@ const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 const postForUpdate: Post = {
                     ...preloadPost,
                     ...post,
-                    description: preloadPost.description ? preloadPost.description : description,
                     authorsId: preloadPost.authorsId,
                     createdAt: preloadPost.createdAt,
                     updatedAt: DateTime.now().toSeconds()
@@ -88,6 +91,9 @@ const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
             <PostTemplate.HeaderWrapper>
                 <PostTemplate.Header>
                     { process.env.NODE_ENV === 'development' ? <span className="text-muted-foreground">Пост будет доступен по id: {postId}</span> : <div></div> }
+                    <div className="flex flex-col w-full gap-4 py-4">
+                        <PostCategory category={category} setCategory={setCategory} />
+                    </div>
                     <div className="flex flex-col w-full gap-4 pt-4 pb-12">
                         <Input placeholder='Введите название поста' disabled={!!post} value={name} onChange={ e => setName(e.target.value ) }
                         className="px-0 lg:text-5xl text-2xl font-semibold normal-case text-accent-foreground border-0 h-fit !ring-0"/>
