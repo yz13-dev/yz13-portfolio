@@ -9,6 +9,8 @@ import PostControls from "./post-controls"
 import Image from "next/image"
 import { Markdown } from "@/components/shared/markdown"
 import PostTemplate from "@/components/templates/post/post.template"
+import { getCategoryName } from "@/const/categories"
+import { Categories } from "@/types/common"
 
 type Props = {
     postId: string
@@ -34,9 +36,15 @@ const PostPage = async({ postId }: Props) => {
                         <Link href='/' className='flex items-center gap-2'><BiLeftArrowAlt />Вернуться на главную</Link>
                     </Button>
                     <div className="flex flex-col w-full gap-4 py-4">
-                        <span className='capitalize text-sm text-muted-foreground'>
-                            { DateTime.fromSeconds(post.createdAt).setLocale('ru').toFormat(' EEEE, dd MMMM yyyy ') }
-                        </span>
+                        <div className="w-fit h-fit flex items-center gap-2">
+                            {
+                                post.category &&
+                                <span className="w-fit h-fit px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">{getCategoryName(post.category as keyof Categories)}</span>
+                            }
+                            <span className='capitalize text-sm text-muted-foreground'>
+                                { DateTime.fromSeconds(post.createdAt).setLocale('ru').toFormat(' EEEE, dd MMMM yyyy ') }
+                            </span>
+                        </div>
                     </div>
                     <div className="flex flex-col w-full gap-4 pt-4 pb-12">
                         <h1 className='lg:text-5xl text-2xl font-semibold normal-case text-accent-foreground'>{ post.name }</h1>

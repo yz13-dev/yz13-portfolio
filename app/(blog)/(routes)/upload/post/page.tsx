@@ -1,5 +1,5 @@
 import { blog } from '@/api/blog'
-import PostForm from '../../../_components/post'
+import PostForm from '../../../_components/post-editor'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { compareAuthor } from '@/helpers/author'
