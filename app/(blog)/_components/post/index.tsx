@@ -43,6 +43,7 @@ const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
         setName('')
         setPreview(false)
         setContent('')
+        setDescription('')
     }
     const createPost = async() => {
         if (user) {
@@ -51,6 +52,7 @@ const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 name: name,
                 authorsId: [user.uid],
                 createdAt: DateTime.now().toSeconds(),
+                description: description,
                 content: content,
             }
             if (preloadPost) {
@@ -59,6 +61,7 @@ const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 const postForUpdate: Post = {
                     ...preloadPost,
                     ...post,
+                    description: preloadPost.description ? preloadPost.description : description,
                     authorsId: preloadPost.authorsId,
                     createdAt: preloadPost.createdAt,
                     updatedAt: DateTime.now().toSeconds()
