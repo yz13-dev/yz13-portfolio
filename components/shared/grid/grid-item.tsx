@@ -1,6 +1,8 @@
+import { file } from "@/api/file"
 import GroupPostAuthorsMini from "@/app/(blog)/_components/post/post-author-group-mini"
 import { DocPost } from "@/types/post"
 import { DateTime } from "luxon"
+import Image from "next/image"
 import Link from "next/link"
 
 type Props = {
@@ -8,17 +10,25 @@ type Props = {
     colSpan?: string
     rowSpan?: string
 }
-const GridItem = ({ post, colSpan, rowSpan }: Props) => {
+const GridItem = async({ post, colSpan, rowSpan }: Props) => {
+    const thumbnail = await file.static.get('placeholders/article-thumbnail-placeholder.jpg') 
     const now = DateTime.now()
     const postCreatedAtDate = DateTime.fromSeconds(post.createdAt)
     const isRecent = now.day === postCreatedAtDate.day && now.month === postCreatedAtDate.month && now.year === postCreatedAtDate.year
-    const className = `relative w-full h-full md:min-h-full min-h-[24rem] relative ${rowSpan || ''} ${colSpan || ''} cursor-pointer border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
+    const className = `relative w-full h-full md:min-h-full min-h-[24rem] shrink-0 overflow-hidden relative ${rowSpan || ''} ${colSpan || ''} cursor-pointer border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
     return (
         <Link href={`/blog/${post.doc_id}`} className={className}>
             {
                 isRecent &&
-                <span className="absolute top-3 right-3 px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">Новое!</span>
+                <span className="absolute z-20 w-fit h-fit top-3 right-3 px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">Новое!</span>
             }
+            <div className="relative w-full h-full rounded-md flex items-center justify-center">
+                { 
+                    thumbnail && 
+                    <Image src={thumbnail} fill alt='article thumbnail'
+                    className="object-center group-hover:scale-110 duration-500 transition-transform object-cover"/>
+                }
+            </div>
             <div className="absolute top-0 left-0 w-full h-full transition-opacity duration-500 rounded-md bg-gradient-to-t from-background to-transparent group-hover:opacity-50" />
             <div className="absolute bottom-0 left-0 z-10 flex flex-col w-full gap-2 p-4 h-fit">
                 <span className="text-xl font-semibold text-accent-foreground">{post.name}</span>

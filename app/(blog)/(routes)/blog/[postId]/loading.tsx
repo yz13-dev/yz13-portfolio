@@ -29,13 +29,13 @@ const Loading = () => {
                     </PostTemplate.Side>
                     <PostTemplate.Separator />
                     <PostTemplate.Content>
-                        <div className="w-1/2 h-6 rounded-md bg-muted animate-pulse" />
-                        <div className="w-1/3 h-6 rounded-md bg-muted animate-pulse" />
-                        <div className="w-1/2 h-6 rounded-md bg-muted animate-pulse" />
-                        <div className="w-2/3 h-6 rounded-md bg-muted animate-pulse" />
-                        <div className="w-1/3 h-6 rounded-md bg-muted animate-pulse" />
-                        <div className="w-1/2 h-6 rounded-md bg-muted animate-pulse" />
-                        <div className="w-2/3 h-6 rounded-md bg-muted animate-pulse" />
+                        <div className="w-1/2 h-6 mb-2 rounded-md bg-muted animate-pulse" />
+                        <div className="w-1/3 h-6 mb-2 rounded-md bg-muted animate-pulse" />
+                        <div className="w-1/2 h-6 mb-2 rounded-md bg-muted animate-pulse" />
+                        <div className="w-2/3 h-6 mb-2 rounded-md bg-muted animate-pulse" />
+                        <div className="w-1/3 h-6 mb-2 rounded-md bg-muted animate-pulse" />
+                        <div className="w-1/2 h-6 mb-2 rounded-md bg-muted animate-pulse" />
+                        <div className="w-2/3 h-6 mb-2 rounded-md bg-muted animate-pulse" />
                     </PostTemplate.Content>
                 </PostTemplate.Body>
             </PostTemplate>

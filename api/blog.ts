@@ -1,5 +1,6 @@
 import { api_host } from "@/const/host"
 import { authorizationHeader } from "@/helpers/headers"
+import { ChunkResponse } from "@/types/common"
 import { DocPost, Post } from "@/types/post"
 
 export const blog = {
@@ -20,21 +21,21 @@ export const blog = {
             return []
         }
     },
-    getAll: async() => {
+    getAll: async(): Promise<ChunkResponse<DocPost[]>> => {
         try {
             const headers = new Headers()
             const authHeader = authorizationHeader()
             headers.append('authorization', authHeader || '')
-            const url = `${api_host}/portfolio/all`
+            const url = `${api_host}/portfolio/all?skip=0`
             const res = await fetch(url, { method: "GET", headers: headers, cache: 'no-store' })
             if (res.ok) {
-                const posts = await res.json() as DocPost[]
+                const posts = await res.json() as ChunkResponse<DocPost[]>
                 return posts
             }
-            return []
+            return { count: 0, data: [], next: '' }
         } catch(e) {
             console.log(e)
-            return []
+            return { count: 0, data: [], next: '' }
         }
     },
     getById: async(postId: string) => {
