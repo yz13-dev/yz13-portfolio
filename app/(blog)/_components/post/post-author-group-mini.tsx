@@ -1,4 +1,4 @@
-import PostAuthor from "./post-author"
+import PostAuthor from "./post-author-server"
 
 type Props = {
     authors: string[]

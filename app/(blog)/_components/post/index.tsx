@@ -1,18 +1,18 @@
 'use client'
-
 import { blog } from "@/api/blog"
 import { Markdown } from "@/components/shared/markdown"
 import Textarea from "@/components/shared/textarea"
+import PostTemplate from "@/components/templates/post/post.template"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
 import { PartialDocPost, Post } from "@/types/post"
 import { auth } from "@/utils/app"
 import { DateTime } from "luxon"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { BiLoaderAlt } from "react-icons/bi"
+import { BiHide, BiLoaderAlt, BiShow } from "react-icons/bi"
+import GroupPostAuthors from "./post-author-group"
 
 type Props = {
     preloadPost: PartialDocPost | null
@@ -22,9 +22,13 @@ const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
     const post = preloadPost
     const [user] = useAuthState(auth)
     const [name, setName] = useState<string>(post ? post.name : '')
+    const [description, setDescription] = useState<string>(post && post.description ? post.description : '')
     const [preview, setPreview] = useState<boolean>(false)
     const [content, setContent] = useState<string>(post ? post.content : '')
     const [loading, setLoading] = useState<boolean>(false)
+    const authors: string[] = useMemo(() => {
+        return post ? post.authorsId : user ? [user.uid] : []
+    },[post, user])
     const { push } = useRouter()
     const regEx = /[\w\[\]`!@#$%\^&*()={}:;<>+'-]*/g
     const nameIdRegExp = /[^a-zA-Z 0-9 -]+/g
@@ -77,28 +81,41 @@ const   PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
         }
     }
     return (
-        <>
-            <div className="flex flex-col w-full gap-2 py-6">
-                <div className="flex items-center justify-between w-full h-fit">
+        <PostTemplate>
+            <PostTemplate.HeaderWrapper>
+                <PostTemplate.Header>
                     { process.env.NODE_ENV === 'development' ? <span className="text-muted-foreground">Пост будет доступен по id: {postId}</span> : <div></div> }
+                    <div className="flex flex-col w-full gap-4 pt-4 pb-12">
+                        <Input placeholder='Введите название поста' disabled={!!post} value={name} onChange={ e => setName(e.target.value ) }
+                        className="px-0 lg:text-5xl text-2xl font-semibold normal-case text-accent-foreground border-0 h-fit !ring-0"/>
+                        <Textarea value={description} className="w-full lg:text-xl text-base font-light text-muted-foreground" 
+                        onChange={ e => setDescription(e.target.value) } placeholder="Введите описание для поста"  />
+                    </div>
                     <div className="flex items-center gap-2 w-fit h-fit">
-                        <Button onClick={() => setPreview(!preview)} variant={preview ? 'default' : 'outline'}>Предпросмотр</Button>
+                        <Button onClick={() => setPreview(!preview)} size='icon' variant={preview ? 'default' : 'outline'}>{ preview ? <BiHide /> : <BiShow />}</Button>
+                        <Button disabled variant='outline'>Добавить соавторов</Button>
                         <Button onClick={createPost} disabled={loading || !name || !validPostName || !user} className="gap-2">
                             { loading && <BiLoaderAlt className='animate-spin' /> }
                             { post ? 'Обновить пост' : 'Опубликовать'}
                         </Button>
                     </div>
-                </div>
-                <Input placeholder='Введите название поста' className="px-0 text-3xl border-0 h-fit !ring-0"
-                disabled={!!post} value={name} onChange={ e => setName(e.target.value ) } />
-                <Separator />
+                </PostTemplate.Header>
+            </PostTemplate.HeaderWrapper>
+            <PostTemplate.Body>
+                <PostTemplate.Side>
+                    <span className='text-muted-foreground'>Под авторством</span>
+                    <GroupPostAuthors authors={authors} asClient />
+                </PostTemplate.Side>
+                <PostTemplate.Separator />
+                <PostTemplate.Content>
                 {
                     preview
-                    ? <Markdown pageMode>{content}</Markdown>
-                    : <Textarea value={content} onChange={ e => setContent(e.target.value) } placeholder="Введите содержание поста"  />
+                    ? <Markdown pageMode>{content || '### Введите содержание поста'}</Markdown>
+                    : <Textarea value={content} className="w-full" onChange={ e => setContent(e.target.value) } placeholder="Введите содержание поста"  />
                 }
-            </div>
-        </>
+                </PostTemplate.Content>
+            </PostTemplate.Body>
+        </PostTemplate>
     )
 }
 

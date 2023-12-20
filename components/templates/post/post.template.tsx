@@ -4,6 +4,7 @@ import PostHeader from './post-header'
 import PostBody from './post-body'
 import PostContent from './post-content'
 import PostSide from './post-side'
+import PostSeparator from './post-separator'
 
 type Props = {
     children?: ReactNode
@@ -13,17 +14,19 @@ type Extensions = {
     Header: typeof PostHeader
     Body: typeof PostBody
     Content: typeof PostContent
+    Separator: typeof PostSeparator
     Side: typeof PostSide
 }
-const PostTemplate = ({ children }: Props) => {
+const Template = ({ children }: Props) => {
     return (
         <>{children}</>
     )
 }
-const Template = PostTemplate as typeof PostTemplate & Extensions
-Template.HeaderWrapper = PostHeaderWrapper
-Template.Header = PostHeader
-Template.Body = PostBody
-Template.Content = PostContent
-Template.Side = PostSide
-export default Template
+const PostTemplate = Template as typeof Template & Extensions
+PostTemplate.HeaderWrapper = PostHeaderWrapper
+PostTemplate.Header = PostHeader
+PostTemplate.Body = PostBody
+PostTemplate.Content = PostContent
+PostTemplate.Separator = PostSeparator
+PostTemplate.Side = PostSide
+export default PostTemplate

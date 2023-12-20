@@ -7,8 +7,8 @@ import { BiLeftArrowAlt } from "react-icons/bi"
 import GroupPostAuthors from "./post-author-group"
 import PostControls from "./post-controls"
 import Image from "next/image"
-import { Separator } from "@/components/ui/separator"
 import { Markdown } from "@/components/shared/markdown"
+import PostTemplate from "@/components/templates/post/post.template"
 
 type Props = {
     postId: string
@@ -19,9 +19,9 @@ const PostPage = async({ postId }: Props) => {
     if (!post) return null
     return (
         // max-w-7xl
-        <>
+        <PostTemplate>
             {/* bg-gradient-to-b from-muted to-transparent */}
-            <div className="relative w-full min-h-[30vh] h-fit pt-6">
+            <PostTemplate.HeaderWrapper>
                 { 
                     grid && 
                     <div className='z-[-1] w-full h-full absolute top-0 left-0'>
@@ -29,7 +29,7 @@ const PostPage = async({ postId }: Props) => {
                         <Image src={grid} className='z-[-1] object-cover' fill alt='grid' /> 
                     </div>
                 }
-                <div className="z-20 flex flex-col px-6 max-w-7xl items-start w-full mx-auto h-fit">
+                <PostTemplate.Header>
                     <Button variant='link' asChild className='px-0 text-muted-foreground hover:text-accent-foreground hover:no-underline'>
                         <Link href='/' className='flex items-center gap-2'><BiLeftArrowAlt />Вернуться на главную</Link>
                     </Button>
@@ -43,19 +43,19 @@ const PostPage = async({ postId }: Props) => {
                         { post.description && <span className='lg:text-xl text-base font-light text-muted-foreground'>{ post.description }</span> }
                     </div>
                     <PostControls author={post.authorsId} postId={post.doc_id} />
-                </div>
-            </div>
-            <div className="w-full h-full flex mx-auto max-w-7xl lg:flex-row-reverse flex-col">
-                <div className="flex lg:w-1/4 w-full items-start flex-col p-6 gap-2 mx-auto h-fit">
+                </PostTemplate.Header>
+            </PostTemplate.HeaderWrapper>
+            <PostTemplate.Body>
+                <PostTemplate.Side>
                     <span className='text-muted-foreground'>Под авторством</span>
                     <GroupPostAuthors authors={post.authorsId} />
-                </div>
-                <Separator className='lg:hidden block ' orientation='horizontal' />
-                <div className="w-3/4 lg:border-r px-6 pt-6 border-0">
+                </PostTemplate.Side>
+                <PostTemplate.Separator />
+                <PostTemplate.Content>
                     <Markdown pageMode>{post.content}</Markdown>
-                </div>
-            </div>
-        </>
+                </PostTemplate.Content>
+            </PostTemplate.Body>
+        </PostTemplate>
     )
 }
 
