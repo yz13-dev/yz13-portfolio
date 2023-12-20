@@ -17,11 +17,9 @@ const page = ({ params }: Props) => {
     if (!(categories.includes(params.category))) return null
     return (
         <>
-            <div style={{ height: 'calc(100dvh - 64px)' }}>
-                <Suspense fallback={<LastPostsSkeleton />}>
-                    <LastPosts category={params.category as keyof Categories} />
-                </Suspense>
-            </div>
+            <Suspense fallback={<LastPostsSkeleton />}>
+                <LastPosts category={params.category as keyof Categories} />
+            </Suspense>
             <AllPosts category={params.category as keyof Categories} />
         </>
     )

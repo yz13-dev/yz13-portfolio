@@ -10,7 +10,7 @@ type Props = {
 const LastPosts = async({ category='all' }: Props) => {
     const posts = await blog.getLast(category)
     return (
-      <div className="w-full max-w-7xl p-6 mx-auto">
+      <div className="w-full max-w-6xl p-6 mx-auto">
         <div className="w-full py-6">
           <h1 className="text-3xl font-bold">Последние посты</h1>
         </div>

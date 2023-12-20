@@ -40,10 +40,11 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
             </div>
             <div className="absolute top-0 left-0 w-full h-full transition-opacity duration-500 rounded-md bg-gradient-to-t from-background to-transparent group-hover:opacity-50" />
             <div className="absolute bottom-0 left-0 z-10 flex flex-col w-full gap-2 p-4 h-fit">
-                <span className="text-xl font-semibold text-accent-foreground">{post.name}</span>
+                <h2 className="text-xl font-semibold text-accent-foreground">{post.name}</h2>
+                { post.description && <span className="text-base text-muted-foreground">{post.description}</span> }
                 <div className="flex items-center justify-between w-full h-fit">
                     <GroupPostAuthorsMini authors={post.authorsId} />
-                    <span className="text-sm capitalize text-muted-foreground">{ DateTime.fromSeconds(post.createdAt).setLocale('ru').toFormat( 'dd LLL yyyy' ) }</span>
+                    <span className="text-sm capitalize text-muted-foreground">{ DateTime.fromSeconds(post.createdAt).setLocale('ru').toFormat( 'dd MMMM yyyy' ) }</span>
                 </div>
             </div>
         </Link>

@@ -15,12 +15,14 @@ const Header = dynamic(() => import("@/components/widgets/header"), {
 const Home = async () => {
     return (
       <>
-        <header className="flex items-center justify-between border-b w-full h-16 px-6 shrink-0">
-          <Suspense fallback={<HeaderSkeleton />}>
-              <Header />
-          </Suspense>
+        <header className="border-b w-full h-16 shrink-0">
+          <div className="w-full max-w-7xl h-full px-6 mx-auto flex items-center justify-between">
+            <Suspense fallback={<HeaderSkeleton />}>
+                <Header />
+            </Suspense>
+          </div>
         </header>
-        <div className=" px-6 max-w-7xl w-full mx-auto pt-24">
+        <div className="px-6 max-w-6xl w-full mx-auto pt-24">
           <CategoryTabs />
         </div>
         <div style={{ height: 'calc(100dvh - 64px)' }}>

@@ -11,10 +11,12 @@ type Props = {
 const layout = ({ children }: Props) => {
     return (
         <>
-            <header className='w-full h-16 px-6 border-b shrink-0'>
-                <Suspense fallback={<HeaderSkeleton />}>
-                    <Header />
-                </Suspense>
+            <header className="border-b w-full h-16 shrink-0">
+                <div className="w-full max-w-7xl h-full px-6 mx-auto flex items-center justify-between">
+                    <Suspense fallback={<HeaderSkeleton />}>
+                        <Header />
+                    </Suspense>
+                </div>
             </header>
             <div style={{ minHeight: 'calc(100dvh - 64px)' }} className='w-full h-fit'>
                 { children }
