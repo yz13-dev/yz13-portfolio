@@ -15,7 +15,9 @@ export type Categories = {
     "other": string,
 }
 
-
+export type GridRatioByCategory = {
+    [key in keyof Categories]: string
+}
 
 export type PickedCategory<T extends keyof Categories> = Categories[T]
 

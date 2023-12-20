@@ -1,4 +1,4 @@
-import { AllPostsRatio, Categories, PickedCategory } from "@/types/common"
+import { AllPostsRatio, Categories, GridRatioByCategory, PickedCategory } from "@/types/common"
 
 export const categories = [
     "all",
@@ -10,7 +10,7 @@ export const categories = [
     "other"
 ]
 
-export const AllPostsGridRatio: AllPostsRatio = '6-4-3-3-2'
+export const defaultRatio: string = '6-4-3-3-2'
 
 
 const CategoriesRUS: Categories = {
@@ -21,6 +21,18 @@ const CategoriesRUS: Categories = {
     "YZ13": "YZ13",
     "updates": "Обновления",
     "other": "Другие",
+}
+
+
+
+export const CategoriesGridRatio: GridRatioByCategory = {
+    all: "6-4-3-3-2",
+    dev: "6-3-4-2-3",
+    community: "6-3-2-4-3",
+    projects: "6-4-3-3-2",
+    YZ13: "6-3-4-2-3",
+    updates: "6-3-2-4-3",
+    other: "6-4-3-3-2"
 }
 
 export const getCategoryName = <K extends keyof Categories>(category: K): PickedCategory<K> => CategoriesRUS[category]

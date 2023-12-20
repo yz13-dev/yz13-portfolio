@@ -7,7 +7,7 @@ import { have_access } from '@/const/access-to-publish'
 import { Suspense } from 'react'
 import HeaderSkeleton from '@/components/skeletons/header'
 import dynamic from 'next/dynamic'
-const Header = dynamic(() => import("@/components/widgets/Header"), {
+const Header = dynamic(() => import("@/components/widgets/header"), {
     loading: () => <HeaderSkeleton />
 })
 type Props = {

@@ -1,15 +1,15 @@
 import { api_host } from "@/const/host"
 import { authorizationHeader } from "@/helpers/headers"
-import { ChunkResponse } from "@/types/common"
+import { Categories, ChunkResponse } from "@/types/common"
 import { DocPost, Post } from "@/types/post"
 
 export const blog = {
-    getLast: async() => {
+    getLast: async(category?: keyof Categories) => {
         try {
             const headers = new Headers()
             const authHeader = authorizationHeader()
             headers.append('authorization', authHeader || '')
-            const url = `${api_host}/portfolio/last?limit=5`
+            const url = `${api_host}/portfolio/last${ category ? `/${category}` : '' }?limit=5`
             const res = await fetch(url, { method: "GET", headers: headers, cache: 'no-store' })
             if (res.ok) {
                 const posts = await res.json() as DocPost[]
@@ -21,12 +21,12 @@ export const blog = {
             return []
         }
     },
-    getAll: async(): Promise<ChunkResponse<DocPost[]>> => {
+    getAll: async(category?: keyof Categories): Promise<ChunkResponse<DocPost[]>> => {
         try {
             const headers = new Headers()
             const authHeader = authorizationHeader()
             headers.append('authorization', authHeader || '')
-            const url = `${api_host}/portfolio/all?skip=0`
+            const url = `${api_host}/portfolio/all${ category ? `/${category}` : '' }?skip=0`
             const res = await fetch(url, { method: "GET", headers: headers, cache: 'no-store' })
             if (res.ok) {
                 const posts = await res.json() as ChunkResponse<DocPost[]>
