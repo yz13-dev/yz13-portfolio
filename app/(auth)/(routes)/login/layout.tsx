@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from "react"
 import dynamic from "next/dynamic"
 import HeaderSkeleton from "@/components/skeletons/header"
-const Header = dynamic(() => import("@/components/widgets/Header"), {
+const Header = dynamic(() => import("@/components/widgets/header"), {
     loading: () => <HeaderSkeleton />
 })
 

@@ -17,10 +17,11 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
     const now = DateTime.now()
     const postCreatedAtDate = DateTime.fromSeconds(post.createdAt)
     const isRecent = now.day === postCreatedAtDate.day && now.month === postCreatedAtDate.month && now.year === postCreatedAtDate.year
-    const className = `relative w-full h-full md:min-h-full min-h-[24rem] shrink-0 overflow-hidden relative ${rowSpan || ''} ${colSpan || ''} cursor-pointer border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
+    const className = `relative w-full h-full md:min-h-full min-h-[24rem] shrink-0 overflow-hidden relative ${colSpan || ''} cursor-pointer border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
     return (
-        <Link href={`/blog/${post.doc_id}`} className={className}>
-            <div className="w-fit gap-2 h-fit z-20 flex items-center justify-end top-3 right-3 absolute">
+        <Link style={{ gridRow: rowSpan }}
+        href={`/blog/${post.doc_id}`} className={className}>
+            <div className="w-fit gap-2 h-fit z-20 flex row-spa items-center justify-end top-3 right-3 absolute">
                 {
                     isRecent &&
                     <span className="w-fit h-fit  px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">Новое!</span>

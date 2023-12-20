@@ -5,7 +5,7 @@ import Controller from "./controller"
 const AllPosts = async() => {
     const { count, data, next } = await blog.getAll()
     return (
-        <div className="w-full max-w-5xl px-6 mx-auto">
+        <div className="w-full max-w-7xl px-6 mx-auto">
             <div className="w-full py-12">
                 <h1 className="text-3xl font-bold">Все посты</h1>
             </div>
