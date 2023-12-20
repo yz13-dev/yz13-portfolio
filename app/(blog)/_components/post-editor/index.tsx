@@ -27,7 +27,7 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
     const [description, setDescription] = useState<string>(post && post.description ? post.description : '')
     const [preview, setPreview] = useState<boolean>(false)
     const [content, setContent] = useState<string>(post ? post.content : '')
-    const [category, setCategory] = useState<string>(post && post.category ? post.category : categories[categories.length - 3])
+    const [category, setCategory] = useState<Post['category']>(post && post.category ? post.category : categories[categories.length - 3] as Post['category'])
     const [loading, setLoading] = useState<boolean>(false)
     const authors: string[] = useMemo(() => {
         return post ? post.authorsId : user ? [user.uid] : []

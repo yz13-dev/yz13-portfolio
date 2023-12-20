@@ -3,16 +3,17 @@
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select"
 import { categories, getCategoryName } from "@/const/categories"
 import { Categories } from "@/types/common"
+import { Post } from "@/types/post"
 import { Dispatch, SetStateAction, useState } from "react"
 
 
 type Props = {
-    category: string 
-    setCategory: Dispatch<SetStateAction<string>>
+    category: Post['category'] 
+    setCategory: Dispatch<SetStateAction<Post['category']>>
 }
 const PostCategory = ({ category, setCategory }: Props) => {
     return (
-        <Select defaultValue="YZ13" onValueChange={value => setCategory(value)}>
+        <Select defaultValue="YZ13" onValueChange={value => setCategory(value as Post['category'])}>
             <SelectTrigger className="w-36">
                 { getCategoryName(category as keyof Categories) }
             </SelectTrigger>
