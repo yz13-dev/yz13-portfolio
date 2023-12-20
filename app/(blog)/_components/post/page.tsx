@@ -50,7 +50,7 @@ const PostPage = async({ postId }: Props) => {
                         <h1 className='lg:text-5xl text-2xl font-semibold normal-case text-accent-foreground'>{ post.name }</h1>
                         { post.description && <span className='lg:text-xl text-base font-light text-muted-foreground'>{ post.description }</span> }
                     </div>
-                    <PostControls author={post.authorsId} postId={post.doc_id} />
+                    <PostControls author={post.authorsId} postId={post.doc_id} pinned={post.pinned} />
                 </PostTemplate.Header>
             </PostTemplate.HeaderWrapper>
             <PostTemplate.Body>

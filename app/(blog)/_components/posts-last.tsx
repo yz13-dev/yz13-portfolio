@@ -8,7 +8,7 @@ type Props = {
   category?: keyof Categories
 }
 const LastPosts = async({ category='all' }: Props) => {
-    const posts = await blog.getLast()
+    const posts = await blog.getLast(category)
     return (
       <div className="w-full max-w-7xl p-6 mx-auto">
         <div className="w-full py-6">

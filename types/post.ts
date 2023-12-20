@@ -1,9 +1,10 @@
+import { Categories } from "./common"
 
 
 export type Post = {
     name: string // can used as id
     description?: string
-    category?: string
+    category?: keyof Categories
     authorsId: string[]
     createdAt: number
     updatedAt?: number
