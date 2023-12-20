@@ -28,7 +28,7 @@ const Home = async () => {
             <LastPosts />
           </Suspense>
         </div>
-        <AllPosts />
+        <AllPosts  />
         <Footer />
       </>
     )

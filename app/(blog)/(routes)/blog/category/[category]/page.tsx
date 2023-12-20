@@ -22,7 +22,7 @@ const page = ({ params }: Props) => {
                     <LastPosts category={params.category as keyof Categories} />
                 </Suspense>
             </div>
-            <AllPosts />
+            <AllPosts category={params.category as keyof Categories} />
         </>
     )
 }

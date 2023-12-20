@@ -1,9 +1,13 @@
 import { blog } from "@/api/blog"
 import PostCard from "./post-card"
 import Controller from "./controller"
+import { Post } from "@/types/post"
 
-const AllPosts = async() => {
-    const { count, data, next } = await blog.getAll()
+type Props = {
+    category?: Post['category']
+}
+const AllPosts = async({ category }: Props) => {
+    const { count, data, next } = await blog.getAll(category)
     return (
         <div className="w-full max-w-7xl px-6 mx-auto">
             <div className="w-full py-12">

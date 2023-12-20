@@ -2,10 +2,10 @@ import { blog } from '@/api/blog'
 import GridItem from '@/components/shared/grid/grid-item'
 import GridTemplate from '@/components/shared/grid/grid-template'
 import { CategoriesGridRatio, defaultRatio } from '@/const/categories'
-import { Categories } from '@/types/common'
+import { Post } from '@/types/post'
 
 type Props = {
-  category?: keyof Categories
+  category?: Post['category']
 }
 const LastPosts = async({ category='all' }: Props) => {
     const posts = await blog.getLast(category)
