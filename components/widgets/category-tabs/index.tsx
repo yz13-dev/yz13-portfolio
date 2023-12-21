@@ -16,20 +16,22 @@ const CategoryTabs = () => {
     },[path])
     return (
         <Tabs>
-            <TabsList className="bg-transparent p-0 rounded-none">
+            <TabsList className="bg-transparent p-0 h-8 rounded-none">
                 {
                     categories
                     .map(category => {
                         const href = category === 'all' ? '/' : `/blog/category/${category}`
+                        const isSelected = selectedTab === category
                         return (
-                            <TabsTrigger asChild value={category}
-                            key={'tab-' + category} className="relative">
+                            <TabsTrigger asChild value={category} key={'tab-' + category}
+                            className="relative h-full border border-transparent">
                                 <Link href={href}>
-                                    <span className="z-10">{ getCategoryName(category as keyof Categories) }</span>
+                                    <span className={`z-10 ${isSelected ? 'text-accent-foreground' : 'text-muted-foreground hover:text-secondary-foreground'}`}>
+                                        { getCategoryName(category as keyof Categories) }
+                                    </span>
                                     { 
-                                        selectedTab === category && 
-                                        <motion.div layoutId="category-tab"
-                                        className="w-full h-full rounded-md bg-muted absolute left-0 top-0" /> 
+                                        isSelected && 
+                                        <motion.div layoutId="category-tab" className="w-full h-full rounded-md bg-muted absolute left-0 top-0" /> 
                                     }
                                 </Link>
                             </TabsTrigger>

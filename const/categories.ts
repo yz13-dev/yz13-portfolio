@@ -20,7 +20,7 @@ const CategoriesRUS: Categories = {
     "projects": "Проекты",
     "YZ13": "YZ13",
     "updates": "Обновления",
-    "other": "Другие",
+    "other": "Другое",
 }
 
 
