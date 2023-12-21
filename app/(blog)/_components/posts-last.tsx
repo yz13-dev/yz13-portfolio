@@ -14,18 +14,25 @@ const LastPosts = async({ category='all' }: Props) => {
         <div className="w-full py-6">
           <h1 className="text-3xl font-bold">Последние посты</h1>
         </div>
-        <GridTemplate>
-          {
-            posts.map((post, index) => {
-              const ratio = category 
-              ? CategoriesGridRatio[category].split('-') 
-              : defaultRatio.split('-')
-              const span = `span ${ratio[index]} / span ${ratio[index]}`
-              return <GridItem key={post.doc_id} post={post} rowSpan={span} />
-            })
-          }
-        </GridTemplate>
-    </div>
+        {
+          posts.length === 0
+          ? <div className='w-full h-96 flex items-center justify-center'>
+            <span>Нет закрепленных постов</span>
+          </div>
+          :
+          <GridTemplate>
+            {
+              posts.map((post, index) => {
+                const ratio = category 
+                ? CategoriesGridRatio[category].split('-') 
+                : defaultRatio.split('-')
+                const span = `span ${ratio[index]} / span ${ratio[index]}`
+                return <GridItem key={post.doc_id} post={post} rowSpan={span} />
+              })
+            }
+          </GridTemplate>
+        }
+      </div>
     )
 }
 

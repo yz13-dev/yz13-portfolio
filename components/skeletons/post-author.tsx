@@ -2,9 +2,9 @@
 type Props = {
     hideName?: boolean
 }
-const PostAuthor = ({ hideName=false }: Props) => {
+const PostAuthorSkeleton = ({ hideName=false }: Props) => {
     return (
-        <div className="w-full h-9 flex items-center gap-2">
+        <div className="w-fit h-9 flex items-center gap-2">
             <div className="shrink-0 w-9 h-9 rounded-full bg-muted animate-pulse" />
             {
                 !hideName &&
@@ -17,4 +17,4 @@ const PostAuthor = ({ hideName=false }: Props) => {
     )
 }
 
-export default PostAuthor
+export default PostAuthorSkeleton

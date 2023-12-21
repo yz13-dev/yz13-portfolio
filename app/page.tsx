@@ -2,9 +2,12 @@ import { Suspense } from "react"
 import LastPostsSkeleton from "@/components/skeletons/posts-last"
 import dynamic from "next/dynamic"
 import HeaderSkeleton from "@/components/skeletons/header"
-import AllPosts from "./(blog)/_components/posts-all"
 import Footer from "@/components/shared/footer"
 import CategoryTabs from "@/components/widgets/category-tabs"
+import AllPostsSkeleton from "@/components/skeletons/posts-all"
+const AllPosts = dynamic(() => import("./(blog)/_components/posts-all"), {
+  loading: () => <AllPostsSkeleton />
+})
 const LastPosts = dynamic(() => import("./(blog)/_components/posts-last"), {
   loading: () => <LastPostsSkeleton />
 })
@@ -22,15 +25,17 @@ const Home = async () => {
             </Suspense>
           </div>
         </header>
-        <div className="px-6 max-w-6xl w-full mx-auto pt-24">
+        <div className="px-6 max-w-6xl w-full mx-auto pt-24 overflow-x-auto">
           <CategoryTabs />
         </div>
-        <div style={{ height: 'calc(100dvh - 64px)' }}>
+        <div style={{ minHeight: 'calc(100dvh - 64px)' }}>
           <Suspense fallback={<LastPostsSkeleton />}>
             <LastPosts />
           </Suspense>
         </div>
-        <AllPosts  />
+        <Suspense fallback={<AllPostsSkeleton />}>
+          <AllPosts  />
+        </Suspense>
         <Footer />
       </>
     )
