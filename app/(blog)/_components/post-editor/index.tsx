@@ -15,6 +15,7 @@ import { BiHide, BiLoaderAlt, BiShow } from "react-icons/bi"
 import GroupPostAuthors from "../post/post-author-group"
 import PostCategory from "./post-category"
 import { categories } from "@/const/categories"
+import DropZone from "@/components/shared/drop-zone"
 
 type Props = {
     preloadPost: PartialDocPost | null
@@ -118,11 +119,15 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 </PostTemplate.Side>
                 <PostTemplate.Separator />
                 <PostTemplate.Content>
-                {
-                    preview
-                    ? <Markdown pageMode>{content || '### Введите содержание поста'}</Markdown>
-                    : <Textarea value={content} className="w-full" onChange={ e => setContent(e.target.value) } placeholder="Введите содержание поста"  />
-                }
+                    <div className="relative w-full aspect-video border rounded-lg mb-4 flex items-center justify-center">
+                        <span className="text-sm text-muted-foreground text-center">Загрузите обложку для поста</span>
+                        <div className="absolute w-full h-full"><DropZone /></div>
+                    </div>
+                    {
+                        preview
+                        ? <Markdown pageMode>{content || '### Введите содержание поста'}</Markdown>
+                        : <Textarea value={content} className="w-full" onChange={ e => setContent(e.target.value) } placeholder="Введите содержание поста"  />
+                    }
                 </PostTemplate.Content>
             </PostTemplate.Body>
         </PostTemplate>
