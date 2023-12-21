@@ -1,5 +1,6 @@
 import Footer from '@/components/shared/footer'
 import HeaderSkeleton from '@/components/skeletons/header'
+import CategoryTemplate from '@/components/templates/category/category.template'
 import dynamic from 'next/dynamic'
 import { ReactNode, Suspense } from 'react'
 const Header = dynamic(() => import("@/components/widgets/header"), {
@@ -18,9 +19,9 @@ const layout = ({ children }: Props) => {
                     </Suspense>
                 </div>
             </header>
-            <div style={{ minHeight: 'calc(100dvh - 64px)' }}>
+            <CategoryTemplate>
                 { children }
-            </div>
+            </CategoryTemplate>
             <Footer />
         </>
     )

@@ -12,7 +12,7 @@ const LastPosts = async({ category='all' }: Props) => {
     return (
       <div className="w-full max-w-6xl p-6 mx-auto">
         <div className="w-full py-6">
-          <h1 className="text-3xl font-bold">Последние посты</h1>
+          <h1 className="lg:text-4xl text-2xl font-bold">Закрепленные посты</h1>
         </div>
         {
           posts.length === 0

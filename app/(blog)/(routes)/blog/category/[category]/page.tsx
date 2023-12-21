@@ -4,6 +4,7 @@ import { Categories } from "@/types/common"
 import dynamic from "next/dynamic"
 import { Suspense } from "react"
 import AllPostsSkeleton from "@/components/skeletons/posts-all"
+import CategoryTemplate from "@/components/templates/category/category.template"
 const AllPosts = dynamic(() => import("@/app/(blog)/_components/posts-all"), {
     loading: () => <AllPostsSkeleton />
 })
@@ -20,12 +21,16 @@ const page = ({ params }: Props) => {
     if (!(categories.includes(params.category))) return null
     return (
         <>
-            <Suspense fallback={<LastPostsSkeleton />}>
-                <LastPosts category={params.category as keyof Categories} />
-            </Suspense>
-            <Suspense fallback={<AllPostsSkeleton />}>
-                <AllPosts category={params.category as keyof Categories} />
-            </Suspense>
+            <CategoryTemplate.PinnedPosts>
+                <Suspense fallback={<LastPostsSkeleton />}>
+                    <LastPosts category={params.category as keyof Categories} />
+                </Suspense>
+            </CategoryTemplate.PinnedPosts>
+            <CategoryTemplate.AllPosts>
+                <Suspense fallback={<AllPostsSkeleton />}>
+                    <AllPosts category={params.category as keyof Categories} />
+                </Suspense>
+            </CategoryTemplate.AllPosts>
         </>
     )
 }

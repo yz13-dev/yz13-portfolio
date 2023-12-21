@@ -28,7 +28,7 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
                 }
                 {
                     post.category &&
-                    <span className="w-fit h-fit  px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">{getCategoryName(post.category as keyof Categories)}</span>
+                    <span className="w-fit h-fit px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">{getCategoryName(post.category as keyof Categories)}</span>
                 }
             </div>
             <div className="relative w-full h-full rounded-md flex items-center justify-center">
@@ -41,7 +41,7 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
             <div className="absolute top-0 left-0 w-full h-full transition-opacity duration-500 rounded-md bg-gradient-to-t from-background to-transparent group-hover:opacity-50" />
             <div className="absolute bottom-0 left-0 z-10 flex flex-col w-full gap-2 p-4 h-fit">
                 <h2 className="text-xl font-semibold text-accent-foreground">{post.name}</h2>
-                { post.description && <span className="text-base text-muted-foreground">{post.description}</span> }
+                { post.description && <span className="lg:inline hidden text-base text-muted-foreground">{post.description}</span> }
                 <div className="flex items-center justify-between w-full h-fit">
                     <GroupPostAuthorsMini authors={post.authorsId} />
                     <span className="text-sm capitalize text-muted-foreground">{ DateTime.fromSeconds(post.createdAt).setLocale('ru').toFormat( 'dd MMMM yyyy' ) }</span>

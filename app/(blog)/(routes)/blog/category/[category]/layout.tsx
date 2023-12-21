@@ -1,4 +1,4 @@
-import CategoryTabs from "@/components/widgets/category-tabs"
+import CategoryTemplate from "@/components/templates/category/category.template"
 import { ReactNode } from "react"
 
 type Props = {
@@ -7,9 +7,7 @@ type Props = {
 const layout = ({ children }: Props) => {
     return (
         <>
-            <div className=" px-6 max-w-6xl w-full mx-auto pt-24">
-                <CategoryTabs />
-            </div>
+            <CategoryTemplate.Header />
             { children }
         </>
     )

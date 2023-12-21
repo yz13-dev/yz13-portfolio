@@ -3,8 +3,8 @@ import LastPostsSkeleton from "@/components/skeletons/posts-last"
 import dynamic from "next/dynamic"
 import HeaderSkeleton from "@/components/skeletons/header"
 import Footer from "@/components/shared/footer"
-import CategoryTabs from "@/components/widgets/category-tabs"
 import AllPostsSkeleton from "@/components/skeletons/posts-all"
+import CategoryTemplate from "@/components/templates/category/category.template"
 const AllPosts = dynamic(() => import("./(blog)/_components/posts-all"), {
   loading: () => <AllPostsSkeleton />
 })
@@ -25,17 +25,19 @@ const Home = async () => {
             </Suspense>
           </div>
         </header>
-        <div className="px-6 max-w-6xl w-full mx-auto pt-24 overflow-x-auto">
-          <CategoryTabs />
-        </div>
-        <div style={{ minHeight: 'calc(100dvh - 64px)' }}>
-          <Suspense fallback={<LastPostsSkeleton />}>
-            <LastPosts />
-          </Suspense>
-        </div>
-        <Suspense fallback={<AllPostsSkeleton />}>
-          <AllPosts  />
-        </Suspense>
+        <CategoryTemplate>
+          <CategoryTemplate.Header />
+          <CategoryTemplate.PinnedPosts>
+            <Suspense fallback={<LastPostsSkeleton />}>
+              <LastPosts />
+            </Suspense>
+          </CategoryTemplate.PinnedPosts>
+          <CategoryTemplate.AllPosts>
+            <Suspense fallback={<AllPostsSkeleton />}>
+              <AllPosts  />
+            </Suspense>
+          </CategoryTemplate.AllPosts>
+        </CategoryTemplate>
         <Footer />
       </>
     )
