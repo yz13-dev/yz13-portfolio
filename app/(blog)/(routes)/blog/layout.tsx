@@ -18,7 +18,7 @@ const layout = ({ children }: Props) => {
                     </Suspense>
                 </div>
             </header>
-            <div style={{ minHeight: 'calc(100dvh - 64px)' }} className='w-full h-fit'>
+            <div style={{ minHeight: 'calc(100dvh - 64px)' }}>
                 { children }
             </div>
             <Footer />

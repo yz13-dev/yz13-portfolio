@@ -52,6 +52,7 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
         if (user) {
             setLoading(true)
             const post: Post = {
+                draft: false,
                 name: name,
                 authorsId: [user.uid],
                 createdAt: DateTime.now().toSeconds(),

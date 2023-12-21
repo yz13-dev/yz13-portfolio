@@ -10,8 +10,8 @@ export type Post = {
     updatedAt?: number
     content: string // used in markdown
     thumbnail?: string // image .png .jpg .webp
-    tags?: string[]
     pinned?: boolean
+    draft: boolean
 }
 
 export type PartialDocPost = { doc_id?: string } & Post

@@ -21,7 +21,7 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
     return (
         <Link style={{ gridRow: rowSpan }}
         href={`/blog/${post.doc_id}`} className={className}>
-            <div className="w-fit gap-2 h-fit z-20 flex row-spa items-center justify-end top-3 right-3 absolute">
+            <div className="w-fit gap-2 h-fit z-20 flex items-center justify-end top-3 right-3 absolute">
                 {
                     isRecent &&
                     <span className="w-fit h-fit  px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">Новое!</span>

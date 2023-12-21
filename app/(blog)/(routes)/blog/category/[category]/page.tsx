@@ -3,7 +3,10 @@ import { categories } from "@/const/categories"
 import { Categories } from "@/types/common"
 import dynamic from "next/dynamic"
 import { Suspense } from "react"
-import AllPosts from "@/app/(blog)/_components/posts-all"
+import AllPostsSkeleton from "@/components/skeletons/posts-all"
+const AllPosts = dynamic(() => import("@/app/(blog)/_components/posts-all"), {
+    loading: () => <AllPostsSkeleton />
+})
 const LastPosts = dynamic(() => import("@/app/(blog)/_components/posts-last"), {
     loading: () => <LastPostsSkeleton />
 })
@@ -20,7 +23,9 @@ const page = ({ params }: Props) => {
             <Suspense fallback={<LastPostsSkeleton />}>
                 <LastPosts category={params.category as keyof Categories} />
             </Suspense>
-            <AllPosts category={params.category as keyof Categories} />
+            <Suspense fallback={<AllPostsSkeleton />}>
+                <AllPosts category={params.category as keyof Categories} />
+            </Suspense>
         </>
     )
 }
