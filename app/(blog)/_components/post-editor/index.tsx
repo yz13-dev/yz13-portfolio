@@ -15,7 +15,7 @@ import { BiHide, BiLoaderAlt, BiShow } from "react-icons/bi"
 import GroupPostAuthors from "../post/post-author-group"
 import PostCategory from "./post-category"
 import { categories } from "@/const/categories"
-import DropZone from "@/components/shared/drop-zone"
+import PostThumbnail from "./post-thumbnail"
 
 type Props = {
     preloadPost: PartialDocPost | null
@@ -28,6 +28,7 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
     const [description, setDescription] = useState<string>(post && post.description ? post.description : '')
     const [preview, setPreview] = useState<boolean>(false)
     const [content, setContent] = useState<string>(post ? post.content : '')
+    const [thumbnail, setThumbnail] = useState<string | undefined>(post && post.thumbnail ? post.thumbnail : undefined)
     const [category, setCategory] = useState<Post['category']>(post && post.category ? post.category : categories[categories.length - 3] as Post['category'])
     const [loading, setLoading] = useState<boolean>(false)
     const authors: string[] = useMemo(() => {
@@ -59,8 +60,10 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 createdAt: DateTime.now().toSeconds(),
                 description: description,
                 content: content,
-                category: category
+                category: category,
+                thumbnail: thumbnail
             }
+            if (post.thumbnail === undefined) delete post.thumbnail
             if (preloadPost) {
                 const targetPath = providedPostId
                 delete preloadPost.doc_id
@@ -71,6 +74,11 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                     createdAt: preloadPost.createdAt,
                     updatedAt: DateTime.now().toSeconds()
                 }
+                if (!thumbnail) {
+                    delete post.thumbnail
+                    delete preloadPost.thumbnail
+                    delete postForUpdate.thumbnail
+                }
                 const isUpdated = await blog.updateOne(postId, postForUpdate)
                 if (isUpdated) {
                     setLoading(false)
@@ -79,6 +87,9 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 } else setLoading(false)
 
             } else {
+                if (!thumbnail) {
+                    delete post.thumbnail
+                }
                 const createdPost = await blog.addOne(postId, post)
                 if (createdPost) {
                     setLoading(false)
@@ -119,10 +130,8 @@ const PostForm = ({ preloadPost, postId: providedPostId }: Props) => {
                 </PostTemplate.Side>
                 <PostTemplate.Separator />
                 <PostTemplate.Content>
-                    <div className="relative w-full aspect-video border rounded-lg mb-4 flex items-center justify-center">
-                        <span className="text-sm text-muted-foreground text-center">Загрузите обложку для поста</span>
-                        <div className="absolute w-full h-full"><DropZone /></div>
-                    </div>
+                    <PostThumbnail postId={postId} disabled={loading || !name || !validPostName || !user}
+                    setThumbnail={setThumbnail} thumbnail={thumbnail} />
                     {
                         preview
                         ? <Markdown pageMode>{content || '### Введите содержание поста'}</Markdown>

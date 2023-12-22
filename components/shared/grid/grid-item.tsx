@@ -1,6 +1,7 @@
 import { file } from "@/api/file"
 import GroupPostAuthorsMini from "@/app/(blog)/_components/post/post-author-group-mini"
 import { getCategoryName } from "@/const/categories"
+import { cdn } from "@/helpers/cdn"
 import { Categories } from "@/types/common"
 import { DocPost } from "@/types/post"
 import { DateTime } from "luxon"
@@ -13,7 +14,7 @@ type Props = {
     rowSpan?: string
 }
 const GridItem = async({ post, colSpan, rowSpan }: Props) => {
-    const thumbnail = await file.static.get('placeholders/article-thumbnail-placeholder.jpg') 
+    const thumbnail = post.thumbnail ? cdn(post.thumbnail) :  await file.static.get('placeholders/article-thumbnail-placeholder.jpg') 
     const now = DateTime.now()
     const postCreatedAtDate = DateTime.fromSeconds(post.createdAt)
     const isRecent = now.day === postCreatedAtDate.day && now.month === postCreatedAtDate.month && now.year === postCreatedAtDate.year
