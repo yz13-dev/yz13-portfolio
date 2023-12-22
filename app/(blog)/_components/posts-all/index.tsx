@@ -14,7 +14,7 @@ const AllPosts = async({ category }: Props) => {
                 <h1 className="lg:text-4xl text-2xl font-bold">Все посты</h1>
             </div>
             {
-                data.length === 0
+                data && data.length === 0
                 ? <div className='w-full h-64 flex items-center justify-center'>
                     <span>Нет опубликованных постов</span>
                 </div>

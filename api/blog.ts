@@ -4,7 +4,7 @@ import { Categories, ChunkResponse } from "@/types/common"
 import { DocPost, Post } from "@/types/post"
 
 export const blog = {
-    getLast: async(category?: keyof Categories) => {
+    getLast: async(category?: keyof Categories): Promise<DocPost[]> => {
         try {
             const headers = new Headers()
             const authHeader = authorizationHeader()
@@ -12,12 +12,13 @@ export const blog = {
             const url = `${api_host}/portfolio/last${ category ? `/${category}` : '' }?limit=5`
             const res = await fetch(url, { method: "GET", headers: headers, cache: 'no-store' })
             if (res.ok) {
-                const posts = await res.json() as DocPost[]
+                const json = await res.json()
+                if (json?.error === true) throw new Error(json?.text)
+                const posts = json as DocPost[]
                 return posts
-            }
-            return []
+            } else return []
         } catch(e) {
-            console.log(e)
+            console.warn(e)
             return []
         }
     },
