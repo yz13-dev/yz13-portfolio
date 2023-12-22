@@ -12,6 +12,7 @@ import PostTemplate from "@/components/templates/post/post.template"
 import { getCategoryName } from "@/const/categories"
 import { Categories } from "@/types/common"
 import NewPostBadge from "@/components/shared/new-post-badge"
+import CategoryBadge from "@/components/shared/category-badge"
 
 type Props = {
     postId: string
@@ -37,7 +38,7 @@ const PostPage = async({ postId }: Props) => {
                             }
                             {
                                 post.category &&
-                                <span className="w-fit h-fit px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">{getCategoryName(post.category)}</span>
+                                <CategoryBadge category={post.category} asLink />
                             }
                             <span className='capitalize text-sm text-muted-foreground'>
                                 { DateTime.fromSeconds(post.createdAt).setLocale('ru').toFormat(' EEEE, dd MMMM yyyy ') }
