@@ -1,8 +1,7 @@
 import CategoryTemplate from "@/components/templates/category/category.template"
-import { ReactNode } from "react"
 
 type Props = {
-    children: ReactNode
+    children: JSX.Element
 }
 const layout = ({ children }: Props) => {
     return (

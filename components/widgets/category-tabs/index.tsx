@@ -31,7 +31,8 @@ const CategoryTabs = () => {
                                     </span>
                                     { 
                                         isSelected && 
-                                        <motion.div layoutId="category-tab" className="w-full h-full rounded-md bg-muted absolute left-0 top-0" /> 
+                                        <motion.div layoutId="category-tab" 
+                                        className="w-full h-full rounded-md bg-muted absolute left-0 top-0" /> 
                                     }
                                 </Link>
                             </TabsTrigger>
