@@ -11,26 +11,22 @@ import { Markdown } from "@/components/shared/markdown"
 import PostTemplate from "@/components/templates/post/post.template"
 import { getCategoryName } from "@/const/categories"
 import { Categories } from "@/types/common"
+import NewPostBadge from "@/components/shared/new-post-badge"
+import CategoryBadge from "@/components/shared/category-badge"
 
 type Props = {
     postId: string
 }
 const PostPage = async({ postId }: Props) => {
     const post = await blog.getById(postId)
-    const grid = await file.static.get('grids/article-grid.svg')
+    const now = DateTime.now()
+    const postCreatedAtDate = post ? DateTime.fromSeconds(post.createdAt) : null
+    const isRecent = post && postCreatedAtDate ? now.day === postCreatedAtDate.day && now.month === postCreatedAtDate.month && now.year === postCreatedAtDate.year : false
     if (!post) return null
     return (
-        // max-w-7xl
         <PostTemplate>
-            {/* bg-gradient-to-b from-muted to-transparent */}
             <PostTemplate.HeaderWrapper>
-                { 
-                    grid && 
-                    <div className='z-[-1] w-full h-full absolute top-0 left-0'>
-                        <div className="w-full h-full z-0 bg-gradient-to-t from-background via-transparent to-background" />
-                        <Image src={grid} className='z-[-1] object-cover' fill alt='grid' /> 
-                    </div>
-                }
+                {/* image */}
                 <PostTemplate.Header>
                     <Button variant='link' asChild className='px-0 text-muted-foreground hover:text-accent-foreground hover:no-underline'>
                         <Link href='/' className='flex items-center gap-2'><BiLeftArrowAlt />Вернуться на главную</Link>
@@ -38,8 +34,11 @@ const PostPage = async({ postId }: Props) => {
                     <div className="flex flex-col w-full gap-4 py-4">
                         <div className="w-fit h-fit flex items-center gap-2">
                             {
+                                isRecent && <NewPostBadge />
+                            }
+                            {
                                 post.category &&
-                                <span className="w-fit h-fit px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">{getCategoryName(post.category as keyof Categories)}</span>
+                                <CategoryBadge category={post.category} asLink />
                             }
                             <span className='capitalize text-sm text-muted-foreground'>
                                 { DateTime.fromSeconds(post.createdAt).setLocale('ru').toFormat(' EEEE, dd MMMM yyyy ') }
