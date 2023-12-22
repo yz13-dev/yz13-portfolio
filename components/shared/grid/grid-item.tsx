@@ -7,6 +7,7 @@ import { DocPost } from "@/types/post"
 import { DateTime } from "luxon"
 import Image from "next/image"
 import Link from "next/link"
+import NewPostBadge from "../new-post-badge"
 
 type Props = {
     post: DocPost
@@ -25,7 +26,7 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
             <div className="w-fit gap-2 h-fit z-20 flex items-center justify-end top-3 right-3 absolute">
                 {
                     isRecent &&
-                    <span className="w-fit h-fit  px-2.5 py-1 rounded-lg border bg-background text-xs text-muted-foreground">Новое!</span>
+                    <NewPostBadge />
                 }
                 {
                     post.category &&
