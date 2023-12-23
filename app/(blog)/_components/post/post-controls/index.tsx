@@ -1,11 +1,11 @@
 'use client'
 import { blog } from '@/api/blog'
 import { Button } from '@/components/ui/button'
+import { useAuthState } from '@/hooks/useAuthState'
 import { DocPost, PartialDocPost } from '@/types/post'
 import { auth } from '@/utils/app'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth'
 import { BiLoaderAlt, BiPencil, BiPin, BiTrashAlt } from 'react-icons/bi'
 
 type Props = {

@@ -2,10 +2,16 @@
 const nextConfig = {
     compress: true,
     optimizeFonts: true,
+    modularizeImports: {
+        "react-icons": {
+            transform: "react-icons/{{member}}",
+            preventFullImport: true
+        }
+    },
     experimental: {
         optimizeServerReact: true,
         serverMinification: true,
-        optimizePackageImports: [ 'react-icons', 'react', 'next' ],
+        optimizePackageImports: [ 'react-icons', 'react', 'next', 'framer-motion', 'luxon' ],
         optimizeCss: true,
         gzipSize: true
     },

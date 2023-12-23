@@ -10,12 +10,12 @@ import { auth } from "@/utils/app"
 import { DateTime } from "luxon"
 import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
 import { BiHide, BiLoaderAlt, BiShow } from "react-icons/bi"
 import GroupPostAuthors from "../post/post-author-group"
 import PostCategory from "./post-category"
 import { categories } from "@/const/categories"
 import PostThumbnail from "./post-thumbnail"
+import { useAuthState } from "@/hooks/useAuthState"
 
 type Props = {
     preloadPost: PartialDocPost | null

@@ -2,12 +2,12 @@ import Footer from '@/components/shared/footer'
 import HeaderSkeleton from '@/components/skeletons/header'
 import CategoryTemplate from '@/components/templates/category/category.template'
 import dynamic from 'next/dynamic'
-import { ReactNode, Suspense } from 'react'
+import { Suspense } from 'react'
 const Header = dynamic(() => import("@/components/widgets/header"), {
     loading: () => <HeaderSkeleton />
 })
 type Props = {
-    children: ReactNode
+    children: JSX.Element[]
 }
 const layout = ({ children }: Props) => {
     return (

@@ -15,14 +15,14 @@ const LastPosts = async({ category='all' }: Props) => {
           <h1 className="lg:text-4xl text-2xl font-bold">Закрепленные посты</h1>
         </div>
         {
-          posts.length === 0
+          posts && posts.length === 0
           ? <div className='w-full h-96 flex items-center justify-center'>
             <span>Нет закрепленных постов</span>
           </div>
           :
           <GridTemplate>
             {
-              posts.map((post, index) => {
+              posts && posts.map((post, index) => {
                 const ratio = category 
                 ? CategoriesGridRatio[category].split('-') 
                 : defaultRatio.split('-')

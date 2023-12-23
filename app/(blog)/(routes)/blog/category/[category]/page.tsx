@@ -1,10 +1,11 @@
-import LastPostsSkeleton from "@/components/skeletons/posts-last"
-import { categories } from "@/const/categories"
-import { Categories } from "@/types/common"
 import dynamic from "next/dynamic"
 import { Suspense } from "react"
+import type { Categories } from "@/types/common"
 import AllPostsSkeleton from "@/components/skeletons/posts-all"
+import LastPostsSkeleton from "@/components/skeletons/posts-last"
+import { categories } from "@/const/categories"
 import CategoryTemplate from "@/components/templates/category/category.template"
+import Loading from "./loading"
 const AllPosts = dynamic(() => import("@/app/(blog)/_components/posts-all"), {
     loading: () => <AllPostsSkeleton />
 })
@@ -20,18 +21,18 @@ type Props =  {
 const page = ({ params }: Props) => {
     if (!(categories.includes(params.category))) return null
     return (
-        <>
-            <CategoryTemplate.PinnedPosts>
-                <Suspense fallback={<LastPostsSkeleton />}>
-                    <LastPosts category={params.category as keyof Categories} />
-                </Suspense>
-            </CategoryTemplate.PinnedPosts>
-            <CategoryTemplate.AllPosts>
-                <Suspense fallback={<AllPostsSkeleton />}>
-                    <AllPosts category={params.category as keyof Categories} />
-                </Suspense>
-            </CategoryTemplate.AllPosts>
-        </>
+        <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LastPostsSkeleton />}>
+                <CategoryTemplate.PinnedPosts>
+                        <LastPosts category={params.category as keyof Categories} />
+                </CategoryTemplate.PinnedPosts>
+            </Suspense>
+            <Suspense fallback={<AllPostsSkeleton />}>
+                <CategoryTemplate.AllPosts>
+                        <AllPosts category={params.category as keyof Categories} />
+                </CategoryTemplate.AllPosts>
+            </Suspense>
+        </Suspense>
     )
 }
 

@@ -1,14 +1,17 @@
 import { file } from "@/api/file"
-import GroupPostAuthorsMini from "@/app/(blog)/_components/post/post-author-group-mini"
-import { getCategoryName } from "@/const/categories"
-import { cdn } from "@/helpers/cdn"
-import { Categories } from "@/types/common"
-import { DocPost } from "@/types/post"
-import { DateTime } from "luxon"
+import dynamic from "next/dynamic"
 import Image from "next/image"
+import { cdn } from "@/helpers/cdn"
 import Link from "next/link"
+import type { DocPost } from "@/types/post"
+import { DateTime } from "luxon"
 import NewPostBadge from "../new-post-badge"
 import CategoryBadge from "../category-badge"
+import GroupAuthorsMiniSkeleton from "@/components/skeletons/group-authors-mini"
+import { Suspense } from "react"
+const GroupPostAuthorsMini = dynamic(() => import("@/app/(blog)/_components/post/post-author-group-mini"), {
+    loading: () => <GroupAuthorsMiniSkeleton />
+})
 
 type Props = {
     post: DocPost
@@ -20,7 +23,7 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
     const now = DateTime.now()
     const postCreatedAtDate = DateTime.fromSeconds(post.createdAt)
     const isRecent = now.day === postCreatedAtDate.day && now.month === postCreatedAtDate.month && now.year === postCreatedAtDate.year
-    const className = `relative w-full h-full md:min-h-full min-h-[24rem] shrink-0 overflow-hidden relative ${colSpan || ''} cursor-pointer border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
+    const className = `relative w-full md:h-full h-[24rem] shrink-0 overflow-hidden relative ${colSpan || ''} cursor-pointer border hover:border-muted-foreground transition-colors duration-500 rounded-lg group`
     return (
         <Link style={{ gridRow: rowSpan }}
         href={`/blog/${post.doc_id}`} className={className}>
@@ -38,7 +41,7 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
                 { 
                     thumbnail && 
                     <Image src={thumbnail} fill alt='article thumbnail'
-                    className="object-center group-hover:scale-110 duration-500 transition-transform object-cover"/>
+                    className="object-center object-cover"/>
                 }
             </div>
             <div className="absolute top-0 left-0 w-full h-full transition-opacity duration-500 rounded-md bg-gradient-to-t from-background to-transparent group-hover:opacity-50" />
@@ -46,7 +49,9 @@ const GridItem = async({ post, colSpan, rowSpan }: Props) => {
                 <h2 className="text-xl font-semibold text-accent-foreground">{post.name}</h2>
                 { post.description && <span className="lg:inline hidden text-base text-muted-foreground">{post.description}</span> }
                 <div className="flex items-center justify-between w-full h-fit">
-                    <GroupPostAuthorsMini authors={post.authorsId} />
+                    <Suspense fallback={<GroupAuthorsMiniSkeleton />}>
+                        <GroupPostAuthorsMini authors={post.authorsId} />
+                    </Suspense>
                     <span className="text-sm capitalize text-muted-foreground">{ DateTime.fromSeconds(post.createdAt).setLocale('ru').toFormat( 'dd MMMM yyyy' ) }</span>
                 </div>
             </div>

@@ -1,11 +1,11 @@
-import { ReactNode } from 'react'
-import CategoryHeader from './category-header'
-import CategoryPinnedPosts from './category-pinned-posts'
-import CategoryAllPosts from './category-all-posts'
+import dynamic from 'next/dynamic'
+const CategoryHeader = dynamic(() => import('./category-header')) 
+const CategoryPinnedPosts = dynamic(() => import('./category-pinned-posts'))
+const CategoryAllPosts = dynamic(() => import('./category-all-posts'))
 
 
 type Props = {
-    children?: ReactNode
+    children?: JSX.Element[]
 }
 type Extensions = {
     Header: typeof CategoryHeader
