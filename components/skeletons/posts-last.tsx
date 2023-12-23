@@ -2,7 +2,7 @@ import GridTemplate from "../shared/grid/grid-template"
 
 const LastPostsSkeleton = () => {
     return (
-      <div className="w-full max-w-6xl px-6 mx-auto">
+      <div className="w-full max-w-6xl p-6 mx-auto">
         <div className="w-full py-6">
             <div className="w-1/2 rounded-md h-9 bg-muted animate-pulse" />
         </div>

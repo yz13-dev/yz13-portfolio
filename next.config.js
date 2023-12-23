@@ -11,7 +11,7 @@ const nextConfig = {
     experimental: {
         optimizeServerReact: true,
         serverMinification: true,
-        optimizePackageImports: [ 'react-icons', 'react', 'next', 'framer-motion' ],
+        optimizePackageImports: [ 'react-icons', 'react', 'next', 'framer-motion', 'luxon' ],
         optimizeCss: true,
         gzipSize: true
     },

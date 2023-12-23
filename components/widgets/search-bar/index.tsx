@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { BiLoaderAlt, BiSearch } from 'react-icons/bi'
 import SearchResult from './search-result'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DocPost } from '@/types/post'
 import { useDebounceEffect } from 'ahooks'
 import { blog } from '@/api/blog'
@@ -21,6 +21,9 @@ const SearchBar = () => {
         setOpen(true)
         setLoading(false)
     }
+    useEffect(() => {
+        if (!open && result.length > 0) setResult([])
+    },[open])
     useDebounceEffect(() => {
         if (debouncedQuery !== query && query !== '') {
             fetchResults(query)

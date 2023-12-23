@@ -1,9 +1,9 @@
 import { Suspense } from "react"
-import LastPostsSkeleton from "@/components/skeletons/posts-last"
 import dynamic from "next/dynamic"
+import LastPostsSkeleton from "@/components/skeletons/posts-last"
+import AllPostsSkeleton from "@/components/skeletons/posts-all"
 import HeaderSkeleton from "@/components/skeletons/header"
 import Footer from "@/components/shared/footer"
-import AllPostsSkeleton from "@/components/skeletons/posts-all"
 import CategoryTemplate from "@/components/templates/category/category.template"
 const AllPosts = dynamic(() => import("./(blog)/_components/posts-all"), {
   loading: () => <AllPostsSkeleton />
