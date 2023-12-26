@@ -1,3 +1,4 @@
+import TravelWatcher from '@/components/entities/travel/watcher'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Geologica } from 'next/font/google'
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: JSX.Element }) {
     return (
       <html lang="en" className={`${first_font.className} ${first_font.variable}`}>
+        <TravelWatcher />
         <body className='min-h-screen dark'>
           {children}
         </body>
