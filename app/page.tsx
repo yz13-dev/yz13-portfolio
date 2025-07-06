@@ -12,7 +12,7 @@ export default function Home() {
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Logo size={48} type="icon" />
-            <h1 className="text-4xl font-semibold">YZ13</h1>
+            <h1 className="text-4xl font-pixel font-medium">YZ13</h1>
           </div>
 
           <p className="block text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
