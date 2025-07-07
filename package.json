@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@yz13/api": "^0.0.0",
     "@yz13/ui": "^0.1.5",
+    "babel-plugin-react-compiler": "^19.1.0-rc.2",
     "lucide-react": "^0.525.0",
     "motion": "^12.23.0",
     "next": "15.3.5",

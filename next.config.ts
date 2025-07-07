@@ -1,11 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["@yz13/ui"],
   compress: true,
   experimental: {
-    inlineCss: true
-  }
+    inlineCss: true,
+    reactCompiler: true,
+    optimizeCss: true,
+    optimizeServerReact: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
