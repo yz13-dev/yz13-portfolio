@@ -1,4 +1,5 @@
 import { Typewriter } from "@/components/text-writter";
+import { availableForWork } from "@/flags/flags";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import type { ReactNode } from "react";
@@ -35,12 +36,14 @@ const Availability = async ({
   className = "",
   size = "default"
 }: AvailabilityProps) => {
-  const available = false;
+  const available = await availableForWork()
+
   const status: "available" | "unavailable" = available
     ? "available"
     : "unavailable";
 
   const text = status === "available" ? availableTexts : unavailableTexts;
+
   return (
     <div
       data-size={size}

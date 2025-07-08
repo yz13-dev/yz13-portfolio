@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
     optimizeServerReact: true,
   },
+  output: 'standalone',
   images: {
     remotePatterns: [
       {

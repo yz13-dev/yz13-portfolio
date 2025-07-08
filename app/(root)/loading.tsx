@@ -1,16 +1,15 @@
-import Availability from "@/components/availability";
-import Background from "@/components/background";
+import { AvailabilitySkeleton } from "@/components/availability";
 import { Logo } from "@/components/logo";
-import Projects, { ProjectsSkeleton } from "@/components/projects";
+import { ProjectsSkeleton } from "@/components/projects";
+import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
+import { PhoneCallIcon, SendIcon } from "lucide-react";
 import Link from "next/link";
-import { Suspense } from "react";
-import CallToAction from "./components/call-to-action";
 
-export default function Home() {
+
+export default function () {
   return (
     <>
-      <Background />
       <main className="flex flex-col h-[calc(100dvh-78px)] max-w-md mx-auto *:max-w-sm px-8 pt-8 gap-[32px] justify-center items-center sm:items-start">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
@@ -37,9 +36,7 @@ export default function Home() {
 
           <section className="space-y-3">
             <span className="block text-muted-foreground font-medium">Проекты</span>
-            <Suspense fallback={<ProjectsSkeleton />}>
-              <Projects />
-            </Suspense>
+            <ProjectsSkeleton />
           </section>
         </div>
 
@@ -55,12 +52,26 @@ export default function Home() {
         </div>
 
         <div className="flex gap-4 sm:mt-0 mt-auto items-center flex-col sm:*:w-fit *:w-full sm:flex-row w-full">
-          <CallToAction />
+          <Button
+            disabled
+            variant="default"
+            size="lg"
+          >
+            <PhoneCallIcon />
+            Запланировать видеозвонок
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+          >
+            <SendIcon />
+            Чат
+          </Button>
         </div>
       </main>
       <footer className="absolute bottom-0 p-6 left-0 right-0 mx-auto flex flex-col items-center gap-6 max-w-md">
-        <Availability className="bg-background/40" />
+        <AvailabilitySkeleton />
       </footer>
     </>
-  );
+  )
 }
