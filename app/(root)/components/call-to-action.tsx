@@ -8,7 +8,7 @@ import Link from "next/link"
 export default async function () {
   const available = await availableForWork()
 
-  const chat = "https://t.me/yz13-dev"
+  const chat = "https://t.me/yz13_dev"
   return (
     <>
       <Button

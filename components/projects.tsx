@@ -1,3 +1,4 @@
+import { getV1Store } from "@yz13/api";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
@@ -14,7 +15,7 @@ export const ProjectsSkeleton = () => {
 
 export default async function () {
 
-  const projects: any[] = []; // await getV1Store();
+  const projects = await getV1Store();
 
 
   if (!projects.length) {
