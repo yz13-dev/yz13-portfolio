@@ -55,7 +55,7 @@ jobs:
             --folder-id $FOLDER_ID \
             --concurrency 5 \
             --zone-instances-limit 5 \
-            --zone-requests-limit 5 /
+            --zone-requests-limit 5 \
             --memory 512MB \
             --cores 1 \
             --core-fraction 100 \
