@@ -1,12 +1,12 @@
 import "@/styles/globals.css";
 import { cn } from "@yz13/ui/utils";
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Inter, Pixelify_Sans } from "next/font/google";
+import { Inter, JetBrains_Mono, Pixelify_Sans } from "next/font/google";
 
 const PIXEL = Pixelify_Sans({
+  weight: "variable",
   subsets: ["latin", "cyrillic"],
   display: "swap",
-  weight: "variable",
   variable: "--font-pixel",
 });
 
@@ -18,9 +18,9 @@ const SANS = Inter({
   variable: "--font-sans",
 });
 
-const MONO = Geist_Mono({
+const MONO = JetBrains_Mono({
   weight: "variable",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   display: "swap",
   variable: "--font-mono",
 });

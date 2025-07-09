@@ -6,6 +6,7 @@ import { Separator } from "@yz13/ui/separator";
 import Link from "next/link";
 import { Suspense } from "react";
 import CallToAction from "./components/call-to-action";
+import InfoList, { InfoListSkeleton } from "./components/info-list";
 
 export default function Home() {
   return (
@@ -23,14 +24,9 @@ export default function Home() {
 
         <div className="space-y-6 w-full">
           <section>
-            <ol className="list-inside list-decimal text-sm/6 text-left">
-              <li className="mb-2 tracking-[-.01em]">
-                Фронтенд разработчик
-              </li>
-              <li className="tracking-[-.01em]">
-                React, TypeScript, Tailwind CSS
-              </li>
-            </ol>
+            <Suspense fallback={<InfoListSkeleton />}>
+              <InfoList />
+            </Suspense>
           </section>
 
           <Separator />
