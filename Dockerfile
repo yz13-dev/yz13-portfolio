@@ -17,8 +17,10 @@ COPY . .
 FROM base as production
 
 ARG EDGE_CONFIG
+ARG SUPABASE_URL
 
 ENV EDGE_CONFIG=${EDGE_CONFIG}
+ENV SUPABASE_URL=${SUPABASE_URL}
 
 # Собираем приложение
 RUN bun run build
@@ -41,4 +43,4 @@ ENV NODE_ENV=production
 ENV PORT=8080
 
 # Запускаем приложение
-CMD ["bun", "server.js"] 
+CMD ["bun", "server.js"]

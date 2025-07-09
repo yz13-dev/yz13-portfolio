@@ -3,6 +3,7 @@ import Background from "@/components/background";
 import { Logo } from "@/components/logo";
 import Projects, { ProjectsSkeleton } from "@/components/projects";
 import { Separator } from "@yz13/ui/separator";
+import { cn } from "@yz13/ui/utils";
 import Link from "next/link";
 import { Suspense } from "react";
 import CallToAction from "./components/call-to-action";
@@ -54,7 +55,10 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex gap-4 items-center flex-col sm:*:w-fit *:w-full sm:flex-row w-full">
+          <div className={cn(
+            "flex gap-4 items-center flex-col sm:*:w-fit *:w-full sm:flex-row w-full",
+            "sm:*:h-10 *:h-12 sm:*:text-sm *:text-base sm:*:[&>svg]:!size-4 *:[&>svg]:!size-[18]"
+          )}>
             <CallToAction />
           </div>
         </div>
