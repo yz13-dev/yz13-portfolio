@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to Serverless Container
         run: |
           IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
-          FOLDER_ID="${{ YC_FOLDER_ID }}"
+          FOLDER_ID="${{ secrets.YC_FOLDER_ID }}"
           yc serverless container revision deploy \
             --image $IMAGE \
             --container-name $CONTAINER_NAME
