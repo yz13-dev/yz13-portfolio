@@ -30,7 +30,6 @@ jobs:
         run: |
           echo '${{ secrets.YC_SA_KEY_JSON }}' > key.json
           yc config set service-account-key key.json
-          yc config set token $(yc iam create-token)
 
       - name: Configure Docker for Yandex Cloud
         run: yc container registry configure-docker
