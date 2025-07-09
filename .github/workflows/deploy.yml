@@ -1,0 +1,49 @@
+name: Deploy to Yandex Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: yz13-portfolio
+  IMAGE_TAG: latest
+  CONTAINER_NAME: yz13-portfolio
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Yandex Cloud CLI
+        run: |
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+          echo "$HOME/yandex-cloud/bin" >> $GITHUB_PATH
+
+      - name: Authenticate to Yandex Cloud
+        run: |
+          echo '${{ secrets.YC_SA_KEY_JSON }}' > key.json
+          yc config set service-account-key key.json
+          yc config set token $(yc iam create-token)
+
+      - name: Configure Docker for Yandex Cloud
+        run: yc container registry configure-docker
+
+      - name: Build and push Docker image
+        run: |
+          IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
+          docker build -t $IMAGE .
+          docker push $IMAGE
+
+      - name: Deploy to Serverless Container
+        run: |
+          IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
+          yc serverless container update \
+            --name $CONTAINER_NAME \
+            --image $IMAGE
