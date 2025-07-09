@@ -41,6 +41,10 @@ jobs:
             --build-arg EDGE_CONFIG="${{ secrets.EDGE_CONFIG }}" \
             --build-arg SUPABASE_URL="${{ secrets.SUPABASE_URL }}" \
             -t $IMAGE .
+          docker build \
+            --build-arg EDGE_CONFIG="${{ secrets.EDGE_CONFIG }}" \
+            --build-arg SUPABASE_URL="${{ secrets.SUPABASE_URL }}" \
+            -t $IMAGE .
           docker push $IMAGE
 
       - name: Deploy to Serverless Container
@@ -52,11 +56,21 @@ jobs:
             --image $IMAGE \
             --container-name $CONTAINER_NAME \
             --folder-id $FOLDER_ID \
+            --environment-file env.yaml \
             --concurrency 3 \
             --memory 512MB \
             --cores 1 \
             --core-fraction 50 \
             --execution-timeout 30s \
-            --service-account-id ${{ secrets.YC_SERVICE_ACCOUNT_ID }} \
-            --secret name=supabase-url,environment-variable=SUPABASE_URL \
-            --secret name=edge-config,environment-variable=EDGE_CONFIG
+            --service-account-id ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
+
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Check container health
+        run: |
+          # Получаем URL контейнера
+          CONTAINER_URL=$(yc serverless container get --name $CONTAINER_NAME --folder-id ${{ secrets.YC_FOLDER_ID }} --format json | jq -r '.url')
+          
+          # Проверяем health endpoint
+          curl -f "$CONTAINER_URL/api/health" || exit 1
