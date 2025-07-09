@@ -52,7 +52,6 @@ jobs:
             --image $IMAGE \
             --container-name $CONTAINER_NAME \
             --folder-id $FOLDER_ID \
-            --environment-file env.yaml \
             --concurrency 3 \
             --memory 512MB \
             --cores 1 \
