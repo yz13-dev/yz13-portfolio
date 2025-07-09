@@ -48,14 +48,6 @@ jobs:
           IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
           FOLDER_ID="${{ secrets.YC_FOLDER_ID }}"
           
-          # Создаем файл с переменными окружения
-          cat > env.yaml << EOF
-          NODE_ENV: production
-          PORT: 8080
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          EDGE_CONFIG: ${{ secrets.EDGE_CONFIG }}
-          EOF
-          
           yc serverless container revision deploy \
             --image $IMAGE \
             --container-name $CONTAINER_NAME \
@@ -66,4 +58,6 @@ jobs:
             --cores 1 \
             --core-fraction 50 \
             --execution-timeout 30s \
-            --service-account-id ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
+            --service-account-id ${{ secrets.YC_SERVICE_ACCOUNT_ID }} \
+            --secret name=supabase-url,environment-variable=SUPABASE_URL \
+            --secret name=edge-config,environment-variable=EDGE_CONFIG
