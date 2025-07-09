@@ -58,4 +58,4 @@ jobs:
             --core-fraction 50 \
             --execution-timeout 30s \
             --service-account-id ${{ secrets.YC_SERVICE_ACCOUNT_ID }} \
-            --enviroment SUPABASE=${{secrets.SUPABASE_URL}},EDGE_CONFIG=${{secrets.EDGE_CONFIG}}
+            --environment SUPABASE=${{secrets.SUPABASE_URL}},EDGE_CONFIG=${{secrets.EDGE_CONFIG}}
