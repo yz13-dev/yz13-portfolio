@@ -46,3 +46,4 @@ jobs:
           yc serverless container revision deploy \
             --image $IMAGE \
             --container-name $CONTAINER_NAME
+            --folder-id ${{ YC_FOLDER_ID }}
