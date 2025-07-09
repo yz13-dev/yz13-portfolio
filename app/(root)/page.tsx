@@ -9,7 +9,7 @@ import { Suspense } from "react";
 import CallToAction from "./components/call-to-action";
 import InfoList, { InfoListSkeleton } from "./components/info-list";
 
-export default function Home() {
+export default function () {
   return (
     <>
       <Background />
