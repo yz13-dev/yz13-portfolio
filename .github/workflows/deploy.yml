@@ -46,5 +46,5 @@ jobs:
           FOLDER_ID="${{ secrets.YC_FOLDER_ID }}"
           yc serverless container revision deploy \
             --image $IMAGE \
-            --container-name $CONTAINER_NAME
+            --container-name $CONTAINER_NAME \
             --folder-id $FOLDER_ID
