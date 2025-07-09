@@ -44,5 +44,5 @@ jobs:
         run: |
           IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
           yc serverless container update \
-            --name $CONTAINER_NAME \
-            --image $IMAGE
+            --id $IMAGE \
+            --name $CONTAINER_NAME
