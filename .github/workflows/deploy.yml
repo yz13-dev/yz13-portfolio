@@ -41,6 +41,10 @@ jobs:
             --build-arg EDGE_CONFIG="${{ secrets.EDGE_CONFIG }}" \
             --build-arg SUPABASE_URL="${{ secrets.SUPABASE_URL }}" \
             -t $IMAGE .
+          docker build \
+            --build-arg EDGE_CONFIG="${{ secrets.EDGE_CONFIG }}" \
+            --build-arg SUPABASE_URL="${{ secrets.SUPABASE_URL }}" \
+            -t $IMAGE .
           docker push $IMAGE
 
       - name: Deploy to Serverless Container
@@ -48,7 +52,7 @@ jobs:
           IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
           FOLDER_ID="${{ secrets.YC_FOLDER_ID }}"
           SERVICE_ACCOUNT_ID="${{ secrets.YC_SERVICE_ACCOUNT_ID }}"
-          
+
           yc serverless container revision deploy \
             --image $IMAGE \
             --container-name $CONTAINER_NAME \
