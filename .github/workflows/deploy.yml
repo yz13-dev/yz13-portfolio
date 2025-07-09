@@ -8,7 +8,7 @@ on:
 env:
   IMAGE_NAME: yz13-portfolio
   IMAGE_TAG: latest
-  CONTAINER_NAME: yz13
+  CONTAINER_NAME: yz13-portfolio
 
 jobs:
   deploy:
@@ -37,14 +37,33 @@ jobs:
       - name: Build and push Docker image
         run: |
           IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
-          docker build -t $IMAGE .
+          docker build \
+            --build-arg EDGE_CONFIG="${{ secrets.EDGE_CONFIG }}" \
+            --build-arg SUPABASE_URL="${{ secrets.SUPABASE_URL }}" \
+            -t $IMAGE .
           docker push $IMAGE
 
       - name: Deploy to Serverless Container
         run: |
           IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
           FOLDER_ID="${{ secrets.YC_FOLDER_ID }}"
+          
+          # Создаем файл с переменными окружения
+          cat > env.yaml << EOF
+          NODE_ENV: production
+          PORT: 8080
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          EDGE_CONFIG: ${{ secrets.EDGE_CONFIG }}
+          EOF
+          
           yc serverless container revision deploy \
             --image $IMAGE \
             --container-name $CONTAINER_NAME \
-            --folder-id $FOLDER_ID
+            --folder-id $FOLDER_ID \
+            --environment-file env.yaml \
+            --concurrency 3 \
+            --memory 512MB \
+            --cores 1 \
+            --core-fraction 50 \
+            --execution-timeout 30s \
+            --service-account-id ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
