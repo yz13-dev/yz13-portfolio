@@ -1,9 +1,8 @@
-import yz_dark from "@/public/logo/dark.png";
-import yz_full_dark from "@/public/logo/full-dark.png";
-import yz_full_light from "@/public/logo/full-light.png";
-import yz_light from "@/public/logo/light.png";
 import { cn } from "@yz13/ui/utils";
-import Image from "next/image";
+import yz_dark from "/logo/dark.png?url";
+import yz_full_dark from "/logo/full-dark.png?url";
+import yz_full_light from "/logo/full-light.png?url";
+import yz_light from "/logo/light.png?url";
 
 
 const Logo = ({
@@ -21,7 +20,7 @@ const Logo = ({
 }) => {
   const lightSrc = type === "icon" ? yz_light : yz_full_light;
   const darkSrc = type === "icon" ? yz_dark : yz_full_dark;
-  const isSizeToSmall = provided && provided < 40;
+  // const isSizeToSmall = provided && provided < 40;
   const defaultSize = 36;
   const size = provided ?? defaultSize;
   const width = type === "icon" ? size : size * 4.15625;
@@ -34,19 +33,19 @@ const Logo = ({
   if (size) {
     return (
       <div className={cn("relative", className)}>
-        <Image
+        <img
           className={cn(imgClassName, "light-mode-image")}
           width={width}
           height={height}
-          placeholder={isSizeToSmall ? undefined : "blur"}
+          // placeholder={isSizeToSmall ? undefined : "blur"}
           src={lightSrc}
           alt="YZ13"
         />
-        <Image
+        <img
           className={cn(imgClassName, "dark-mode-image")}
           width={width}
           height={height}
-          placeholder={isSizeToSmall ? undefined : "blur"}
+          // placeholder={isSizeToSmall ? undefined : "blur"}
           src={darkSrc}
           alt="YZ13"
         />
@@ -56,14 +55,12 @@ const Logo = ({
   }
   return (
     <div className={cn("relative", className)}>
-      <Image
-        fill
+      <img
         className={cn(imgClassName, "light-mode-image")}
         src={lightSrc}
         alt="YZ13-LOGO"
       />
-      <Image
-        fill
+      <img
         className={cn(imgClassName, "dark-mode-image")}
         src={darkSrc}
         alt="YZ13-LOGO"

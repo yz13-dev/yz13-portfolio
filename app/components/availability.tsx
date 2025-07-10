@@ -1,11 +1,9 @@
 import { Typewriter } from "@/components/text-writter";
-import { availableForWork } from "@/flags/flags";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
-import type { ReactNode } from "react";
 
 type AvailabilityProps = {
-  label?: ReactNode;
+  enabled?: boolean
   className?: string;
   size?: "sm" | "default" | "lg";
 };
@@ -31,14 +29,13 @@ const unavailableTexts = [
   "Завален работой"
 ];
 
-const Availability = async ({
-  label,
+const Availability = ({
+  enabled = false,
   className = "",
   size = "default"
 }: AvailabilityProps) => {
-  const available = await availableForWork()
 
-  const status: "available" | "unavailable" = available
+  const status: "available" | "unavailable" = enabled
     ? "available"
     : "unavailable";
 
@@ -87,20 +84,16 @@ const Availability = async ({
         "data-[status=available]:text-foreground",
         "data-[status=unavailable]:text-muted-foreground",
       )}>
-        {label ? (
-          label
-        ) : (
-          <Typewriter
-            text={text}
-            speed={100}
-            loop={true}
-            className={cn(
-              "group-data-[size=sm]:text-xs",
-              "group-data-[size=default]:text-sm",
-              "group-data-[size=lg]:text-base",
-            )}
-          />
-        )}
+        <Typewriter
+          text={text}
+          speed={100}
+          loop={true}
+          className={cn(
+            "group-data-[size=sm]:text-xs",
+            "group-data-[size=default]:text-sm",
+            "group-data-[size=lg]:text-base",
+          )}
+        />
       </div>
     </div>
   );

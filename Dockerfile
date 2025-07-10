@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json bun.lock ./
 
 # Устанавливаем зависимости
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Копируем исходный код
 COPY . .
@@ -16,11 +16,11 @@ COPY . .
 # Создаем production образ
 FROM base as production
 
-ARG EDGE_CONFIG
-ARG SUPABASE_URL
+ARG VITE_EDGE_CONFIG
+ARG VITE_SUPABASE_URL
 
-ENV EDGE_CONFIG=${EDGE_CONFIG}
-ENV SUPABASE_URL=${SUPABASE_URL}
+ENV VITE_EDGE_CONFIG=${VITE_EDGE_CONFIG}
+ENV VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
 
 # Собираем приложение
 RUN bun run build
@@ -31,9 +31,9 @@ FROM oven/bun:1-alpine as runtime
 WORKDIR /app
 
 # Копируем standalone сборку из production образа
-COPY --from=production /app/.next/standalone ./
-COPY --from=production /app/.next/static ./.next/static
-COPY --from=production /app/public ./public
+COPY --from=production /app/package.json ./
+COPY --from=production /app/node_modules ./node_modules
+COPY --from=production /app/build ./build
 
 # Открываем порт (Yandex Cloud использует 8080)
 EXPOSE 8080
@@ -43,4 +43,4 @@ ENV NODE_ENV=production
 ENV PORT=8080
 
 # Запускаем приложение
-CMD ["bun", "server.js"]
+CMD ["bun", "run", "start"]
