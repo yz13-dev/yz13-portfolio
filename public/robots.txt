@@ -1,0 +1,13 @@
+User-Agent: *
+
+Allow: /
+
+Disallow:
+Disallow: /api/
+Disallow: /oauth
+Disallow: /login?*
+Disallow: /signup?*
+
+
+
+Sitemap: https://yz13.ru/sitemap.txt
