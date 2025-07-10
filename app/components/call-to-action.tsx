@@ -1,30 +1,27 @@
-import { availableForWork } from "@/flags/flags"
+import { Link } from "@remix-run/react"
 import { Button } from "@yz13/ui/button"
 import { PhoneCallIcon, SendIcon } from "lucide-react"
-import Link from "next/link"
 
 
 
-export default async function () {
-  const available = await availableForWork()
-
+export default function ({ enabled = false }: { enabled?: boolean }) {
   const chat = "https://t.me/yz13_dev"
   return (
     <>
       <Button
         disabled
-        variant={available ? "default" : "secondary"}
+        variant={enabled ? "default" : "secondary"}
         size="lg"
       >
         <PhoneCallIcon />
         Запланировать видеозвонок
       </Button>
       <Button
-        variant={available ? "secondary" : "default"}
+        variant={enabled ? "secondary" : "default"}
         size="lg"
         asChild
       >
-        <Link href={chat}>
+        <Link to={chat}>
           <SendIcon />
           Чат
         </Link>

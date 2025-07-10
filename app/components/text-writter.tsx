@@ -59,6 +59,7 @@ export function Typewriter({
 
     return () => clearTimeout(timeout);
   }, [
+    textArray.length,
     currentIndex,
     isDeleting,
     currentText,
@@ -67,7 +68,6 @@ export function Typewriter({
     deleteSpeed,
     delay,
     displayText,
-    text,
   ]);
   const Tag = tag;
   return (

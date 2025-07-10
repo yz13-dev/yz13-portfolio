@@ -1,4 +1,3 @@
-import { getInfoList } from "@/flags/flags";
 import { Skeleton } from "@yz13/ui/skeleton";
 
 export const InfoListSkeleton = () => {
@@ -11,10 +10,9 @@ export const InfoListSkeleton = () => {
   )
 }
 
-export default async function () {
+export default function ({ list = [] }: { list?: string[] }) {
 
-  const list = await getInfoList()
-
+  if (!list.length) return null;
   return (
     <ol className="list-inside list-decimal text-sm/6 text-left space-y-2">
       {

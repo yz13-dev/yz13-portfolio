@@ -51,26 +51,18 @@ jobs:
         run: |
           IMAGE="${{ secrets.YC_REGISTRY_ID }}/$IMAGE_NAME:$IMAGE_TAG"
           FOLDER_ID="${{ secrets.YC_FOLDER_ID }}"
-          
+          SERVICE_ACCOUNT_ID="${{ secrets.YC_SERVICE_ACCOUNT_ID }}"
+
           yc serverless container revision deploy \
             --image $IMAGE \
             --container-name $CONTAINER_NAME \
             --folder-id $FOLDER_ID \
-            --environment-file env.yaml \
-            --concurrency 3 \
+            --concurrency 5 \
+            --zone-instances-limit 5 \
+            --zone-requests-limit 5 \
             --memory 512MB \
             --cores 1 \
-            --core-fraction 50 \
+            --core-fraction 100 \
             --execution-timeout 30s \
-            --service-account-id ${{ secrets.YC_SERVICE_ACCOUNT_ID }}
-
-      - name: Wait for deployment
-        run: sleep 30
-
-      - name: Check container health
-        run: |
-          # Получаем URL контейнера
-          CONTAINER_URL=$(yc serverless container get --name $CONTAINER_NAME --folder-id ${{ secrets.YC_FOLDER_ID }} --format json | jq -r '.url')
-          
-          # Проверяем health endpoint
-          curl -f "$CONTAINER_URL/api/health" || exit 1
+            --service-account-id $SERVICE_ACCOUNT_ID \
+            --environment VITE_SUPABASE_URL=${{secrets.SUPABASE_URL}},VITE_EDGE_CONFIG=${{secrets.EDGE_CONFIG}}

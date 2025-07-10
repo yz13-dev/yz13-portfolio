@@ -1,29 +1,28 @@
 "use client"
-import variant1 from "@/public/background/variant-1.gif";
-import variant10 from "@/public/background/variant-10.gif";
-import variant11 from "@/public/background/variant-11.gif";
-import variant12 from "@/public/background/variant-12.gif";
-import variant13 from "@/public/background/variant-13.gif";
-import variant14 from "@/public/background/variant-14.gif";
-import variant15 from "@/public/background/variant-15.gif";
-import variant16 from "@/public/background/variant-16.gif";
-import variant17 from "@/public/background/variant-17.gif";
-import variant18 from "@/public/background/variant-18.gif";
-import variant19 from "@/public/background/variant-19.gif";
-import variant2 from "@/public/background/variant-2.gif";
-import variant20 from "@/public/background/variant-20.gif";
-import variant21 from "@/public/background/variant-21.gif";
-import variant3 from "@/public/background/variant-3.gif";
-import variant4 from "@/public/background/variant-4.gif";
-import variant5 from "@/public/background/variant-5.gif";
-import variant6 from "@/public/background/variant-6.gif";
-import variant7 from "@/public/background/variant-7.gif";
-import variant8 from "@/public/background/variant-8.gif";
-import variant9 from "@/public/background/variant-9.gif";
 import { cn } from "@yz13/ui/utils";
 import { motion } from "motion/react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import variant1 from "/background/variant-1.gif?url";
+import variant10 from "/background/variant-10.gif?url";
+import variant11 from "/background/variant-11.gif?url";
+import variant12 from "/background/variant-12.gif?url";
+import variant13 from "/background/variant-13.gif?url";
+import variant14 from "/background/variant-14.gif?url";
+import variant15 from "/background/variant-15.gif?url";
+import variant16 from "/background/variant-16.gif?url";
+import variant17 from "/background/variant-17.gif?url";
+import variant18 from "/background/variant-18.gif?url";
+import variant19 from "/background/variant-19.gif?url";
+import variant2 from "/background/variant-2.gif?url";
+import variant20 from "/background/variant-20.gif?url";
+import variant21 from "/background/variant-21.gif?url";
+import variant3 from "/background/variant-3.gif?url";
+import variant4 from "/background/variant-4.gif?url";
+import variant5 from "/background/variant-5.gif?url";
+import variant6 from "/background/variant-6.gif?url";
+import variant7 from "/background/variant-7.gif?url";
+import variant8 from "/background/variant-8.gif?url";
+import variant9 from "/background/variant-9.gif?url";
 
 const bgs = [
   variant1,
@@ -83,11 +82,10 @@ export default function Background({
             "grayscale bg-gradient-to-b from-background via-transparent to-background blur-2xl"
           )}
         >
-          <Image
+          <img
             onLoad={() => setLoaded(true)}
             className="object-cover opacity-10 w-full h-full invert dark:invert-0"
             src={bgSrc}
-            fill
             alt="background"
           />
         </motion.div>

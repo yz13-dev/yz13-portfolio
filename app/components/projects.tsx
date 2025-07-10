@@ -1,13 +1,11 @@
 import { cdn } from "@/utils/cdn";
-import { getV1Store } from "@yz13/api";
+import { Link } from "@remix-run/react";
 import { GetV1Store200Item } from "@yz13/api/types";
 import { Badge } from "@yz13/ui/badge";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { parseISO } from "date-fns";
 import { ExternalLinkIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 
 export const ProjectsSkeleton = () => {
   return (
@@ -27,26 +25,23 @@ const Logo = ({ project, className = "" }: { project: GetV1Store200Item, classNa
     <>
       {icon.type === "themed" && (
         <>
-          <Image
+          <img
             src={cdn(`/apps${icon.dark}`)}
             className={cn("dark-mode-image", className)}
             alt=""
-            fill
           />
-          <Image
+          <img
             src={cdn(`/apps${icon.light}`)}
             className={cn("light-mode-image", className)}
             alt=""
-            fill
           />
         </>
       )}
       {icon.type === "simple" && (
-        <Image
+        <img
           src={cdn(`/apps${icon.url}`)}
           className={className}
           alt=""
-          fill
         />
       )}
     </>
@@ -63,15 +58,20 @@ const ProjectRow = ({ children, className = "" }: { children?: React.ReactNode, 
 
 const ProjectRowLogo = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => {
   return (
-    <div className="size-4 inline-block relative mr-1 -bottom-0.5">
+    <div className={cn("size-4 inline-block relative mr-1 -bottom-0.5", className)}>
       {children}
     </div>
   )
 }
 
-export default async function () {
+export default function ({ projects = [] }: { projects?: GetV1Store200Item[] }) {
 
-  const projects = await getV1Store();
+  const sorted = projects
+    .sort((a, b) => {
+      const aCreatedAt = parseISO(a.created_at);
+      const bCreatedAt = parseISO(b.created_at);
+      return aCreatedAt.getTime() - bCreatedAt.getTime();
+    })
 
   if (!projects.length) {
     return (
@@ -81,13 +81,7 @@ export default async function () {
   return (
     <ol className="list-inside list-decimal text-sm/6 text-left space-y-2">
       {
-        projects
-          .sort((a, b) => {
-            const aCreatedAt = parseISO(a.created_at);
-            const bCreatedAt = parseISO(b.created_at);
-            return aCreatedAt.getTime() - bCreatedAt.getTime();
-          })
-          .sort((a) => a.public_url ? -1 : 1)
+        sorted
           .map((project) => {
 
             const stage = project.stage;
@@ -98,7 +92,7 @@ export default async function () {
                   <ProjectRowLogo>
                     <Logo project={project} className="rounded-full" />
                   </ProjectRowLogo>
-                  <Link href={project.public_url} target="_blank" className="hover:underline">
+                  <Link to={project.public_url} target="_blank" className="hover:underline">
                     <span>{project.name}</span>
                     <ExternalLinkIcon
                       size={14}
