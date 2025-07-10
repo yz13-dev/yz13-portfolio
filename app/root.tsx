@@ -21,6 +21,10 @@ export const links: LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
   },
   {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap"
+  },
+  {
     rel: "icon",
     href: "/favicon.ico",
     type: "image/x-icon",
@@ -64,7 +68,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="inter-font">
+      <body className="inter-sans pixelify-sans">
         {children}
         <ScrollRestoration />
         <Scripts />

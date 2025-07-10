@@ -10,10 +10,18 @@
 }
 
 
-.inter-font {
+.inter-sans {
     --font-sans: "Inter", sans-serif;
-    font-family: "Inter", sans-serif;
+    /* font-family: "Inter", sans-serif; */
     font-optical-sizing: auto;
     font-weight: 400;
+    font-style: normal;
+}
+
+.pixelify-sans {
+    --font-pixel: "Pixelify Sans", sans-serif;
+    /* font-family: "Pixelify Sans", sans-serif; */
+    font-optical-sizing: auto;
+    font-weight: 500;
     font-style: normal;
 }
