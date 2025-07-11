@@ -4,6 +4,7 @@ import CallToAction from "@/components/call-to-action";
 import InfoList, { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import Projects, { ProjectsSkeleton } from "@/components/projects";
+import { availableForWork, getInfoList } from "@/flags/flags";
 import { isRouteErrorResponse, Link, useLoaderData, useRouteError } from "@remix-run/react";
 import { getV1Store } from "@yz13/api";
 import { Separator } from "@yz13/ui/separator";
@@ -15,8 +16,8 @@ export const loader = async () => {
 
   const projects = await getV1Store()
 
-  const available = false;
-  const list: string[] = [];
+  const available = await availableForWork()
+  const list = await getInfoList()
 
   return {
     projects,
