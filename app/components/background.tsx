@@ -2,27 +2,31 @@
 import { cn } from "@yz13/ui/utils";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import variant1 from "/background/variant-1.gif?url";
-import variant10 from "/background/variant-10.gif?url";
-import variant11 from "/background/variant-11.gif?url";
-import variant12 from "/background/variant-12.gif?url";
-import variant13 from "/background/variant-13.gif?url";
-import variant14 from "/background/variant-14.gif?url";
-import variant15 from "/background/variant-15.gif?url";
-import variant16 from "/background/variant-16.gif?url";
-import variant17 from "/background/variant-17.gif?url";
-import variant18 from "/background/variant-18.gif?url";
-import variant19 from "/background/variant-19.gif?url";
-import variant2 from "/background/variant-2.gif?url";
-import variant20 from "/background/variant-20.gif?url";
-import variant21 from "/background/variant-21.gif?url";
-import variant3 from "/background/variant-3.gif?url";
-import variant4 from "/background/variant-4.gif?url";
-import variant5 from "/background/variant-5.gif?url";
-import variant6 from "/background/variant-6.gif?url";
-import variant7 from "/background/variant-7.gif?url";
-import variant8 from "/background/variant-8.gif?url";
-import variant9 from "/background/variant-9.gif?url";
+import variant1 from "/background/bg-1.mp4?url";
+import variant10 from "/background/bg-10.mp4?url";
+import variant11 from "/background/bg-11.mp4?url";
+import variant12 from "/background/bg-12.mp4?url";
+import variant13 from "/background/bg-13.mp4?url";
+import variant14 from "/background/bg-14.mp4?url";
+import variant15 from "/background/bg-15.mp4?url";
+import variant16 from "/background/bg-16.mp4?url";
+import variant17 from "/background/bg-17.mp4?url";
+import variant18 from "/background/bg-18.mp4?url";
+import variant19 from "/background/bg-19.mp4?url";
+import variant2 from "/background/bg-2.mp4?url";
+import variant20 from "/background/bg-20.mp4?url";
+import variant21 from "/background/bg-21.mp4?url";
+import variant22 from "/background/bg-22.mp4?url";
+import variant23 from "/background/bg-23.mp4?url";
+import variant24 from "/background/bg-24.mp4?url";
+import variant25 from "/background/bg-25.mp4?url";
+import variant3 from "/background/bg-3.mp4?url";
+import variant4 from "/background/bg-4.mp4?url";
+import variant5 from "/background/bg-5.mp4?url";
+import variant6 from "/background/bg-6.mp4?url";
+import variant7 from "/background/bg-7.mp4?url";
+import variant8 from "/background/bg-8.mp4?url";
+import variant9 from "/background/bg-9.mp4?url";
 
 const bgs = [
   variant1,
@@ -46,6 +50,10 @@ const bgs = [
   variant19,
   variant20,
   variant21,
+  variant22,
+  variant23,
+  variant24,
+  variant25,
 ];
 
 const randomNumberInRange = (min: number, max: number) => {
@@ -82,11 +90,14 @@ export default function Background({
             "grayscale bg-gradient-to-b from-background via-transparent to-background blur-2xl"
           )}
         >
-          <img
-            onLoad={() => setLoaded(true)}
+          <video
+            muted
+            autoPlay
+            loop
+            playsInline
+            onCanPlay={() => setLoaded(true)}
             className="object-cover opacity-10 w-full h-full invert dark:invert-0"
             src={bgSrc}
-            alt="background"
           />
         </motion.div>
       </div>
