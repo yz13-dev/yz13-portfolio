@@ -96,7 +96,7 @@ export default function ({ projects = [] }: { projects?: GetV1Store200Item[] }) 
                     <span>{project.name}</span>
                     <ExternalLinkIcon
                       size={14}
-                      className="inline-block ml-2"
+                      className="inline-block ml-2 relative -top-0.5"
                     />
                   </Link>
                   {stage && <Badge variant="secondary" className="ml-1 capitalize">{stage}</Badge>}
