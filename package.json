@@ -16,6 +16,7 @@
     "@remix-run/serve": "^2.16.8",
     "@vercel/edge-config": "^1.4.0",
     "@yz13/api": "^0.0.1",
+    "@yz13/flags": "^0.0.3",
     "@yz13/ui": "^0.1.5",
     "flags": "^4.0.1",
     "isbot": "^4.4.0",
