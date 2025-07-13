@@ -9,3 +9,9 @@ export const availableForWork = async (): Promise<boolean> => {
 export const getInfoList = async (): Promise<string[]> => {
   return await client.get<string[]>("info-list") ?? [] // Автоматически вернет []
 }
+
+export const showSettings = async (): Promise<boolean> => {
+  const isDev = import.meta.env.DEV;
+  if (isDev) return true;
+  return await client.get<boolean>("show-settings") ?? false // Автоматически вернет true
+}

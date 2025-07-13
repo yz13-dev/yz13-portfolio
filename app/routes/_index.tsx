@@ -4,12 +4,15 @@ import CallToAction from "@/components/call-to-action";
 import InfoList, { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import Projects, { ProjectsSkeleton } from "@/components/projects";
-import { availableForWork, getInfoList } from "@/flags/flags";
+import Modal from "@/components/settings/modal";
+import { availableForWork, getInfoList, showSettings } from "@/flags/flags";
 import { isRouteErrorResponse, Link, useLoaderData, useRouteError } from "@remix-run/react";
 import { getV1Store } from "@yz13/api";
+import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
+import { SettingsIcon } from "lucide-react";
 import { Suspense } from "react";
 
 export const loader = async () => {
@@ -18,11 +21,13 @@ export const loader = async () => {
 
   const available = await availableForWork()
   const list = await getInfoList()
+  const settings = await showSettings()
 
   return {
     projects,
     available,
-    list
+    list,
+    settings
   }
 }
 
@@ -124,16 +129,24 @@ export function ErrorBoundary() {
 
 export default function () {
 
-  const { available, list, projects } = useLoaderData<typeof loader>();
+  const { available, list, projects, settings } = useLoaderData<typeof loader>();
 
   return (
     <>
       <Background />
       <main className="flex flex-col h-dvh max-w-md mx-auto *:max-w-sm p-8 gap-[32px] justify-center items-center sm:items-start">
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Logo size={48} type="icon" />
-            <h1 className="text-4xl font-pixel font-medium">YZ13</h1>
+          <div className="flex items-center gap-2 justify-between w-full">
+            <div className="flex items-center gap-2">
+              <Logo size={48} type="icon" />
+              <h1 className="text-4xl font-pixel font-medium">YZ13</h1>
+            </div>
+            {
+              settings &&
+              <Modal>
+                <Button variant="secondary" size="icon"><SettingsIcon /></Button>
+              </Modal>
+            }
           </div>
 
           <p className="block text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
