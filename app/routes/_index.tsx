@@ -1,6 +1,6 @@
 import Availability, { AvailabilitySkeleton } from "@/components/availability";
-import Background from "@/components/background";
 import CallToAction from "@/components/call-to-action";
+import DitheringBackground from "@/components/dithering-background";
 import InfoList, { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import Projects, { ProjectsSkeleton } from "@/components/projects";
@@ -92,7 +92,7 @@ export function ErrorBoundary() {
 
   return (
     <>
-      <Background />
+      <DitheringBackground />
       <main className="flex flex-col h-dvh max-w-md mx-auto *:max-w-sm p-8 gap-[32px] justify-center items-center sm:items-start">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
@@ -133,7 +133,7 @@ export default function () {
 
   return (
     <>
-      <Background />
+      <DitheringBackground />
       <main className="flex flex-col h-dvh max-w-md mx-auto *:max-w-sm p-8 gap-[32px] justify-center items-center sm:items-start">
         <div className="space-y-4">
           <div className="flex items-center gap-2 justify-between w-full">
