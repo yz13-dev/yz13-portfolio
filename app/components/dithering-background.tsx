@@ -52,7 +52,7 @@ export default function DitheringBackground() {
     // Плавная интерполяция между предыдущим и текущим значением
     const lerpFactor = 0.15 // Коэффициент плавности (меньше = плавнее)
     const smoothedIntensity = prevIntensity + (intensity - prevIntensity) * lerpFactor
-    
+
     // Выбираем символ на основе сглаженной интенсивности
     const charIndex = Math.floor(smoothedIntensity * (DITHER_CHARS.length - 1))
     return DITHER_CHARS[Math.max(0, Math.min(DITHER_CHARS.length - 1, charIndex))]
@@ -64,7 +64,7 @@ export default function DitheringBackground() {
       const initGrid = () => {
         const newGrid: string[][] = []
         const newPrevIntensities: number[][] = []
-        
+
         for (let y = 0; y < gridSize.height; y++) {
           const row: string[] = []
           const intensityRow: number[] = []
@@ -101,7 +101,7 @@ export default function DitheringBackground() {
 
               // Получаем предыдущую интенсивность для этого пикселя
               const prevIntensity = prevIntensitiesRef.current[y]?.[x] || intensity
-              
+
               // Обновляем предыдущую интенсивность
               prevIntensitiesRef.current[y][x] = intensity
 
@@ -127,7 +127,7 @@ export default function DitheringBackground() {
   }, [gridSize])
 
   return (
-    <div className="w-full h-dvh absolute top-0 z-[-1] left-0">
+    <div className="w-full h-dvh absolute overflow-hidden top-0 z-[-1] left-0">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: ready ? 1 : 0 }}
@@ -137,7 +137,7 @@ export default function DitheringBackground() {
           "grayscale bg-gradient-to-b from-background via-transparent to-background blur-2xl"
         )}
       >
-        <div className="absolute inset-0 bg-background opacity-50">
+        <div className="absolute inset-0 w-full h-full bg-background opacity-50">
           <pre
             className="text-foreground/50 text-xs leading-none font-mono whitespace-pre opacity-70 w-full h-full"
             style={{
@@ -151,7 +151,7 @@ export default function DitheringBackground() {
           </pre>
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-br from-card via-transparent to-background" />
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-card via-transparent to-background" />
       </motion.div>
     </div>
   )
