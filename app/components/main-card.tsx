@@ -1,10 +1,10 @@
 import useIsMac from "@/hooks/use-is-mac";
-import { Link } from "@remix-run/react";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { cn } from "@yz13/ui/utils";
 import { ChevronDownIcon, SearchIcon, SettingsIcon } from "lucide-react";
 import { motion } from "motion/react";
+import { Link } from "react-router";
 import Availability from "./availability";
 import CallToAction from "./call-to-action";
 import { Logo } from "./logo";

@@ -1,12 +1,4 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration
-} from "@remix-run/react";
-
+import { Links, LinksFunction, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration } from "react-router";
 import "./styles/globals.css";
 
 export const links: LinksFunction = () => [
