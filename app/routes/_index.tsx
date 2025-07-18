@@ -144,7 +144,7 @@ export default function () {
 
         <motion.main
           transition={{ duration: 0.2 }}
-          className="w-full gap-4 flex flex-col justify-between md:bg-card/40 bg-transparent rounded-4xl p-4 md:max-w-md max-w-full md:h-fit h-dvh"
+          className="w-full gap-4 flex flex-col justify-between p-4 md:max-w-md max-w-full md:h-fit h-dvh"
         >
           <div className="flex items-center gap-2 justify-between w-full">
             <div className="flex items-center gap-2">
@@ -182,7 +182,7 @@ export default function () {
 
           <Projects projects={projects} />
 
-          <div className="w-full !mt-auto space-y-4">
+          <div className="w-full !mt-auto space-y-4 bg-card/40 rounded-4xl p-4">
             <div className="w-full max-w-xs">
               <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={available} />
               <div className="w-full">

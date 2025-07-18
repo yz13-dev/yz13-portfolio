@@ -23,8 +23,7 @@ export default function ({ enabled = false }: { enabled?: boolean }) {
       >
         <Link to={chat}>
           <SendIcon />
-          <span className="sm:inline hidden">Чат</span>
-          <span className="inline sm:hidden">Перейти в чат</span>
+          <span>Перейти в чат</span>
         </Link>
       </Button>
     </>
