@@ -1,5 +1,5 @@
 # Используем официальный образ Bun
-FROM oven/bun:1 as base
+FROM oven/bun:1.2.18 as base
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -26,7 +26,7 @@ ENV VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
 RUN bun run build
 
 # Создаем минимальный runtime образ
-FROM oven/bun:1-alpine as runtime
+FROM base as runtime
 
 WORKDIR /app
 

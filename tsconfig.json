@@ -12,7 +12,9 @@
       "ES2022"
     ],
     "types": [
-      "vite/client"
+      "node",
+      "vite/client",
+      "bun"
     ],
     "isolatedModules": true,
     "esModuleInterop": true,

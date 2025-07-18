@@ -29,6 +29,7 @@
     "@babel/preset-typescript": "^7.27.1",
     "@react-router/dev": "^7.7.0",
     "@tailwindcss/vite": "^4.1.11",
+    "@types/bun": "^1.2.18",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "babel-plugin-react-compiler": "^19.1.0-rc.2",
