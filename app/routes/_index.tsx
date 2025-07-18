@@ -5,7 +5,7 @@ import InfoList, { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import Projects, { ProjectsSkeleton } from "@/components/projects";
 import Modal from "@/components/settings/modal";
-import { availableForWork, getInfoList, showSettings } from "@/flags/flags";
+import { availableForWork, getInfoList, showCommand, showSettings } from "@/flags/flags";
 import useIsMac from "@/hooks/use-is-mac";
 import { isRouteErrorResponse, Link, useLoaderData, useRouteError } from "@remix-run/react";
 import { getV1Store } from "@yz13/api";
@@ -23,8 +23,10 @@ export const loader = async () => {
   const available = await availableForWork()
   const list = await getInfoList()
   const settings = await showSettings()
+  const command = await showCommand()
 
   return {
+    command,
     projects,
     available,
     list,
@@ -130,7 +132,7 @@ export function ErrorBoundary() {
 
 export default function () {
 
-  const { available, list, projects, settings } = useLoaderData<typeof loader>();
+  const { available, list, projects, settings, command } = useLoaderData<typeof loader>();
 
   const isMac = useIsMac()
   return (
@@ -170,12 +172,15 @@ export default function () {
               <h1 className="text-4xl font-pixel font-medium">YZ13</h1>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="secondary">
-                <SearchIcon />
-                <span className="text-sm font-mono">
-                  <kbd>{isMac ? "Cmd + K" : "Ctrl + K"}</kbd>
-                </span>
-              </Button>
+              {
+                command &&
+                <Button variant="secondary">
+                  <SearchIcon />
+                  <span className="text-sm font-mono">
+                    <kbd>{isMac ? "Cmd + K" : "Ctrl + K"}</kbd>
+                  </span>
+                </Button>
+              }
               {
                 settings &&
                 <Modal>

@@ -15,3 +15,10 @@ export const showSettings = async (): Promise<boolean> => {
   if (isDev) return true;
   return await client.get<boolean>("show-settings") ?? false // Автоматически вернет true
 }
+
+
+export const showCommand = async (): Promise<boolean> => {
+  const isDev = import.meta.env.DEV;
+  if (isDev) return true;
+  return await client.get<boolean>("show-command") ?? false // Автоматически вернет true
+}
