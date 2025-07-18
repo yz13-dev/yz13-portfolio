@@ -8,21 +8,20 @@ const DITHER_CHARS = ["█", "▓", "▒", "░", "·", " "]
 
 export default function DitheringBackground() {
   const [grid, setGrid] = useState<string[][]>([])
+  const [ready, setReady] = useState<boolean>(false)
   const [gridSize, setGridSize] = useState({ width: 300, height: 150 })
   const animationRef = useRef<number>()
   const timeRef = useRef(0)
-  const [ready, setReady] = useState<boolean>(false);
-  const prevIntensitiesRef = useRef<number[][]>([])
+  const intensityGridRef = useRef<number[][]>([])
 
   useEffect(() => {
     setReady(true)
   }, [])
-
   useEffect(() => {
     // Вычисляем размер сетки на основе размера экрана
     const calculateGridSize = () => {
-      const charWidth = 4 // уменьшенный размер символа
-      const charHeight = 6 // уменьшенный размер символа
+      const charWidth = 4
+      const charHeight = 6
 
       const width = Math.ceil(window.innerWidth / charWidth) + 20
       const height = Math.ceil(window.innerHeight / charHeight) + 20
@@ -32,7 +31,6 @@ export default function DitheringBackground() {
 
     calculateGridSize()
 
-    // Пересчитываем размер при изменении размера окна
     const handleResize = () => {
       calculateGridSize()
     }
@@ -47,74 +45,76 @@ export default function DitheringBackground() {
     }
   }, [])
 
-  // Функция для плавной интерполяции между символами
-  const interpolateChar = (intensity: number, prevIntensity: number): string => {
-    // Плавная интерполяция между предыдущим и текущим значением
-    const lerpFactor = 0.15 // Коэффициент плавности (меньше = плавнее)
-    const smoothedIntensity = prevIntensity + (intensity - prevIntensity) * lerpFactor
-
-    // Выбираем символ на основе сглаженной интенсивности
-    const charIndex = Math.floor(smoothedIntensity * (DITHER_CHARS.length - 1))
-    return DITHER_CHARS[Math.max(0, Math.min(DITHER_CHARS.length - 1, charIndex))]
-  }
-
   useEffect(() => {
     if (gridSize.width > 0 && gridSize.height > 0) {
-      // Инициализация сетки и предыдущих интенсивностей
-      const initGrid = () => {
-        const newGrid: string[][] = []
-        const newPrevIntensities: number[][] = []
-
+      // Инициализация сетки интенсивности
+      const initIntensityGrid = () => {
+        const newIntensityGrid: number[][] = []
         for (let y = 0; y < gridSize.height; y++) {
-          const row: string[] = []
-          const intensityRow: number[] = []
+          const row: number[] = []
           for (let x = 0; x < gridSize.width; x++) {
-            const intensity = Math.random()
-            row.push(DITHER_CHARS[Math.floor(intensity * (DITHER_CHARS.length - 1))])
-            intensityRow.push(intensity)
+            row.push(Math.random())
           }
-          newGrid.push(row)
-          newPrevIntensities.push(intensityRow)
+          newIntensityGrid.push(row)
         }
-        setGrid(newGrid)
-        prevIntensitiesRef.current = newPrevIntensities
+        intensityGridRef.current = newIntensityGrid
       }
 
-      // Анимационная функция с более плавными параметрами
+      // Инициализация символьной сетки
+      const initGrid = () => {
+        const newGrid: string[][] = []
+        for (let y = 0; y < gridSize.height; y++) {
+          const row: string[] = []
+          for (let x = 0; x < gridSize.width; x++) {
+            const intensity = intensityGridRef.current[y][x]
+            const charIndex = Math.floor(intensity * (DITHER_CHARS.length - 1))
+            row.push(DITHER_CHARS[charIndex])
+          }
+          newGrid.push(row)
+        }
+        setGrid(newGrid)
+      }
+
+      // Анимационная функция с плавными переходами
       const animate = () => {
-        timeRef.current += 0.005 // Еще более медленная скорость для плавности
+        timeRef.current += 0.008
 
+        // Обновляем интенсивность с интерполяцией
+        const newIntensityGrid = intensityGridRef.current.map((row, y) =>
+          row.map((currentIntensity, x) => {
+            // Вычисляем целевую интенсивность
+            const wave1 = Math.sin(x * 0.05 + timeRef.current) * 0.5 + 0.5
+            const wave2 = Math.sin(y * 0.08 + timeRef.current * 0.7) * 0.5 + 0.5
+            const wave3 = Math.sin((x + y) * 0.04 + timeRef.current * 0.5) * 0.5 + 0.5
+
+            const combined = (wave1 + wave2 + wave3) / 3
+            // Уменьшен шум для плавности
+            const noise = Math.random() * 0.005 // Сделано минимальным
+            const targetIntensity = Math.max(0, Math.min(1, combined + noise))
+
+            // Плавная интерполяция к целевой интенсивности
+            const lerpFactor = 0.05 // Чем меньше, тем плавнее переходы
+            return currentIntensity + (targetIntensity - currentIntensity) * lerpFactor
+          }),
+        )
+
+        intensityGridRef.current = newIntensityGrid
+
+        // Обновляем символьную сетку на основе новой интенсивности
         setGrid((prevGrid) => {
-          const newGrid = prevGrid.map((row, y) =>
+          return prevGrid.map((row, y) =>
             row.map((_, x) => {
-              // Создаем более плавные волновые паттерны с меньшей частотой
-              const wave1 = Math.sin(x * 0.03 + timeRef.current) * 0.4 + 0.5
-              const wave2 = Math.sin(y * 0.05 + timeRef.current * 0.6) * 0.4 + 0.5
-              const wave3 = Math.sin((x + y) * 0.025 + timeRef.current * 0.4) * 0.4 + 0.5
-
-              // Комбинируем волны для создания сложного паттерна
-              const combined = (wave1 + wave2 + wave3) / 3
-
-              // Минимальный шум для стабильности
-              const noise = Math.random() * 0.02
-              const intensity = Math.max(0, Math.min(1, combined + noise))
-
-              // Получаем предыдущую интенсивность для этого пикселя
-              const prevIntensity = prevIntensitiesRef.current[y]?.[x] || intensity
-
-              // Обновляем предыдущую интенсивность
-              prevIntensitiesRef.current[y][x] = intensity
-
-              // Используем интерполяцию для плавного перехода
-              return interpolateChar(intensity, prevIntensity)
+              const intensity = intensityGridRef.current[y][x]
+              const charIndex = Math.floor(intensity * (DITHER_CHARS.length - 1))
+              return DITHER_CHARS[charIndex]
             }),
           )
-          return newGrid
         })
 
         animationRef.current = requestAnimationFrame(animate)
       }
 
+      initIntensityGrid()
       initGrid()
       animate()
 
@@ -134,7 +134,7 @@ export default function DitheringBackground() {
         transition={{ duration: 1 }}
         className={cn(
           "w-full h-full relative",
-          "grayscale bg-gradient-to-b from-background via-transparent to-background blur-2xl"
+          "grayscale bg-gradient-to-b from-background via-transparent to-background blur-xl"
         )}
       >
         <div className="absolute inset-0 w-full h-full bg-background opacity-50">
