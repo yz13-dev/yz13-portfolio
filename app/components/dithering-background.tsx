@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react"
 type DitheringStyle = "blocks" | "ascii"
 
 interface DitheringBackgroundProps {
+  className?: string
   style?: DitheringStyle
 }
 
@@ -14,7 +15,8 @@ const DITHER_STYLES = {
   ascii: ["@", "#", "%", "&", "*", "+", "=", "-", ":", ".", " "],
 }
 
-export default function DitheringBackground({ style = "blocks" }: DitheringBackgroundProps) {
+
+export default function DitheringBackground({ style = "blocks", className = "" }: DitheringBackgroundProps) {
   const [grid, setGrid] = useState<string[][]>([])
   const [gridSize, setGridSize] = useState({ width: 300, height: 150 })
   const animationRef = useRef<number>()
@@ -136,7 +138,7 @@ export default function DitheringBackground({ style = "blocks" }: DitheringBackg
     }
   }, [gridSize, DITHER_CHARS])
   return (
-    <div className="w-full h-dvh absolute overflow-hidden top-0 z-[-1] left-0">
+    <div className={cn("w-full h-dvh absolute overflow-hidden top-0 z-[-1] left-0", className)}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: ready ? 1 : 0 }}

@@ -1,7 +1,7 @@
 import Availability, { AvailabilitySkeleton } from "@/components/availability";
 import CallToAction from "@/components/call-to-action";
 import DitheringBackground from "@/components/dithering-background";
-import InfoList, { InfoListSkeleton } from "@/components/info-list";
+import { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import Projects, { ProjectsSkeleton } from "@/components/projects";
 import Modal from "@/components/settings/modal";
@@ -13,8 +13,8 @@ import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
-import { SearchIcon, SettingsIcon } from "lucide-react";
-import { Suspense } from "react";
+import { ChevronDownIcon, SearchIcon, SettingsIcon } from "lucide-react";
+import { motion } from "motion/react";
 
 export const loader = async () => {
 
@@ -132,40 +132,20 @@ export function ErrorBoundary() {
 
 export default function () {
 
-  const { available, list, projects, settings, command } = useLoaderData<typeof loader>();
+  const { available, projects, settings, command } = useLoaderData<typeof loader>();
+
 
   const isMac = useIsMac()
+
   return (
     <>
-      <DitheringBackground />
-      <div className="flex flex-col h-dvh sm:max-w-md max-w-full mx-auto sm:*:max-w-sm *:max-w-full p-4 gap-[32px] justify-center items-center sm:items-start">
+      <DitheringBackground className="fixed" />
+      <div className="w-full h-dvh flex flex-col items-center justify-center">
 
-        {
-          false &&
-          <div className="space-y-6 w-full">
-            {
-              false &&
-              list.length !== 0 &&
-              <section>
-                <Suspense fallback={<InfoListSkeleton />}>
-                  <InfoList list={list} />
-                </Suspense>
-              </section>
-            }
-
-            {/* <Separator /> */}
-
-            <section className="space-y-3">
-              <span className="block text-muted-foreground font-medium">Проекты</span>
-              <Suspense fallback={<ProjectsSkeleton />}>
-                <Projects projects={projects} />
-              </Suspense>
-            </section>
-          </div>
-        }
-
-
-        <main className="w-full space-y-4 mt-auto bg-card/40 rounded-lg p-4">
+        <motion.main
+          transition={{ duration: 0.2 }}
+          className="w-full gap-4 flex flex-col justify-between md:bg-card/40 bg-transparent rounded-4xl p-4 md:max-w-md max-w-full md:h-fit h-dvh"
+        >
           <div className="flex items-center gap-2 justify-between w-full">
             <div className="flex items-center gap-2">
               <Logo size={48} type="icon" />
@@ -187,6 +167,12 @@ export default function () {
                   <Button variant="secondary" size="icon"><SettingsIcon /></Button>
                 </Modal>
               }
+              {
+                false &&
+                <Button variant="secondary" size="icon">
+                  <ChevronDownIcon />
+                </Button>
+              }
             </div>
           </div>
 
@@ -194,30 +180,33 @@ export default function () {
             <p className="block text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
           </div>
 
-          <Separator />
+          <Projects projects={projects} />
 
-          <div className="w-full max-w-xs">
-            <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={available} />
-            <div className="w-full">
-              <span className="text-muted-foreground text-center text-xs">
-                По вопросам и/или предложениям пишите:
-              </span>
-              <div className="flex items-center gap-1.5 text-xs">
-                <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
-                <span className="text-muted-foreground">или</span>
-                <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
+          <div className="w-full !mt-auto space-y-4">
+            <div className="w-full max-w-xs">
+              <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={available} />
+              <div className="w-full">
+                <span className="text-muted-foreground text-center text-xs">
+                  По вопросам и/или предложениям пишите:
+                </span>
+                <div className="flex items-center gap-1.5 text-xs">
+                  <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
+                  <span className="text-muted-foreground">или</span>
+                  <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className={cn(
-            "flex gap-4 items-center flex-col sm:*:w-fit *:w-full sm:flex-row w-full",
-            "sm:*:h-10 *:h-12 sm:*:text-sm *:text-base sm:*:[&>svg]:!size-4 *:[&>svg]:!size-[18]"
-          )}>
-            <CallToAction enabled={available} />
+            <div className={cn(
+              "flex gap-4 items-center flex-col",
+              "*:w-full *:h-12 *:text-base [&>svg]:!size-[18]"
+            )}>
+              <CallToAction enabled={available} />
+            </div>
           </div>
-        </main>
+        </motion.main>
+
       </div>
     </>
-  );
+  )
 }
