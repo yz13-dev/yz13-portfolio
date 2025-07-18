@@ -13,6 +13,8 @@
 # testing
 /coverage
 
+.react-router
+
 # next.js
 /.next/
 /out/

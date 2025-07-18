@@ -183,19 +183,22 @@ export default function () {
           </div>
 
           <div className="w-full !mt-auto space-y-4 bg-card/40 rounded-4xl p-4">
-            <div className="w-full max-w-xs">
-              <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={available} />
-              <div className="w-full">
-                <span className="text-muted-foreground text-center text-xs">
-                  По вопросам и/или предложениям пишите:
-                </span>
-                <div className="flex items-center gap-1.5 text-xs">
-                  <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
-                  <span className="text-muted-foreground">или</span>
-                  <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
+            <div className="p-2">
+              <div className="w-full max-w-xs">
+                <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={available} />
+                <div className="w-full">
+                  <span className="text-muted-foreground text-center text-xs">
+                    По вопросам и/или предложениям пишите:
+                  </span>
+                  <div className="flex items-center gap-1.5 text-xs">
+                    <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
+                    <span className="text-muted-foreground">или</span>
+                    <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
+                  </div>
                 </div>
               </div>
             </div>
+
 
             <div className={cn(
               "flex gap-4 items-center flex-col",
