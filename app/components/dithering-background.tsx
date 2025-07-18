@@ -1,18 +1,29 @@
 "use client"
+import { cn } from "@yz13/ui/utils"
+import { motion } from "motion/react"
+import { useEffect, useRef, useState } from "react"
 
-import { cn } from "@yz13/ui/utils";
-import { motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+type DitheringStyle = "blocks" | "ascii"
 
-const DITHER_CHARS = ["█", "▓", "▒", "░", "·", " "]
+interface DitheringBackgroundProps {
+  style?: DitheringStyle
+}
 
-export default function DitheringBackground() {
+const DITHER_STYLES = {
+  blocks: ["█", "▓", "▒", "░", "·", " "],
+  ascii: ["@", "#", "%", "&", "*", "+", "=", "-", ":", ".", " "],
+}
+
+export default function DitheringBackground({ style = "blocks" }: DitheringBackgroundProps) {
   const [grid, setGrid] = useState<string[][]>([])
-  const [ready, setReady] = useState<boolean>(false)
   const [gridSize, setGridSize] = useState({ width: 300, height: 150 })
   const animationRef = useRef<number>()
   const timeRef = useRef(0)
   const intensityGridRef = useRef<number[][]>([])
+
+  const [ready, setReady] = useState<boolean>(false)
+
+  const DITHER_CHARS = DITHER_STYLES[style]
 
   useEffect(() => {
     setReady(true)
@@ -88,12 +99,11 @@ export default function DitheringBackground() {
             const wave3 = Math.sin((x + y) * 0.04 + timeRef.current * 0.5) * 0.5 + 0.5
 
             const combined = (wave1 + wave2 + wave3) / 3
-            // Уменьшен шум для плавности
-            const noise = Math.random() * 0.005 // Сделано минимальным
+            const noise = Math.random() * 0.005
             const targetIntensity = Math.max(0, Math.min(1, combined + noise))
 
             // Плавная интерполяция к целевой интенсивности
-            const lerpFactor = 0.05 // Чем меньше, тем плавнее переходы
+            const lerpFactor = 0.05
             return currentIntensity + (targetIntensity - currentIntensity) * lerpFactor
           }),
         )
@@ -124,8 +134,7 @@ export default function DitheringBackground() {
         }
       }
     }
-  }, [gridSize])
-
+  }, [gridSize, DITHER_CHARS])
   return (
     <div className="w-full h-dvh absolute overflow-hidden top-0 z-[-1] left-0">
       <motion.div
@@ -139,7 +148,7 @@ export default function DitheringBackground() {
       >
         <div className="absolute inset-0 w-full h-full bg-background opacity-50">
           <pre
-            className="text-foreground/50 text-xs leading-none font-mono whitespace-pre opacity-70 w-full h-full"
+            className="text-foreground/50 text-base leading-none font-mono whitespace-pre opacity-70 w-full h-full"
             style={{
               letterSpacing: "0px",
               lineHeight: "0.6em",

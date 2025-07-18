@@ -2,10 +2,11 @@ import { cdn } from "@/utils/cdn";
 import { Link } from "@remix-run/react";
 import { GetV1Store200Item } from "@yz13/api/types";
 import { Badge } from "@yz13/ui/badge";
+import { Button } from "@yz13/ui/button";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { parseISO } from "date-fns";
-import { ExternalLinkIcon } from "lucide-react";
+import { ArrowRightIcon, ExternalLinkIcon } from "lucide-react";
 
 export const ProjectsSkeleton = () => {
   return (
@@ -50,7 +51,7 @@ const Logo = ({ project, className = "" }: { project: GetV1Store200Item, classNa
 
 const ProjectRow = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => {
   return (
-    <li className={cn("align-middle tracking-[-.01em]", className)}>
+    <li className={cn("flex items-start gap-2 p-3", className)}>
       {children}
     </li>
   )
@@ -58,7 +59,7 @@ const ProjectRow = ({ children, className = "" }: { children?: React.ReactNode, 
 
 const ProjectRowLogo = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => {
   return (
-    <div className={cn("size-4 inline-block relative mr-1 -bottom-0.5", className)}>
+    <div className={cn("size-8 shrink-0 inline-block relative mt-1", className)}>
       {children}
     </div>
   )
@@ -79,27 +80,37 @@ export default function ({ projects = [] }: { projects?: GetV1Store200Item[] }) 
     )
   }
   return (
-    <ol className="list-inside list-decimal text-sm/6 text-left space-y-2">
+    <ul className="list-inside rounded-lg divide-y bg-card/40 text-sm/6 text-left">
       {
         sorted
           .map((project) => {
 
             const stage = project.stage;
+            const description = project.description ?? "Без описания"
+            const url = project.public_url
 
-            if (project.public_url) {
+            if (url) {
               return (
                 <ProjectRow key={project.id}>
                   <ProjectRowLogo>
                     <Logo project={project} className="rounded-full" />
                   </ProjectRowLogo>
-                  <Link to={project.public_url} target="_blank" className="hover:underline">
-                    <span>{project.name}</span>
-                    <ExternalLinkIcon
-                      size={14}
-                      className="inline-block ml-2 relative -top-0.5"
-                    />
-                  </Link>
-                  {stage && <Badge variant="secondary" className="ml-1 capitalize">{stage}</Badge>}
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2">
+                      <Link to={url} target="_blank" className="hover:underline">
+                        <span>{project.name}</span>
+                        <ExternalLinkIcon
+                          size={14}
+                          className="inline-block ml-2 relative -top-0.5"
+                        />
+                      </Link>
+                      {stage && <Badge variant="secondary" className="ml-1 capitalize">{stage}</Badge>}
+                    </div>
+                    <p className="text-sm line-clamp-1 text-muted-foreground">{description}</p>
+                  </div>
+                  {
+                    <Button size="sm" className="ml-auto" variant="outline"><ArrowRightIcon /></Button>
+                  }
                 </ProjectRow>
               )
             }
@@ -109,12 +120,17 @@ export default function ({ projects = [] }: { projects?: GetV1Store200Item[] }) 
                 <ProjectRowLogo>
                   <Logo project={project} className="rounded-full" />
                 </ProjectRowLogo>
-                <span>{project.name}</span>
-                {stage && <Badge variant="secondary" className="ml-1 capitalize">{stage}</Badge>}
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <span>{project.name}</span>
+                    {stage && <Badge variant="secondary" className="ml-1 capitalize">{stage}</Badge>}
+                  </div>
+                  <p className="text-sm line-clamp-1 text-muted-foreground">{description}</p>
+                </div>
               </ProjectRow>
             );
           })
       }
-    </ol>
+    </ul>
   )
 }

@@ -6,13 +6,14 @@ import { Logo } from "@/components/logo";
 import Projects, { ProjectsSkeleton } from "@/components/projects";
 import Modal from "@/components/settings/modal";
 import { availableForWork, getInfoList, showSettings } from "@/flags/flags";
+import useIsMac from "@/hooks/use-is-mac";
 import { isRouteErrorResponse, Link, useLoaderData, useRouteError } from "@remix-run/react";
 import { getV1Store } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
-import { SettingsIcon } from "lucide-react";
+import { SearchIcon, SettingsIcon } from "lucide-react";
 import { Suspense } from "react";
 
 export const loader = async () => {
@@ -131,48 +132,65 @@ export default function () {
 
   const { available, list, projects, settings } = useLoaderData<typeof loader>();
 
+  const isMac = useIsMac()
   return (
     <>
       <DitheringBackground />
-      <main className="flex flex-col h-dvh max-w-md mx-auto *:max-w-sm p-8 gap-[32px] justify-center items-center sm:items-start">
-        <div className="space-y-4">
+      <div className="flex flex-col h-dvh sm:max-w-md max-w-full mx-auto sm:*:max-w-sm *:max-w-full p-4 gap-[32px] justify-center items-center sm:items-start">
+
+        {
+          false &&
+          <div className="space-y-6 w-full">
+            {
+              false &&
+              list.length !== 0 &&
+              <section>
+                <Suspense fallback={<InfoListSkeleton />}>
+                  <InfoList list={list} />
+                </Suspense>
+              </section>
+            }
+
+            {/* <Separator /> */}
+
+            <section className="space-y-3">
+              <span className="block text-muted-foreground font-medium">Проекты</span>
+              <Suspense fallback={<ProjectsSkeleton />}>
+                <Projects projects={projects} />
+              </Suspense>
+            </section>
+          </div>
+        }
+
+
+        <main className="w-full space-y-4 mt-auto bg-card/40 rounded-lg p-4">
           <div className="flex items-center gap-2 justify-between w-full">
             <div className="flex items-center gap-2">
               <Logo size={48} type="icon" />
               <h1 className="text-4xl font-pixel font-medium">YZ13</h1>
             </div>
-            {
-              settings &&
-              <Modal>
-                <Button variant="secondary" size="icon"><SettingsIcon /></Button>
-              </Modal>
-            }
+            <div className="flex items-center gap-2">
+              <Button variant="secondary">
+                <SearchIcon />
+                <span className="text-sm font-mono">
+                  <kbd>{isMac ? "Cmd + K" : "Ctrl + K"}</kbd>
+                </span>
+              </Button>
+              {
+                settings &&
+                <Modal>
+                  <Button variant="secondary" size="icon"><SettingsIcon /></Button>
+                </Modal>
+              }
+            </div>
           </div>
 
-          <p className="block text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
-        </div>
-
-        <div className="space-y-6 w-full">
-          {
-            list.length !== 0 &&
-            <section>
-              <Suspense fallback={<InfoListSkeleton />}>
-                <InfoList list={list} />
-              </Suspense>
-            </section>
-          }
+          <div>
+            <p className="block text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
+          </div>
 
           <Separator />
 
-          <section className="space-y-3">
-            <span className="block text-muted-foreground font-medium">Проекты</span>
-            <Suspense fallback={<ProjectsSkeleton />}>
-              <Projects projects={projects} />
-            </Suspense>
-          </section>
-        </div>
-
-        <div className="w-full space-y-4 sm:mt-0 mt-auto">
           <div className="w-full max-w-xs">
             <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={available} />
             <div className="w-full">
@@ -193,8 +211,8 @@ export default function () {
           )}>
             <CallToAction enabled={available} />
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </>
   );
 }

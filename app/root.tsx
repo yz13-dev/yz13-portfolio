@@ -25,6 +25,10 @@ export const links: LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap"
   },
   {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+  },
+  {
     rel: "icon",
     href: "/favicon.ico",
     type: "image/x-icon",
@@ -68,7 +72,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="inter-sans pixelify-sans">
+      <body className="inter-sans pixelify-sans jetbrains-mono">
         {children}
         <ScrollRestoration />
         <Scripts />
