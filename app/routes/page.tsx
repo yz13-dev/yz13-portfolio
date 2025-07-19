@@ -1,34 +1,34 @@
 import Availability, { AvailabilitySkeleton } from "@/components/availability";
 import CallToAction from "@/components/call-to-action";
 import DitheringBackground from "@/components/dithering-background";
+import InfiniteCanvas from "@/components/infinite-canvas";
 import { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import Projects, { ProjectsSkeleton } from "@/components/projects";
 import Modal from "@/components/settings/modal";
-import { availableForWork, getInfoList, showCommand, showSettings } from "@/flags/flags";
 import useIsMac from "@/hooks/use-is-mac";
-import { getV1Store } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { ChevronDownIcon, SearchIcon, SettingsIcon } from "lucide-react";
 import { motion } from "motion/react";
-import { isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
+import { useEffect, useState } from "react";
+import { isRouteErrorResponse, Link, useRouteError } from "react-router";
 
 export const loader = async () => {
 
-  const projects = await getV1Store()
+  // const projects = await getV1Store()
 
-  const [available, list, settings, command] = await Promise.all([availableForWork(), getInfoList(), showSettings(), showCommand()])
+  // const [available, list, settings, command] = await Promise.all([availableForWork(), getInfoList(), showSettings(), showCommand()])
 
-  return {
-    command,
-    projects,
-    available,
-    list,
-    settings
-  }
+  // return {
+  //   command,
+  //   projects,
+  //   available,
+  //   list,
+  //   settings
+  // }
 }
 
 export const HydrateFallback = () => {
@@ -129,11 +129,22 @@ export function ErrorBoundary() {
 
 export default function () {
 
-  const { available, projects, settings, command } = useLoaderData<typeof loader>();
+  // const { available, projects, settings, command } = useLoaderData<typeof loader>();
 
 
   const isMac = useIsMac()
+  const [ready, setReady] = useState<boolean>(false)
 
+  useEffect(() => {
+    setReady(true)
+  }, [])
+
+  if (!ready) return null;
+  return (
+    <div className="w-full h-dvh">
+      <InfiniteCanvas />
+    </div>
+  )
   return (
     <>
       <DitheringBackground className="fixed" />
