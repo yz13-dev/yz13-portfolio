@@ -5,7 +5,6 @@ import { Button } from "@yz13/ui/button"
 import { PlusIcon } from "lucide-react"
 import type React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { CanvasItem } from "./canvas-item"
 import { TileBackground } from "./tile-background"
 
 interface CanvasItemData {
@@ -85,7 +84,7 @@ export default function InfiniteCanvas() {
         x: normalizedX,
         y: normalizedY,
         content: (
-          <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200 w-[200px] h-[100px] flex flex-col">
+          <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200 w-fit h-fit flex flex-col">
             <h3 className="font-semibold text-lg mb-2 flex-shrink-0">{"Привет, мир!"}</h3>
             <p className="text-sm text-gray-600 flex-1 mb-2">
               {"Это HTML-блок. Вы можете вставить сюда любой HTML-контент."}
@@ -119,27 +118,14 @@ export default function InfiniteCanvas() {
           tileWidth={REPEAT_WIDTH}
           tileHeight={REPEAT_HEIGHT}
           onMouseDown={handleMouseDown}
-        />,
+        >
+          {
+            items.map(item => {
+              return item.content
+            })
+          }
+        </TileBackground>
       )
-    }
-  }
-
-  // Рендерим элементы контента
-  const renderedItems: React.ReactNode[] = []
-  for (let col = startCol; col <= endCol; col++) {
-    for (let row = startRow; row <= endRow; row++) {
-      items.forEach((item) => {
-        renderedItems.push(
-          <CanvasItem
-            key={`${item.id}-${col}-${row}`}
-            id={item.id}
-            x={item.x + col * REPEAT_WIDTH}
-            y={item.y + row * REPEAT_HEIGHT}
-          >
-            {item.content}
-          </CanvasItem>,
-        )
-      })
     }
   }
 
@@ -156,8 +142,6 @@ export default function InfiniteCanvas() {
         {/* Фоновые тайлы для перетаскивания */}
         {backgroundTiles}
 
-        {/* Рендеринг всех элементов контента */}
-        {renderedItems}
       </div>
 
       {/* Кнопка для добавления нового HTML-блока */}

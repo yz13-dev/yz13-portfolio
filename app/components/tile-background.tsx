@@ -8,9 +8,10 @@ interface TileBackgroundProps {
   tileWidth: number
   tileHeight: number
   onMouseDown: (e: React.MouseEvent) => void
+  children?: React.ReactNode
 }
 
-export function TileBackground({ col, row, tileWidth, tileHeight, onMouseDown }: TileBackgroundProps) {
+export function TileBackground({ col, row, tileWidth, tileHeight, onMouseDown, children }: TileBackgroundProps) {
   return (
     <div
       className="absolute cursor-grab active:cursor-grabbing"
@@ -22,6 +23,10 @@ export function TileBackground({ col, row, tileWidth, tileHeight, onMouseDown }:
         zIndex: 1, // Ниже элементов контента
       }}
       onMouseDown={onMouseDown}
-    />
+    >
+      <div className="w-full h-full relative">
+        {children}
+      </div>
+    </div>
   )
 }
