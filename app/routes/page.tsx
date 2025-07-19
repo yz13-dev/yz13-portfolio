@@ -141,7 +141,7 @@ export default function () {
 
         <motion.main
           transition={{ duration: 0.2 }}
-          className="w-full gap-4 flex flex-col justify-between p-4 md:max-w-md max-w-full md:h-fit h-dvh"
+          className="w-full flex flex-col justify-between p-4 md:max-w-md max-w-full md:h-fit h-dvh"
         >
           <div className="space-y-4 py-8 px-4">
             <div className="flex items-center gap-2 justify-between w-full">
@@ -178,19 +178,21 @@ export default function () {
               <p className="block text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
             </div>
 
-            <Projects projects={projects} />
+            <div>
+              <Projects projects={projects} />
+            </div>
 
           </div>
 
-          <div className="w-full !mt-auto space-y-4 bg-card/40 rounded-4xl p-4">
-            <div className="p-2">
-              <div className="w-full max-w-xs">
-                <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={available} />
+          <div className="w-full !mt-auto space-y-4 bg-card/40 rounded-4xl border p-4">
+            <div>
+              <div className="w-full max-w-xs mx-auto">
+                <Availability className="bg-transparent !px-0 !py-0 border-0 mx-auto" size="sm" enabled={available} />
                 <div className="w-full">
-                  <span className="text-muted-foreground text-center text-xs">
+                  <span className="text-muted-foreground text-center block mx-auto text-xs">
                     По вопросам и/или предложениям пишите:
                   </span>
-                  <div className="flex items-center gap-1.5 text-xs">
+                  <div className="flex items-center justify-center gap-1.5 text-xs *:text-center">
                     <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
                     <span className="text-muted-foreground">или</span>
                     <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
