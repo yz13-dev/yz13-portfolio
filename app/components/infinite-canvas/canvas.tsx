@@ -26,17 +26,31 @@ export default function InfiniteCanvas() {
   const { translateX, translateY, updateTranslate } = useCanvasStore()
   const [isDragging, setIsDragging] = useState(false)
   const lastMousePos = useRef({ x: 0, y: 0 })
+  const lastTouchPos = useRef({ x: 0, y: 0 })
+  const initialTouchPos = useRef({ x: 0, y: 0 })
+  const lastTouchUpdate = useRef(0)
   const canvasRef = useRef<HTMLDivElement>(null)
 
   const width = 5_000;
   const height = 5_000;
 
-
-  // Обработчик начала перетаскивания холста
+  // Обработчик начала перетаскивания холста (мышь)
   const handlePointerDown = useCallback((e: React.MouseEvent) => {
     if (e.button === 0) {
       setIsDragging(true)
       lastMousePos.current = { x: e.clientX, y: e.clientY }
+      e.preventDefault()
+    }
+  }, [])
+
+  // Обработчик начала перетаскивания холста (касание)
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      setIsDragging(true)
+      const touch = e.touches[0]
+      lastTouchPos.current = { x: touch.clientX, y: touch.clientY }
+      initialTouchPos.current = { x: touch.clientX, y: touch.clientY }
+      lastTouchUpdate.current = Date.now()
       e.preventDefault()
     }
   }, [])
@@ -55,8 +69,41 @@ export default function InfiniteCanvas() {
     [isDragging, updateTranslate],
   )
 
+  // Обработчик перемещения касания для перетаскивания холста
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (!isDragging || e.touches.length !== 1) return
+
+      const now = Date.now()
+      // Throttle touch updates to 30fps (33ms) for smoother movement
+      if (now - lastTouchUpdate.current < 33) return
+
+      const touch = e.touches[0]
+      const currentX = touch.clientX
+      const currentY = touch.clientY
+      
+      // Вычисляем дельту от последней позиции
+      const deltaX = currentX - lastTouchPos.current.x
+      const deltaY = currentY - lastTouchPos.current.y
+
+      // Применяем перемещение с более низким коэффициентом для еще более плавного движения
+      const sensitivity = 0
+      updateTranslate(deltaX * sensitivity, deltaY * sensitivity)
+      
+      lastTouchPos.current = { x: currentX, y: currentY }
+      lastTouchUpdate.current = now
+      e.preventDefault()
+    },
+    [isDragging, updateTranslate],
+  )
+
   // Обработчик отпускания кнопки мыши для завершения перетаскивания холста
   const handlePointerUp = useCallback(() => {
+    setIsDragging(false)
+  }, [])
+
+  // Обработчик окончания касания для завершения перетаскивания холста
+  const handleTouchEnd = useCallback(() => {
     setIsDragging(false)
   }, [])
 
@@ -65,13 +112,17 @@ export default function InfiniteCanvas() {
     if (isDragging) {
       window.addEventListener("pointermove", handlePointerMove)
       window.addEventListener("pointerup", handlePointerUp)
+      window.addEventListener("touchmove", handleTouchMove, { passive: false })
+      window.addEventListener("touchend", handleTouchEnd)
 
       return () => {
         window.removeEventListener("pointermove", handlePointerMove)
         window.removeEventListener("pointerup", handlePointerUp)
+        window.removeEventListener("touchmove", handleTouchMove)
+        window.removeEventListener("touchend", handleTouchEnd)
       }
     }
-  }, [isDragging, handlePointerMove, handlePointerUp])
+  }, [isDragging, handlePointerMove, handlePointerUp, handleTouchMove, handleTouchEnd])
 
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
@@ -99,6 +150,7 @@ export default function InfiniteCanvas() {
           width={width}
           height={height}
           onPointerDown={handlePointerDown}
+          onTouchStart={handleTouchStart}
           contentClassName="flex flex-wrap flex-row"
           className="p-4"
         >
@@ -183,7 +235,16 @@ export default function InfiniteCanvas() {
   }
 
   return (
-    <div className="relative w-full h-full overflow-hidden" ref={canvasRef}>
+    <div 
+      className="relative w-full h-full overflow-hidden" 
+      ref={canvasRef}
+      style={{
+        touchAction: 'none',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        WebkitTouchCallout: 'none',
+      }}
+    >
       {/* Контейнер для перемещения всего содержимого холста */}
       <div
         className="absolute inset-0"

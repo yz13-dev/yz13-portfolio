@@ -4,7 +4,6 @@ import InfiniteCanvas from "@/components/infinite-canvas/canvas";
 import { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import { ProjectsSkeleton } from "@/components/projects";
-import useIsMac from "@/hooks/use-is-mac";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
@@ -126,8 +125,6 @@ export default function () {
 
   // const { available, projects, settings, command } = useLoaderData<typeof loader>();
 
-
-  const isMac = useIsMac()
   const [ready, setReady] = useState<boolean>(false)
 
   useEffect(() => {
@@ -136,7 +133,7 @@ export default function () {
 
   if (!ready) return null;
   return (
-    <div className="w-full h-dvh">
+    <div className="w-full h-dvh overflow-hidden">
       <InfiniteCanvas />
     </div>
   )
