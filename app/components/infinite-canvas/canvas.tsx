@@ -1,0 +1,206 @@
+"use client"
+
+import { cn } from "@yz13/ui/utils"
+import type React from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { Link } from "react-router"
+import Availability from "../availability"
+import Background from "../background"
+import CallToAction from "../call-to-action"
+import { Logo } from "../logo"
+import { useCanvasStore } from "./canvas-store"
+import { Group, GroupItem } from "./group"
+import { TileBackground } from "./tile-background"
+
+interface CanvasItemData {
+  id: string
+  x: number
+  y: number
+  content: React.ReactNode
+}
+
+// const REPEAT_WIDTH = 1000
+// const REPEAT_HEIGHT = 1000
+
+export default function InfiniteCanvas() {
+  const { translateX, translateY, updateTranslate } = useCanvasStore()
+  const [isDragging, setIsDragging] = useState(false)
+  const lastMousePos = useRef({ x: 0, y: 0 })
+  const canvasRef = useRef<HTMLDivElement>(null)
+
+  const width = 5_000;
+  const height = 5_000;
+
+
+  // Обработчик начала перетаскивания холста
+  const handlePointerDown = useCallback((e: React.MouseEvent) => {
+    if (e.button === 0) {
+      setIsDragging(true)
+      lastMousePos.current = { x: e.clientX, y: e.clientY }
+      e.preventDefault()
+    }
+  }, [])
+
+  // Обработчик перемещения мыши для перетаскивания холста
+  const handlePointerMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging) return
+
+      const dx = e.clientX - lastMousePos.current.x
+      const dy = e.clientY - lastMousePos.current.y
+
+      updateTranslate(dx, dy)
+      lastMousePos.current = { x: e.clientX, y: e.clientY }
+    },
+    [isDragging, updateTranslate],
+  )
+
+  // Обработчик отпускания кнопки мыши для завершения перетаскивания холста
+  const handlePointerUp = useCallback(() => {
+    setIsDragging(false)
+  }, [])
+
+  // Эффект для добавления и удаления слушателей событий
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener("pointermove", handlePointerMove)
+      window.addEventListener("pointerup", handlePointerUp)
+
+      return () => {
+        window.removeEventListener("pointermove", handlePointerMove)
+        window.removeEventListener("pointerup", handlePointerUp)
+      }
+    }
+  }, [isDragging, handlePointerMove, handlePointerUp])
+
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
+  const startCol = Math.floor(-translateX / width) - 1
+  const endCol = Math.ceil((-translateX + viewportWidth) / width) + 1
+  const startRow = Math.floor(-translateY / height) - 1
+  const endRow = Math.ceil((-translateY + viewportHeight) / height) + 1
+
+  const MainWrapper = ({ root, children, className = "" }: { root: boolean, children?: React.ReactNode, className?: string }) => {
+    if (root) return <main className={className}>{children}</main>
+    return <div className={className}>{children}</div>
+  }
+  // Рендерим фоновые тайлы для перетаскивания
+  const backgroundTiles = []
+  for (let col = startCol; col <= endCol; col++) {
+    for (let row = startRow; row <= endRow; row++) {
+      const isRoot = col === 0 && row === 0
+      backgroundTiles.push(
+        <TileBackground
+          id={isRoot ? "root-container" : undefined}
+          key={`bg-${col}-${row}`}
+          col={col}
+          row={row}
+          width={width}
+          height={height}
+          onPointerDown={handlePointerDown}
+          contentClassName="flex flex-wrap flex-row"
+          className="p-4"
+        >
+          <div className="w-dvw h-dvh flex items-center relative justify-center">
+            <Background />
+
+            <MainWrapper root={isRoot} className="w-full md:max-w-sm max-w-full space-y-4 bg-card/40 backdrop-blur-md rounded-4xl border p-4">
+
+              <div className="flex items-center gap-2">
+                <Logo size={48} type="icon" />
+                <h1 className="text-4xl font-pixel font-medium">YZ13</h1>
+              </div>
+
+              <div>
+                <p className="text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
+              </div>
+
+              <div>
+                <div className="w-full max-w-xs space-y-2">
+                  <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={false} />
+                  <div className="w-full">
+                    <span className="text-muted-foreground block text-xs">
+                      По вопросам и/или предложениям пишите:
+                    </span>
+                    <div className="flex items-center gap-1.5 text-xs">
+                      <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
+                      <span className="text-muted-foreground">или</span>
+                      <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div className={cn(
+                "flex gap-4 items-center flex-col",
+                "*:w-full *:h-12 *:text-base [&>svg]:!size-[18]"
+              )}>
+                <CallToAction enabled={false} />
+              </div>
+            </MainWrapper>
+
+          </div>
+          <div className="w-[calc(100%-100dvw)] h-dvh p-4 flex flex-wrap gap-4 flex-row">
+            <GroupItem label="OG">
+              <img src="/og/og.png" className="w-full h-full object-cover" alt="og" />
+            </GroupItem>
+          </div>
+          <div className="w-full h-full p-4 flex flex-wrap gap-4 flex-row">
+            <Group label="YZ13 Portfolio">
+              <GroupItem label="v1 Dark">
+                <img src="/screenshots/yz13-v1-dark.png" className="object-cover" alt="yz13-dark" />
+              </GroupItem>
+              <GroupItem label="v1 Light">
+                <img src="/screenshots/yz13-v1-light.png" className="object-cover" alt="yz13-light" />
+              </GroupItem>
+              <GroupItem label="v2">
+                <img src="/screenshots/yz13-v2.png" className="object-cover" alt="yz13-light" />
+              </GroupItem>
+              <GroupItem label="v3">
+                <img src="/screenshots/yz13-v3.png" className="object-cover" alt="yz13-light" />
+              </GroupItem>
+            </Group>
+            <Group label="YZLAB">
+              <GroupItem label="Главная (Dark)">
+                <img src="/screenshots/yzlab-dark.png" className="object-cover" alt="yzlab-dark" />
+              </GroupItem>
+              <GroupItem label="Главная (Light)">
+                <img src="/screenshots/yzlab-light.png" className="object-cover" alt="yzlab-light" />
+              </GroupItem>
+              <GroupItem label="Og">
+                <img src="/screenshots/yzlab-light-og.png" className="" alt="yzlab-dark" />
+              </GroupItem>
+              <GroupItem label="Site">
+                <img src="/screenshots/yzlab-light-site.png" className="" alt="yzlab-dark" />
+              </GroupItem>
+            </Group>
+          </div>
+        </TileBackground>
+      )
+    }
+  }
+
+  return (
+    <div className="relative w-full h-full overflow-hidden" ref={canvasRef}>
+      {/* Контейнер для перемещения всего содержимого холста */}
+      <div
+        className="absolute inset-0"
+        style={{
+          transform: `translate(${translateX}px, ${translateY}px)`,
+          transformOrigin: "0 0",
+        }}
+      >
+        {/* Фоновые тайлы для перетаскивания */}
+        {backgroundTiles}
+
+      </div>
+
+      {/* Кнопка для добавления нового HTML-блока */}
+      <footer className="fixed w-fit bottom-4 left-0 right-0 mx-auto flex flex-col gap-2 z-10">
+
+      </footer>
+    </div>
+  )
+}

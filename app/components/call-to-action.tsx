@@ -23,7 +23,8 @@ export default function ({ enabled = false }: { enabled?: boolean }) {
       >
         <Link to={chat}>
           <SendIcon />
-          <span>Перейти в чат</span>
+          <span className="md:block hidden">Чат</span>
+          <span className="md:hidden block">Перейти в чат</span>
         </Link>
       </Button>
     </>

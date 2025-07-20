@@ -1,34 +1,29 @@
-import Availability, { AvailabilitySkeleton } from "@/components/availability";
-import CallToAction from "@/components/call-to-action";
+import { AvailabilitySkeleton } from "@/components/availability";
 import DitheringBackground from "@/components/dithering-background";
+import InfiniteCanvas from "@/components/infinite-canvas/canvas";
 import { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
-import Projects, { ProjectsSkeleton } from "@/components/projects";
-import Modal from "@/components/settings/modal";
-import { availableForWork, getInfoList, showCommand, showSettings } from "@/flags/flags";
+import { ProjectsSkeleton } from "@/components/projects";
 import useIsMac from "@/hooks/use-is-mac";
-import { getV1Store } from "@yz13/api";
-import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
-import { ChevronDownIcon, SearchIcon, SettingsIcon } from "lucide-react";
-import { motion } from "motion/react";
-import { isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
+import { useEffect, useState } from "react";
+import { isRouteErrorResponse, Link, useRouteError } from "react-router";
 
 export const loader = async () => {
 
-  const projects = await getV1Store()
+  // const projects = await getV1Store()
 
-  const [available, list, settings, command] = await Promise.all([availableForWork(), getInfoList(), showSettings(), showCommand()])
+  // const [available, list, settings, command] = await Promise.all([availableForWork(), getInfoList(), showSettings(), showCommand()])
 
-  return {
-    command,
-    projects,
-    available,
-    list,
-    settings
-  }
+  // return {
+  //   command,
+  //   projects,
+  //   available,
+  //   list,
+  //   settings
+  // }
 }
 
 export const HydrateFallback = () => {
@@ -129,89 +124,20 @@ export function ErrorBoundary() {
 
 export default function () {
 
-  const { available, projects, settings, command } = useLoaderData<typeof loader>();
+  // const { available, projects, settings, command } = useLoaderData<typeof loader>();
 
 
   const isMac = useIsMac()
+  const [ready, setReady] = useState<boolean>(false)
 
+  useEffect(() => {
+    setReady(true)
+  }, [])
+
+  if (!ready) return null;
   return (
-    <>
-      <DitheringBackground className="fixed" />
-      <div className="w-full h-dvh flex flex-col items-center justify-center">
-
-        <motion.main
-          transition={{ duration: 0.2 }}
-          className="w-full flex flex-col justify-between p-4 md:max-w-md max-w-full md:h-fit h-dvh"
-        >
-          <div className="space-y-4 py-8 px-4">
-            <div className="flex items-center gap-2 justify-between w-full">
-              <div className="flex items-center gap-2">
-                <Logo size={48} type="icon" />
-                <h1 className="text-4xl font-pixel font-medium">YZ13</h1>
-              </div>
-              <div className="flex items-center gap-2">
-                {
-                  command &&
-                  <Button variant="secondary">
-                    <SearchIcon />
-                    <span className="text-sm font-mono">
-                      <kbd>{isMac ? "Cmd + K" : "Ctrl + K"}</kbd>
-                    </span>
-                  </Button>
-                }
-                {
-                  settings &&
-                  <Modal>
-                    <Button variant="secondary" size="icon"><SettingsIcon /></Button>
-                  </Modal>
-                }
-                {
-                  false &&
-                  <Button variant="secondary" size="icon">
-                    <ChevronDownIcon />
-                  </Button>
-                }
-              </div>
-            </div>
-
-            <div>
-              <p className="block text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
-            </div>
-
-            <div>
-              <Projects projects={projects} />
-            </div>
-
-          </div>
-
-          <div className="w-full !mt-auto space-y-4 bg-card/40 rounded-4xl border p-4">
-            <div>
-              <div className="w-full max-w-xs mx-auto">
-                <Availability className="bg-transparent !px-0 !py-0 border-0 mx-auto" size="sm" enabled={available} />
-                <div className="w-full">
-                  <span className="text-muted-foreground text-center block mx-auto text-xs">
-                    По вопросам и/или предложениям пишите:
-                  </span>
-                  <div className="flex items-center justify-center gap-1.5 text-xs *:text-center">
-                    <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
-                    <span className="text-muted-foreground">или</span>
-                    <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <div className={cn(
-              "flex gap-4 items-center flex-col",
-              "*:w-full *:h-12 *:text-base [&>svg]:!size-[18]"
-            )}>
-              <CallToAction enabled={available} />
-            </div>
-          </div>
-        </motion.main>
-
-      </div>
-    </>
+    <div className="w-full h-dvh">
+      <InfiniteCanvas />
+    </div>
   )
 }
