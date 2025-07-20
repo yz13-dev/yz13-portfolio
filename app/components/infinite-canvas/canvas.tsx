@@ -81,7 +81,7 @@ export default function InfiniteCanvas() {
       const touch = e.touches[0]
       const currentX = touch.clientX
       const currentY = touch.clientY
-      
+
       // Вычисляем дельту от последней позиции
       const deltaX = currentX - lastTouchPos.current.x
       const deltaY = currentY - lastTouchPos.current.y
@@ -89,7 +89,7 @@ export default function InfiniteCanvas() {
       // Применяем перемещение с более низким коэффициентом для еще более плавного движения
       const sensitivity = 0
       updateTranslate(deltaX * sensitivity, deltaY * sensitivity)
-      
+
       lastTouchPos.current = { x: currentX, y: currentY }
       lastTouchUpdate.current = now
       e.preventDefault()
@@ -157,7 +157,7 @@ export default function InfiniteCanvas() {
           <div className="w-dvw h-dvh flex items-center relative justify-center">
             <Background />
 
-            <MainWrapper root={isRoot} className="w-full md:max-w-sm max-w-full space-y-4 bg-card/40 backdrop-blur-md rounded-4xl border p-4">
+            <MainWrapper root={isRoot} className="w-full max-w-sm space-y-4 bg-card/40 backdrop-blur-md rounded-4xl border p-4">
 
               <div className="flex items-center gap-2">
                 <Logo size={48} type="icon" />
@@ -235,8 +235,8 @@ export default function InfiniteCanvas() {
   }
 
   return (
-    <div 
-      className="relative w-full h-full overflow-hidden" 
+    <div
+      className="relative w-full h-full overflow-hidden"
       ref={canvasRef}
       style={{
         touchAction: 'none',
