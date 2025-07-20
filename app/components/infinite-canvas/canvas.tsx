@@ -259,9 +259,6 @@ export default function InfiniteCanvas() {
       </div>
 
       {/* Кнопка для добавления нового HTML-блока */}
-      <footer className="fixed w-fit bottom-4 left-0 right-0 mx-auto flex flex-col gap-2 z-10">
-
-      </footer>
     </div>
   )
 }

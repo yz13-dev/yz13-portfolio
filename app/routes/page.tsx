@@ -4,9 +4,11 @@ import InfiniteCanvas from "@/components/infinite-canvas/canvas";
 import { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import { ProjectsSkeleton } from "@/components/projects";
+import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
+import { PhoneCallIcon, SendIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { isRouteErrorResponse, Link, useRouteError } from "react-router";
 
@@ -134,7 +136,19 @@ export default function () {
   if (!ready) return null;
   return (
     <div className="w-full h-dvh overflow-hidden">
+      <div className="absolute top-6 left-6 z-10">
+        <Logo size={48} type="icon" />
+      </div>
       <InfiniteCanvas />
+      <footer className="fixed w-fit bottom-4 left-0 right-0 mx-auto gap-2 z-10">
+        <div className="flex items-center gap-2 border rounded-xl bg-card/40 backdrop-blur-md h-14 w-fit px-2">
+          <Button variant="secondary"><PhoneCallIcon />Запланировать видеозвонок</Button>
+          <div className="flex items-center gap-2">
+            <Button variant="secondary"><SendIcon /></Button>
+            <Button>Войти</Button>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
