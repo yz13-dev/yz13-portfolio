@@ -12,7 +12,7 @@ type TileBackgroundProps = {
   contentClassName?: string
 } & ComponentProps<"div">
 
-export function TileBackground({ col, row, width, height, onMouseDown, children, className = "", contentClassName = "", ...props }: TileBackgroundProps) {
+export function TileBackground({ col, row, width, height, onMouseDown, onTouchStart, children, className = "", contentClassName = "", ...props }: TileBackgroundProps) {
   return (
     <div
       style={{
@@ -21,8 +21,14 @@ export function TileBackground({ col, row, width, height, onMouseDown, children,
         width: `${width}px`,
         minHeight: `${height}px`,
         zIndex: 1, // Ниже элементов контента
+        touchAction: 'none',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        WebkitTouchCallout: 'none',
       }}
       className={cn("absolute cursor-grab active:cursor-grabbing", className)}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
       {...props}
     >
       <div className={cn("w-full h-full relative", contentClassName)}>
