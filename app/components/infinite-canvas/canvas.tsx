@@ -247,10 +247,10 @@ export default function InfiniteCanvas() {
                 <img src="/screenshots/yzlab-light.png" className="object-cover" alt="yzlab-light" />
               </GroupItem>
               <GroupItem label="Og">
-                <img src="/screenshots/yzlab-light-og.png" className="" alt="yzlab-dark" />
+                <img src="/screenshots/yzlab-light-og.png" className="" alt="yzlab-light-og" />
               </GroupItem>
               <GroupItem label="Site">
-                <img src="/screenshots/yzlab-light-site.png" className="" alt="yzlab-dark" />
+                <img src="/screenshots/yzlab-light-site.png" className="" alt="yzlab-light-site" />
               </GroupItem>
             </Group>
           </div>
