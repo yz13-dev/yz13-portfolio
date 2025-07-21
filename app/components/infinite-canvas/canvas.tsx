@@ -1,6 +1,7 @@
 "use client"
 
 import { cn } from "@yz13/ui/utils"
+import { StickerIcon } from "lucide-react"
 import type React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Link } from "react-router"
@@ -152,20 +153,44 @@ export default function InfiniteCanvas() {
           onPointerDown={handlePointerDown}
           onTouchStart={handleTouchStart}
           contentClassName="flex flex-wrap flex-row"
-          className="p-4"
         >
-          <div className="w-dvw h-dvh flex items-center relative justify-center">
-            <Background />
+          <div className="w-dvw h-dvh flex md:items-center items-end relative justify-center p-4">
+            {/* <Background /> */}
 
-            <MainWrapper root={isRoot} className="w-full max-w-sm space-y-4 bg-card/40 backdrop-blur-md rounded-4xl border p-4">
+            <MainWrapper root={isRoot} className="w-full sm:max-w-sm max-w-full space-y-4 bg-card/60 backdrop-blur-md rounded-4xl border p-4">
 
-              <div className="flex items-center gap-2">
-                <Logo size={48} type="icon" />
-                <h1 className="text-4xl font-pixel font-medium">YZ13</h1>
+              <div className="flex items-center justify-center relative gap-2 aspect-video w-full bg-secondary/20 border rounded-lg">
+                <Logo size={56} type="icon" />
+                <span className="text-5xl font-pixel font-medium">YZ13</span>
+                <Background className="h-full" videoClassName="opacity-30" containerClassName="blur-md" />
               </div>
 
               <div>
-                <p className="text-muted-foreground">Фронтенд разработчик, специализируюсь на&nbsp;разработке сайтов, веб-приложений.</p>
+                <h1 className="md:text-4xl text-3xl font-semibold">YZ13 - Фронтенд разработчик</h1>
+              </div>
+
+              <div>
+                <p className="md:text-base text-sm text-muted-foreground">
+                  Превращаю дизайн в работающий код. Разрабатываю сайты и веб-приложения с упором на удобство и скорость.
+                </p>
+              </div>
+
+              <div className="py-2">
+                <div className="w-full my-2 bg-secondary/30 rounded-xl">
+                  <div className="w-full h-fit flex items-center">
+                    <div className="md:size-24 size-20 flex items-center justify-center">
+                      <div className="flex items-center justify-center size-14 rounded-full bg-secondary">
+                        <StickerIcon size={28} />
+                      </div>
+                    </div>
+                    <div className="w-[calc(100%-var(--spacing)*20)] h-full flex flex-col gap-0 md:py-3 py-2 pr-3">
+                      <span className="md:text-lg text-base font-medium">React</span>
+                      <span className="text-sm text-muted-foreground">
+                        Быстрые и удобные решения для создания веб-приложений.
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div>

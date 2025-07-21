@@ -139,16 +139,21 @@ export default function () {
       <div className="absolute top-6 left-6 z-10">
         <Logo size={48} type="icon" />
       </div>
+      <div className="absolute top-6 right-6 z-10">
+        <Button disabled>Войти</Button>
+      </div>
       <InfiniteCanvas />
-      <footer className="fixed w-fit bottom-4 left-0 right-0 mx-auto gap-2 z-10">
-        <div className="flex items-center gap-2 border rounded-xl bg-card/40 backdrop-blur-md h-14 w-fit px-2">
-          <Button variant="secondary"><PhoneCallIcon />Запланировать видеозвонок</Button>
-          <div className="flex items-center gap-2">
-            <Button variant="secondary"><SendIcon /></Button>
-            <Button>Войти</Button>
+      {
+        false &&
+        <footer className="fixed w-fit bottom-4 left-0 right-0 mx-auto gap-2 z-10">
+          <div className="flex items-center gap-2 border rounded-xl bg-card/40 backdrop-blur-md h-14 w-fit px-2">
+            <Button variant="secondary"><PhoneCallIcon />Запланировать видеозвонок</Button>
+            <div className="flex items-center gap-2">
+              <Button variant="secondary"><SendIcon /></Button>
+            </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      }
     </div>
   )
 }

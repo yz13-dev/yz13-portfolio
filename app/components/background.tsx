@@ -62,8 +62,12 @@ const randomNumberInRange = (min: number, max: number) => {
 
 export default function Background({
   className = "",
+  containerClassName = "",
+  videoClassName = ""
 }: {
   className?: string;
+  videoClassName?: string;
+  containerClassName?: string;
 }) {
   const randomBg = bgs[randomNumberInRange(0, bgs.length - 1)];
   const bgSrc = randomBg ?? variant1;
@@ -78,29 +82,26 @@ export default function Background({
   if (!ready) return null
   return (
     <div className={cn("w-full h-dvh absolute top-0 z-[-1] left-0", className)}>
-      <div
-        className="w-full h-full relative"
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loaded ? 1 : 0 }}
+        transition={{ duration: 1 }}
+        className={cn(
+          "w-full h-full relative",
+          "grayscale bg-gradient-to-b from-background via-transparent to-background blur-2xl",
+          containerClassName
+        )}
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: loaded ? 1 : 0 }}
-          transition={{ duration: 1 }}
-          className={cn(
-            "w-full h-full relative",
-            "grayscale bg-gradient-to-b from-background via-transparent to-background blur-2xl"
-          )}
-        >
-          <video
-            muted
-            autoPlay
-            loop
-            playsInline
-            onCanPlay={() => setLoaded(true)}
-            className="object-cover opacity-10 w-full h-full invert dark:invert-0"
-            src={bgSrc}
-          />
-        </motion.div>
-      </div>
+        <video
+          muted
+          autoPlay
+          loop
+          playsInline
+          onCanPlay={() => setLoaded(true)}
+          className={cn("object-cover opacity-10 w-full h-full invert dark:invert-0", videoClassName)}
+          src={bgSrc}
+        />
+      </motion.div>
     </div>
   );
 }
