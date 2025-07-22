@@ -2,7 +2,7 @@
 import { cn } from "@yz13/ui/utils"
 import { StickerIcon } from "lucide-react"
 import type React from "react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState, WheelEvent } from "react"
 import { Link } from "react-router"
 import Availability from "../availability"
 import Background from "../background"
@@ -22,8 +22,23 @@ export default function InfiniteCanvas() {
   const lastTouchUpdate = useRef(0)
   const canvasRef = useRef<HTMLDivElement>(null)
 
+
+
   const width = 5_000;
   const height = 5_000;
+
+  const handleWheel = useCallback((e: WheelEvent) => {
+    e.preventDefault()
+
+    const deltaY = e.deltaY
+    const deltaX = e.deltaX
+
+    const newX = deltaX
+    const newY = deltaY
+
+    updateTranslate(-newX, -newY)
+
+  }, [updateTranslate])
 
   // Обработчик начала перетаскивания холста (мышь)
   const handlePointerDown = useCallback((e: React.MouseEvent) => {
@@ -105,12 +120,14 @@ export default function InfiniteCanvas() {
       window.addEventListener("pointerup", handlePointerUp)
       window.addEventListener("touchmove", handleTouchMove, { passive: false })
       window.addEventListener("touchend", handleTouchEnd)
+      // window.addEventListener("wheel", handleWheel)
 
       return () => {
         window.removeEventListener("pointermove", handlePointerMove)
         window.removeEventListener("pointerup", handlePointerUp)
         window.removeEventListener("touchmove", handleTouchMove)
         window.removeEventListener("touchend", handleTouchEnd)
+        // window.removeEventListener("wheel", handleWheel)
       }
     }
   }, [isDragging, handlePointerMove, handlePointerUp, handleTouchMove, handleTouchEnd])
@@ -142,7 +159,8 @@ export default function InfiniteCanvas() {
           height={height}
           onPointerDown={handlePointerDown}
           onTouchStart={handleTouchStart}
-          contentClassName="flex flex-wrap flex-row"
+          onWheel={handleWheel}
+          contentClassName={cn("flex flex-wrap flex-row cursor-grab", isDragging && "cursor-grabbing")}
         >
           <div className="w-dvw h-dvh flex md:items-center items-end relative justify-center p-4">
             {/* <Background /> */}
