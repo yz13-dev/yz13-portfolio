@@ -216,16 +216,16 @@ export default function InfiniteCanvas() {
             </GroupItem>
             <GroupItem label="Logo">
               <div className="w-[600px] h-[270px] grid grid-cols-2 grid-rows-2">
-                <div className="p-4 w-full h-full rounded-md bg-foreground flex items-center justify-center">
+                <div className="p-4 w-full h-full rounded-md bg-white flex items-center justify-center">
                   <img src="/logo/light.png" className="h-1/2" alt="yz13" />
                 </div>
-                <div className="p-4 w-full h-full rounded-md bg-background flex items-center justify-center">
+                <div className="p-4 w-full h-full rounded-md bg-black flex items-center justify-center">
                   <img src="/logo/dark.png" className="h-1/2" alt="yz13" />
                 </div>
-                <div className="p-4 w-full h-full rounded-md bg-background flex items-center justify-center">
+                <div className="p-4 w-full h-full rounded-md bg-black flex items-center justify-center">
                   <img src="/logo/full-dark.png" className="h-1/2" alt="yz13" />
                 </div>
-                <div className="p-4 w-full h-full rounded-md bg-foreground flex items-center justify-center">
+                <div className="p-4 w-full h-full rounded-md bg-white flex items-center justify-center">
                   <img src="/logo/full-light.png" className="h-1/2" alt="yz13" />
                 </div>
               </div>

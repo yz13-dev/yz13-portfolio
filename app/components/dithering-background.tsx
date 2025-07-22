@@ -23,7 +23,9 @@ export default function DitheringBackground({ style = "blocks", className = "" }
   const timeRef = useRef(0)
   const intensityGridRef = useRef<number[][]>([])
 
-  const [ready, setReady] = useState<boolean>(false)
+  const [ready, setReady] = useState<boolean>(false);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   const DITHER_CHARS = DITHER_STYLES[style]
 
@@ -31,13 +33,15 @@ export default function DitheringBackground({ style = "blocks", className = "" }
     setReady(true)
   }, [])
   useEffect(() => {
+    const div = ref.current;
+    if (!div) return;
     // Вычисляем размер сетки на основе размера экрана
     const calculateGridSize = () => {
       const charWidth = 4
       const charHeight = 6
 
-      const width = Math.ceil(window.innerWidth / charWidth) + 20
-      const height = Math.ceil(window.innerHeight / charHeight) + 20
+      const width = Math.ceil(div.clientWidth / charWidth) + 20
+      const height = Math.ceil(div.clientHeight / charHeight) + 20
 
       setGridSize({ width, height })
     }
@@ -48,10 +52,10 @@ export default function DitheringBackground({ style = "blocks", className = "" }
       calculateGridSize()
     }
 
-    window.addEventListener("resize", handleResize)
+    div.addEventListener("resize", handleResize)
 
     return () => {
-      window.removeEventListener("resize", handleResize)
+      div.removeEventListener("resize", handleResize)
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
@@ -138,7 +142,10 @@ export default function DitheringBackground({ style = "blocks", className = "" }
     }
   }, [gridSize, DITHER_CHARS])
   return (
-    <div className={cn("w-full h-dvh absolute overflow-hidden top-0 z-[-1] left-0", className)}>
+    <div
+      ref={ref}
+      className={cn("w-full h-dvh absolute overflow-hidden top-0 z-[-1] left-0", className)}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: ready ? 1 : 0 }}
