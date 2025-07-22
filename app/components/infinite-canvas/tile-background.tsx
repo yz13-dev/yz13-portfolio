@@ -26,7 +26,7 @@ export function TileBackground({ col, row, width, height, onMouseDown, onTouchSt
         WebkitUserSelect: 'none',
         WebkitTouchCallout: 'none',
       }}
-      className={cn("absolute cursor-grab active:cursor-grabbing", className)}
+      className={cn("absolute", className)}
       {...props}
     >
       <div className={cn("w-full h-full relative", contentClassName)}>
