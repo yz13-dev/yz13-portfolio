@@ -22,10 +22,8 @@ export default function InfiniteCanvas() {
   const lastTouchUpdate = useRef(0)
   const canvasRef = useRef<HTMLDivElement>(null)
 
-
-
-  const width = 5_000;
-  const height = 5_000;
+  const width = 3000;
+  const height = 3000;
 
   const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault()
@@ -162,10 +160,10 @@ export default function InfiniteCanvas() {
           onWheel={handleWheel}
           contentClassName={cn("flex flex-wrap flex-row cursor-grab", isDragging && "cursor-grabbing")}
         >
-          <div className="w-dvw h-dvh flex md:items-center items-end relative justify-center p-4">
+          <div className="p-4">
             {/* <Background /> */}
 
-            <MainWrapper root={isRoot} className="w-full sm:max-w-sm max-w-full space-y-8 bg-card/60 backdrop-blur-md rounded-4xl border p-4">
+            <MainWrapper root={isRoot} className="w-full h-fit max-w-sm space-y-8 bg-card/60 backdrop-blur-md rounded-4xl border p-4">
 
               <div className="space-y-4">
                 <div className="flex items-center justify-center relative gap-2 aspect-video w-full bg-secondary/20 border rounded-lg overflow-hidden">
@@ -233,7 +231,7 @@ export default function InfiniteCanvas() {
             </MainWrapper>
 
           </div>
-          <div className="w-[calc(100%-100dvw)] h-dvh p-4 flex flex-wrap gap-4 flex-row">
+          <div className="w-[calc(100%-100dvw)] h-fit p-4 flex flex-wrap gap-4 flex-row">
             <GroupItem label="OG">
               <img src="/og/og.png" className="w-full h-full object-cover" alt="og" />
             </GroupItem>

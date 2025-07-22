@@ -6,6 +6,7 @@ import type { ComponentProps, ReactNode } from "react"
 type TileBackgroundProps = {
   col: number
   row: number
+
   width: number
   height: number
   children?: ReactNode
