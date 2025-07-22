@@ -1,6 +1,5 @@
 "use client"
 import { cn } from "@yz13/ui/utils"
-import { StickerIcon } from "lucide-react"
 import type React from "react"
 import { useCallback, useEffect, useRef, useState, WheelEvent } from "react"
 import { Link } from "react-router"
@@ -22,8 +21,8 @@ export default function InfiniteCanvas() {
   const lastTouchUpdate = useRef(0)
   const canvasRef = useRef<HTMLDivElement>(null)
 
-  const width = 3000;
-  const height = 3000;
+  const width = 2600;
+  const height = 2300;
 
   const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault()
@@ -163,13 +162,13 @@ export default function InfiniteCanvas() {
           <div className="p-4">
             {/* <Background /> */}
 
-            <MainWrapper root={isRoot} className="w-full h-fit max-w-sm space-y-8 bg-card/60 backdrop-blur-md rounded-4xl border p-4">
+            <MainWrapper root={isRoot} className="w-full h-full max-w-sm bg-card/60 backdrop-blur-md rounded-4xl flex flex-col justify-between border p-4">
 
               <div className="space-y-4">
                 <div className="flex items-center justify-center relative gap-2 aspect-video w-full bg-secondary/20 border rounded-lg overflow-hidden">
                   <Logo size={56} type="icon" />
                   <span className="text-5xl font-pixel font-medium">YZ13</span>
-                  <Background className="h-full" videoClassName="opacity-30" containerClassName="blur-md" />
+                  <Background className="h-full" videoClassName="opacity-30" />
                 </div>
 
                 <div>
@@ -183,60 +182,54 @@ export default function InfiniteCanvas() {
                 </div>
               </div>
 
-              {
-                false &&
-                <div className="py-2">
-                  <div className="w-full my-2 bg-secondary/30 rounded-xl">
-                    <div className="w-full h-fit flex items-center">
-                      <div className="md:size-24 size-20 flex items-center justify-center">
-                        <div className="flex items-center justify-center size-14 rounded-full bg-secondary">
-                          <StickerIcon size={28} />
-                        </div>
-                      </div>
-                      <div className="w-[calc(100%-var(--spacing)*20)] h-full flex flex-col gap-0 md:py-3 py-2 pr-3">
-                        <span className="md:text-lg text-base font-medium">React</span>
-                        <span className="text-sm text-muted-foreground">
-                          Быстрые и удобные решения для создания веб-приложений.
-                        </span>
+              <div className="w-full space-y-4">
+                <div>
+                  <div className="w-full max-w-xs space-y-2">
+                    <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={false} />
+                    <div className="w-full">
+                      <span className="text-muted-foreground block text-xs">
+                        По вопросам и/или предложениям пишите:
+                      </span>
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
+                        <span className="text-muted-foreground">или</span>
+                        <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
                       </div>
                     </div>
                   </div>
                 </div>
-              }
 
 
-              <div>
-                <div className="w-full max-w-xs space-y-2">
-                  <Availability className="bg-transparent !px-0 !py-0 border-0" size="sm" enabled={false} />
-                  <div className="w-full">
-                    <span className="text-muted-foreground block text-xs">
-                      По вопросам и/или предложениям пишите:
-                    </span>
-                    <div className="flex items-center gap-1.5 text-xs">
-                      <Link to="mailto:yz13.dev@gmail.com" className="font-medium text-foreground hover:underline">yz13.dev@gmail.com</Link>
-                      <span className="text-muted-foreground">или</span>
-                      <Link to="mailto:yztheceo@yandex.ru" className="font-medium text-foreground hover:underline">yztheceo@yandex.ru</Link>
-                    </div>
-                  </div>
+                <div className={cn(
+                  "flex gap-4 items-center flex-col",
+                  "*:w-full *:h-12 *:text-base [&>svg]:!size-[18]"
+                )}>
+                  <CallToAction enabled={false} />
                 </div>
-              </div>
-
-
-              <div className={cn(
-                "flex gap-4 items-center flex-col",
-                "*:w-full *:h-12 *:text-base [&>svg]:!size-[18]"
-              )}>
-                <CallToAction enabled={false} />
               </div>
             </MainWrapper>
 
           </div>
-          <div className="w-[calc(100%-100dvw)] h-fit p-4 flex flex-wrap gap-4 flex-row">
+          <div className="w-[calc(100%-100dvw)] h-fit p-4 flex flex-col gap-4">
             <GroupItem label="OG">
               <img src="/og/og.png" className="w-full h-full object-cover" alt="og" />
             </GroupItem>
-            <div className="">
-            </div>
+            <GroupItem label="Logo">
+              <div className="w-[600px] h-[270px] grid grid-cols-2 grid-rows-2">
+                <div className="p-4 w-full h-full rounded-md bg-foreground flex items-center justify-center">
+                  <img src="/logo/light.png" className="h-1/2" alt="yz13" />
+                </div>
+                <div className="p-4 w-full h-full rounded-md bg-background flex items-center justify-center">
+                  <img src="/logo/dark.png" className="h-1/2" alt="yz13" />
+                </div>
+                <div className="p-4 w-full h-full rounded-md bg-background flex items-center justify-center">
+                  <img src="/logo/full-dark.png" className="h-1/2" alt="yz13" />
+                </div>
+                <div className="p-4 w-full h-full rounded-md bg-foreground flex items-center justify-center">
+                  <img src="/logo/full-light.png" className="h-1/2" alt="yz13" />
+                </div>
+              </div>
+            </GroupItem>
           </div>
           <div className="w-full h-full p-4 flex flex-wrap gap-4 flex-row">
             <Group label="YZ13 Portfolio">
