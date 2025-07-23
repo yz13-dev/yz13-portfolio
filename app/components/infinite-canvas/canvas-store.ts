@@ -17,3 +17,13 @@ export const useCanvasStore = create<CanvasState>((set) => ({
       translateY: state.translateY + dy,
     })),
 }))
+
+// Селекторы для оптимизации ре-рендеров
+export const useTranslateX = () => useCanvasStore((state) => state.translateX)
+export const useTranslateY = () => useCanvasStore((state) => state.translateY)
+export const useUpdateTranslate = () => useCanvasStore((state) => state.updateTranslate)
+export const useTranslate = () => {
+  const translateX = useCanvasStore(state => state.translateX)
+  const translateY = useCanvasStore(state => state.translateY)
+  return { translateX, translateY }
+}
