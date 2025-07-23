@@ -21,8 +21,8 @@ export const Group = ({
   actions
 }: GroupProps) => {
   return (
-    <div className={cn("flex flex-col w-fit h-fit", groupClassName)}>
-      <div className="flex items-center justify-between gap-3 py-3">
+    <div className={cn("flex flex-col divide-y w-fit h-fit", groupClassName)}>
+      <div className="flex items-center justify-between gap-3 p-4">
         <div className="flex items-center gap-2">
           <div className="size-6 flex items-center justify-center bg-secondary rounded-[6px]">
             <GroupIcon size={14} className="text-muted-foreground" />
@@ -39,7 +39,7 @@ export const Group = ({
       </div>
       {
         children &&
-        <div className={cn("grid grid-cols-2 gap-4 px-4 pb-4 rounded-3xl bg-card/40 border *:bg-card", className)}>
+        <div className={cn("grid grid-cols-2 divide-x rounded-3xl", className)}>
           {children}
         </div>
       }
@@ -56,8 +56,8 @@ type GroupItemProps = {
 
 export const GroupItem = ({ children, className = "", label = "" }: GroupItemProps) => {
   return (
-    <div className="flex flex-col w-fit h-fit">
-      <div className="flex items-center justify-between gap-3 py-3">
+    <div className="flex flex-col w-fit h-fit divide-y">
+      <div className="flex items-center justify-between gap-3 p-4">
         <div className="flex items-center gap-2">
           <div className="size-6 flex items-center justify-center bg-secondary rounded-[6px]">
             <LayoutGridIcon size={14} className="text-muted-foreground" />
@@ -66,7 +66,7 @@ export const GroupItem = ({ children, className = "", label = "" }: GroupItemPro
         </div>
         <div className="flex items-center gap-2"></div>
       </div>
-      <div className={cn("w-[600px] bg-card rounded-sm overflow-hidden border relative", className)}>
+      <div className={cn("w-[600px] bg-card overflow-hidden relative", className)}>
         {children}
       </div>
     </div>

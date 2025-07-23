@@ -28,7 +28,7 @@ export const MainContent = React.memo(({ isRoot }: { isRoot: boolean }) => {
   }, [])
 
   return (
-    <MainWrapper root={isRoot} className="w-full h-full max-w-sm gap-6 bg-card backdrop-blur-md rounded-4xl flex flex-col justify-between border p-4">
+    <MainWrapper root={isRoot} className="w-full h-full max-w-sm gap-6 backdrop-blur-md p-4 flex flex-col justify-between">
       <div className="space-y-4">
         <div className="flex items-center justify-center relative gap-2 aspect-video w-full bg-secondary/20 border rounded-lg overflow-hidden">
           <Logo size={56} type="icon" />
@@ -76,22 +76,22 @@ export const MainContent = React.memo(({ isRoot }: { isRoot: boolean }) => {
 })
 
 export const LogoSection = React.memo(() => (
-  <div className="h-full flex flex-col gap-4">
-    <GroupItem label="OG">
+  <div className="h-full flex flex-col *:h-1/2 divide-y">
+    <GroupItem label="OG" className="h-full">
       <img src="/og/og.png" className="w-full h-full object-cover" alt="og" />
     </GroupItem>
     <GroupItem label="Logo">
-      <div className="w-[600px] h-[270px] grid grid-cols-2 grid-rows-2">
-        <div className="p-4 w-full h-full rounded-md bg-white flex items-center justify-center">
+      <div className="w-full h-full grid grid-cols-2 grid-rows-2">
+        <div className="p-4 w-full h-full bg-white flex items-center justify-center">
           <img src="/logo/light.png" className="h-1/2" alt="yz13" />
         </div>
-        <div className="p-4 w-full h-full rounded-md bg-black flex items-center justify-center">
+        <div className="p-4 w-full h-full bg-black flex items-center justify-center">
           <img src="/logo/dark.png" className="h-1/2" alt="yz13" />
         </div>
-        <div className="p-4 w-full h-full rounded-md bg-black flex items-center justify-center">
+        <div className="p-4 w-full h-full bg-black flex items-center justify-center">
           <img src="/logo/full-dark.png" className="h-1/2" alt="yz13" />
         </div>
-        <div className="p-4 w-full h-full rounded-md bg-white flex items-center justify-center">
+        <div className="p-4 w-full h-full bg-white flex items-center justify-center">
           <img src="/logo/full-light.png" className="h-1/2" alt="yz13" />
         </div>
       </div>
@@ -100,11 +100,11 @@ export const LogoSection = React.memo(() => (
 ))
 
 export const ScreenshotsSection = React.memo(() => (
-  <div className="h-full flex flex-col gap-4">
+  <div className="h-full flex flex-col">
     <Group
       label="YZ13 Portfolio"
       groupClassName="w-full"
-      className="*:w-full"
+      className="*:w-full *:h-full divide-y"
     >
       <GroupItem label="v1 Dark" className="w-full">
         <img src="/screenshots/yz13-v1-dark.png" className="object-cover" alt="yz13-dark" />
@@ -113,8 +113,8 @@ export const ScreenshotsSection = React.memo(() => (
         <img src="/screenshots/yz13-v1-light.png" className="object-cover" alt="yz13-light" />
       </GroupItem>
     </Group>
-    <Group label="Соц. сети" groupClassName="w-full h-full" className="h-full grid grid-rows-1 grid-cols-4 p-4">
-      <div className="w-full h-full border rounded-lg flex items-center justify-center gap-2 relative group">
+    <Group label="Соц. сети" groupClassName="w-full h-full" className="h-full grid grid-rows-1 grid-cols-4 *:p-4">
+      <div className="w-full h-full flex items-center justify-center gap-2 relative hover:bg-card group">
         <Link
           to="https://github.com/yz13-dev"
           className="absolute inset-0 w-full h-full"
@@ -122,7 +122,7 @@ export const ScreenshotsSection = React.memo(() => (
         <span className="text-muted-foreground text-base group-hover:text-foreground group-hover:underline">Github</span>
         <ExternalLinkIcon size={16} className="text-muted-foreground group-hover:text-foreground" />
       </div>
-      <div className="w-full h-full border rounded-lg flex items-center justify-center gap-2 relative group">
+      <div className="w-full h-full flex items-center justify-center gap-2 relative hover:bg-card group">
         <Link
           to="https://t.me/yz13_dev"
           className="absolute inset-0 w-full h-full"
@@ -130,7 +130,7 @@ export const ScreenshotsSection = React.memo(() => (
         <span className="text-muted-foreground text-base group-hover:text-foreground group-hover:underline">Telegram</span>
         <ExternalLinkIcon size={16} className="text-muted-foreground group-hover:text-foreground" />
       </div>
-      <div className="w-full h-full border rounded-lg flex items-center justify-center gap-2 relative group">
+      <div className="w-full h-full flex items-center justify-center gap-2 relative hover:bg-card group">
         <Link
           to="https://x.com/yz13_dev"
           className="absolute inset-0 w-full h-full"
@@ -138,7 +138,7 @@ export const ScreenshotsSection = React.memo(() => (
         <span className="text-muted-foreground text-base group-hover:text-foreground group-hover:underline">Twitter(X)</span>
         <ExternalLinkIcon size={16} className="text-muted-foreground group-hover:text-foreground" />
       </div>
-      <div className="w-full h-full border rounded-lg flex items-center justify-center gap-2 relative hover:bg-card group">
+      <div className="w-full h-full flex items-center justify-center gap-2 relative hover:bg-card group">
         <Link
           to="mailto:yz13.dev@gmail.com"
           className="absolute inset-0 w-full h-full"
@@ -195,7 +195,7 @@ export const ProjectGroup = React.memo(({ project }: { project: ExtenderPublicat
 })
 
 export const ProjectChunk = React.memo(({ items }: { items: ExtenderPublication[] }) => (
-  <div className="w-full flex flex-row gap-4">
+  <div className="w-full flex flex-row divide-x">
     {
       items.map(project => (
         <ProjectGroup key={project.id} project={project} />
