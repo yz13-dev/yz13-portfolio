@@ -8,23 +8,41 @@ type GroupProps = {
   children?: React.ReactNode
   className?: string
   label?: string
+  description?: string
+  groupClassName?: string
+  actions?: React.ReactNode
 }
-export const Group = ({ children, className = "", label = "" }: GroupProps) => {
+export const Group = ({
+  groupClassName = "",
+  children,
+  className = "",
+  label = "",
+  description,
+  actions
+}: GroupProps) => {
   return (
-    <div className="flex flex-col w-fit h-fit">
+    <div className={cn("flex flex-col w-fit h-fit", groupClassName)}>
       <div className="flex items-center justify-between gap-3 py-3">
         <div className="flex items-center gap-2">
           <div className="size-6 flex items-center justify-center bg-secondary rounded-[6px]">
             <GroupIcon size={14} className="text-muted-foreground" />
           </div>
-          <span className="text-sm text-muted-foreground">{label}</span>
+          <span className="text-sm text-foreground">{label}</span>
+          {
+            description &&
+            <span className="text-sm line-clamp-1 text-muted-foreground">{description}</span>
+          }
         </div>
         <div className="flex items-center gap-2">
+          {actions}
         </div>
       </div>
-      <div className={cn("grid grid-cols-2 gap-4 px-4 pb-4 rounded-3xl bg-card/40 border", className)}>
-        {children}
-      </div>
+      {
+        children &&
+        <div className={cn("grid grid-cols-2 gap-4 px-4 pb-4 rounded-3xl bg-card/40 border *:bg-card", className)}>
+          {children}
+        </div>
+      }
     </div>
   )
 }
