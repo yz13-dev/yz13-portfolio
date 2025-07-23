@@ -4,27 +4,34 @@ import InfiniteCanvas from "@/components/infinite-canvas/canvas";
 import { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import { ProjectsSkeleton } from "@/components/projects";
+import { getV1Store } from "@yz13/api";
+import type { GetV1Store200Item } from "@yz13/api/types";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { PhoneCallIcon, SendIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { isRouteErrorResponse, Link, useRouteError } from "react-router";
+import { isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
+
+export type ExtenderPublication = GetV1Store200Item & {
+  attachments: { url: string }[]
+}
 
 export const loader = async () => {
 
-  // const projects = await getV1Store()
+  const projects = ((await getV1Store()) as ExtenderPublication[])
+    .sort((a, b) => a.public_url ? -1 : 1)
 
   // const [available, list, settings, command] = await Promise.all([availableForWork(), getInfoList(), showSettings(), showCommand()])
 
-  // return {
-  //   command,
-  //   projects,
-  //   available,
-  //   list,
-  //   settings
-  // }
+  return {
+    projects,
+    //   command,
+    //   available,
+    //   list,
+    //   settings
+  }
 }
 
 export const HydrateFallback = () => {
@@ -125,7 +132,7 @@ export function ErrorBoundary() {
 
 export default function () {
 
-  // const { available, projects, settings, command } = useLoaderData<typeof loader>();
+  const { projects } = useLoaderData<typeof loader>();
 
   const [ready, setReady] = useState<boolean>(false)
 
@@ -142,7 +149,7 @@ export default function () {
       <div className="absolute top-6 right-6 z-10">
         <Button disabled>Войти</Button>
       </div>
-      <InfiniteCanvas />
+      <InfiniteCanvas projects={projects} />
       {
         false &&
         <footer className="fixed w-fit bottom-4 left-0 right-0 mx-auto gap-2 z-10">
