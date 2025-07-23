@@ -19,7 +19,7 @@ const DITHER_STYLES = {
 export default function DitheringBackground({ style = "blocks", className = "" }: DitheringBackgroundProps) {
   const [grid, setGrid] = useState<string[][]>([])
   const [gridSize, setGridSize] = useState({ width: 300, height: 150 })
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | undefined>(undefined)
   const timeRef = useRef(0)
   const intensityGridRef = useRef<number[][]>([])
 
