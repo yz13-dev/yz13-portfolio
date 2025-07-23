@@ -43,7 +43,7 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
   // Constants
   const dimensions: Dimensions = {
     width: 2400,
-    height: 3000
+    height: 1300
   }
 
   // Viewport - используем статичные значения
@@ -166,7 +166,7 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
             <div className="p-4">
               <MainContent isRoot={isRoot} />
             </div>
-            <div className="w-[calc(100%-var(--container-sm))] h-fit p-4 flex flex-row gap-4">
+            <div className="w-[calc(100%-var(--container-sm))] h-full p-4 flex flex-row gap-4">
               <LogoSection />
               <ScreenshotsSection />
             </div>
