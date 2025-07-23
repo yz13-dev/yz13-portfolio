@@ -1,7 +1,7 @@
 import { cdn } from "@/utils/cdn"
 import { Button } from "@yz13/ui/button"
 import { cn } from "@yz13/ui/utils"
-import { ArrowUpRightIcon } from "lucide-react"
+import { ArrowUpRightIcon, ExternalLinkIcon } from "lucide-react"
 import React, { useCallback } from "react"
 import { Link } from "react-router"
 import { ExtenderPublication } from "../../routes/page"
@@ -100,18 +100,54 @@ export const LogoSection = React.memo(() => (
 ))
 
 export const ScreenshotsSection = React.memo(() => (
-  <Group
-    label="YZ13 Portfolio"
-    groupClassName="w-full"
-    className="*:w-full"
-  >
-    <GroupItem label="v1 Dark" className="w-full">
-      <img src="/screenshots/yz13-v1-dark.png" className="object-cover" alt="yz13-dark" />
-    </GroupItem>
-    <GroupItem label="v1 Light" className="w-full">
-      <img src="/screenshots/yz13-v1-light.png" className="object-cover" alt="yz13-light" />
-    </GroupItem>
-  </Group>
+  <div className="h-full flex flex-col gap-4">
+    <Group
+      label="YZ13 Portfolio"
+      groupClassName="w-full"
+      className="*:w-full"
+    >
+      <GroupItem label="v1 Dark" className="w-full">
+        <img src="/screenshots/yz13-v1-dark.png" className="object-cover" alt="yz13-dark" />
+      </GroupItem>
+      <GroupItem label="v1 Light" className="w-full">
+        <img src="/screenshots/yz13-v1-light.png" className="object-cover" alt="yz13-light" />
+      </GroupItem>
+    </Group>
+    <Group label="Соц. сети" groupClassName="w-full h-full" className="h-full grid grid-rows-1 grid-cols-4 p-4">
+      <div className="w-full h-full border rounded-lg flex items-center justify-center gap-2 relative group">
+        <Link
+          to="https://github.com/yz13-dev"
+          className="absolute inset-0 w-full h-full"
+        />
+        <span className="text-muted-foreground text-base group-hover:text-foreground group-hover:underline">Github</span>
+        <ExternalLinkIcon size={16} className="text-muted-foreground group-hover:text-foreground" />
+      </div>
+      <div className="w-full h-full border rounded-lg flex items-center justify-center gap-2 relative group">
+        <Link
+          to="https://t.me/yz13_dev"
+          className="absolute inset-0 w-full h-full"
+        />
+        <span className="text-muted-foreground text-base group-hover:text-foreground group-hover:underline">Telegram</span>
+        <ExternalLinkIcon size={16} className="text-muted-foreground group-hover:text-foreground" />
+      </div>
+      <div className="w-full h-full border rounded-lg flex items-center justify-center gap-2 relative group">
+        <Link
+          to="https://x.com/yz13_dev"
+          className="absolute inset-0 w-full h-full"
+        />
+        <span className="text-muted-foreground text-base group-hover:text-foreground group-hover:underline">Twitter(X)</span>
+        <ExternalLinkIcon size={16} className="text-muted-foreground group-hover:text-foreground" />
+      </div>
+      <div className="w-full h-full border rounded-lg flex items-center justify-center gap-2 relative hover:bg-card group">
+        <Link
+          to="mailto:yz13.dev@gmail.com"
+          className="absolute inset-0 w-full h-full"
+        />
+        <span className="text-muted-foreground text-base group-hover:text-foreground group-hover:underline">Email</span>
+        <ExternalLinkIcon size={16} className="text-muted-foreground group-hover:text-foreground" />
+      </div>
+    </Group>
+  </div>
 ))
 
 export const ProjectGroup = React.memo(({ project }: { project: ExtenderPublication }) => {
@@ -166,4 +202,4 @@ export const ProjectChunk = React.memo(({ items }: { items: ExtenderPublication[
       ))
     }
   </div>
-)) 
+))
