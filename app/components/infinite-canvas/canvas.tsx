@@ -43,7 +43,7 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
   // Constants
   const dimensions: Dimensions = {
     width: 2400,
-    height: 1300
+    height: 1310
   }
 
   // Viewport - используем статичные значения
@@ -160,18 +160,20 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
           onPointerDown={handlePointerDown}
           onTouchStart={handleTouchStart}
           onWheel={handleWheel}
-          contentClassName={cn("flex flex-wrap bg-background flex-row cursor-grab", isDragging && "cursor-grabbing")}
+          contentClassName={cn(
+            "flex flex-wrap bg-background flex-row cursor-grab",
+            "divide-y divide-x border-t",
+            isDragging && "cursor-grabbing"
+          )}
         >
-          <div className="w-full flex">
-            <div className="p-4">
-              <MainContent isRoot={isRoot} />
-            </div>
-            <div className="w-[calc(100%-var(--container-sm))] h-full p-4 flex flex-row gap-4">
+          <div className="w-full flex divide-x">
+            <MainContent isRoot={isRoot} />
+            <div className="w-[calc(100%-var(--container-sm))] h-full flex flex-row divide-x">
               <LogoSection />
               <ScreenshotsSection />
             </div>
           </div>
-          <div className="w-full h-full p-4 flex flex-col gap-4">
+          <div className="w-full h-full flex flex-col divide-y border-r">
             {
               chunk.map((items, index) => (
                 <ProjectChunk key={`chunk/${index}`} items={items} />
