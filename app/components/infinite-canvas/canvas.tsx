@@ -35,10 +35,7 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
 
   // Local state
   const [isDragging, setIsDragging] = useState(false)
-  const lastMousePos = useRef({ x: 0, y: 0 })
-  const lastTouchPos = useRef({ x: 0, y: 0 })
-  const initialTouchPos = useRef({ x: 0, y: 0 })
-  const lastTouchUpdate = useRef(0)
+  const lastPointerPos = useRef({ x: 0, y: 0 })
 
   // Constants
   const dimensions: Dimensions = {
@@ -66,77 +63,42 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
     updateTranslate(-e.deltaX, -e.deltaY)
   }
 
-  const handlePointerDown = (e: React.MouseEvent) => {
+  const handlePointerDown = (e: React.PointerEvent) => {
     if (e.button === 0) {
       setIsDragging(true)
-      lastMousePos.current = { x: e.clientX, y: e.clientY }
+      lastPointerPos.current = { x: e.clientX, y: e.clientY }
       e.preventDefault()
     }
   }
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
-      setIsDragging(true)
-      const touch = e.touches[0]
-      lastTouchPos.current = { x: touch.clientX, y: touch.clientY }
-      initialTouchPos.current = { x: touch.clientX, y: touch.clientY }
-      lastTouchUpdate.current = Date.now()
-      e.preventDefault()
-    }
-  }
-
-  const handlePointerMove = (e: MouseEvent) => {
+  const handlePointerMove = (e: PointerEvent) => {
     if (!isDragging) return
 
-    const dx = e.clientX - lastMousePos.current.x
-    const dy = e.clientY - lastMousePos.current.y
+    // requestAnimationFrame(() => {
+      const dx = e.clientX - lastPointerPos.current.x
+      const dy = e.clientY - lastPointerPos.current.y
 
-    updateTranslate(dx, dy)
-    lastMousePos.current = { x: e.clientX, y: e.clientY }
-  }
-
-  const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging || e.touches.length !== 1) return
-
-    const now = Date.now()
-    if (now - lastTouchUpdate.current < 33) return // Throttle to 30fps
-
-    const touch = e.touches[0]
-    const currentX = touch.clientX
-    const currentY = touch.clientY
-
-    const deltaX = currentX - lastTouchPos.current.x
-    const deltaY = currentY - lastTouchPos.current.y
-
-    const sensitivity = 1
-    updateTranslate(deltaX * sensitivity, deltaY * sensitivity)
-
-    lastTouchPos.current = { x: currentX, y: currentY }
-    lastTouchUpdate.current = now
-    e.preventDefault()
+      updateTranslate(dx, dy)
+      lastPointerPos.current = { x: e.clientX, y: e.clientY }
+    // })
   }
 
   const handlePointerUp = () => {
     setIsDragging(false)
   }
 
-  const handleTouchEnd = () => {
-    setIsDragging(false)
-  }
-
   // Event listeners
   useEffect(() => {
     if (isDragging) {
-      window.addEventListener("pointermove", handlePointerMove)
-      window.addEventListener("pointerup", handlePointerUp)
-      window.addEventListener("touchmove", handleTouchMove, { passive: false })
-      window.addEventListener("touchend", handleTouchEnd)
+      const handlePointerMoveEvent = (e: PointerEvent) => handlePointerMove(e)
+      const handlePointerUpEvent = () => handlePointerUp()
+
+      window.addEventListener("pointermove", handlePointerMoveEvent, { passive: false })
+      window.addEventListener("pointerup", handlePointerUpEvent)
 
       return () => {
-        window.removeEventListener("pointermove", handlePointerMove)
-        window.removeEventListener("pointerup", handlePointerUp)
-        window.removeEventListener("touchmove", handleTouchMove)
-        window.removeEventListener("touchend", handleTouchEnd)
+        window.removeEventListener("pointermove", handlePointerMoveEvent)
+        window.removeEventListener("pointerup", handlePointerUpEvent)
       }
     }
   }, [isDragging])
@@ -158,7 +120,6 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
           width={width}
           height={height}
           onPointerDown={handlePointerDown}
-          onTouchStart={handleTouchStart}
           onWheel={handleWheel}
           contentClassName={cn(
             "flex flex-wrap bg-background flex-row cursor-grab",
@@ -194,6 +155,7 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
         userSelect: 'none',
         WebkitUserSelect: 'none',
         WebkitTouchCallout: 'none',
+        WebkitTapHighlightColor: 'transparent',
       }}
     >
       <div
@@ -201,6 +163,8 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
         style={{
           transform: `translate(${translateX}px, ${translateY}px)`,
           transformOrigin: "0 0",
+          willChange: 'transform',
+          backfaceVisibility: 'hidden',
         }}
       >
         {backgroundTiles}
