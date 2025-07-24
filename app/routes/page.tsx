@@ -140,6 +140,7 @@ export default function () {
     setReady(true)
   }, [])
 
+  const isDev = import.meta.env.DEV
   if (!ready) return null;
   return (
     <div className="w-full h-dvh overflow-hidden">
@@ -147,7 +148,19 @@ export default function () {
         <Logo size={48} type="icon" />
       </div>
       <div className="absolute top-6 right-6 z-10">
-        <Button disabled>Войти</Button>
+        {
+          isDev
+            ?
+            <Button asChild>
+              <Link to="/auth/signin">
+                Войти
+              </Link>
+            </Button>
+            :
+            <Button disabled>
+              Войти
+            </Button>
+        }
       </div>
       <InfiniteCanvas projects={projects} />
       {
