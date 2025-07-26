@@ -58,7 +58,7 @@ const ProjectRow = ({ children, className = "" }: { children?: React.ReactNode, 
 
 const ProjectRowLogo = ({ children, className = "" }: { children?: React.ReactNode, className?: string }) => {
   return (
-    <div className={cn("size-10 shrink-0 relative bg-background rounded-sm", className)}>
+    <div className={cn("size-10 shrink-0 relative bg-background border rounded-sm", className)}>
       {children}
     </div>
   )

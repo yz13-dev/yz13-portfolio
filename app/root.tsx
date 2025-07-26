@@ -1,3 +1,4 @@
+import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { Links, LinksFunction, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration } from "react-router";
 import "./styles/globals.css";
 
@@ -65,7 +66,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="inter-sans pixelify-sans jetbrains-mono">
-        {children}
+        <NuqsAdapter>
+          {children}
+        </NuqsAdapter>
         <ScrollRestoration />
         <Scripts />
       </body>

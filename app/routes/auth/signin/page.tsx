@@ -1,11 +1,44 @@
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
+import { postV1AuthLogin } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
-import { Link } from "react-router";
+import { Loader2Icon } from "lucide-react";
+import { useQueryState } from "nuqs";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 
+export default function () {
 
-export default function Page() {
+  const [next] = useQueryState("next")
+
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const nav = useNavigate()
+
+  const login = async () => {
+    setLoading(true)
+    try {
+
+      const result = await postV1AuthLogin({
+        email,
+        password
+      })
+
+      if (result) {
+        nav(next ? next : "/")
+      }
+
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="w-full h-dvh relative flex flex-col items-center justify-center">
       <DitheringBackground />
@@ -21,16 +54,31 @@ export default function Page() {
         </div>
         <div className="md:w-1/2 w-full md:h-full h-1/2 pt-20 relative">
           <div className="px-6 pb-6 h-full gap-4 flex flex-col justify-between">
-            <Input placeholder="yz13@yz13.ru" className="h-10 text-base" />
+            <Input
+              placeholder="yz13@yz13.ru"
+              className="h-10 text-base"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="******"
+              className="h-10 text-base"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <div className="w-full">
             </div>
             <div className="flex items-center justify-end gap-3">
-              <Button variant="ghost" asChild>
-                <Link to="/auth/signup">
-                  Создать аккаунт
-                </Link>
-              </Button>
-              <Button>Продолжить</Button>
+              {
+                !loading &&
+                <Button variant="ghost" asChild>
+                  <Link to="/auth/signup">
+                    Создать аккаунт
+                  </Link>
+                </Button>
+              }
+              <Button disabled={loading} onClick={login}>{loading && <Loader2Icon className="animate-spin" />}Продолжить</Button>
             </div>
           </div>
         </div>

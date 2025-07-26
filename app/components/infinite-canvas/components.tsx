@@ -100,7 +100,7 @@ export const LogoSection = React.memo(() => (
 ))
 
 export const ScreenshotsSection = React.memo(() => (
-  <div className="h-full flex flex-col">
+  <div className="h-full flex flex-row divide-x">
     <Group
       label="YZ13 Portfolio"
       groupClassName="w-full"
@@ -113,8 +113,8 @@ export const ScreenshotsSection = React.memo(() => (
         <img src="/screenshots/yz13-v1-light.png" className="object-cover" alt="yz13-light" />
       </GroupItem>
     </Group>
-    <Group label="Соц. сети" groupClassName="w-full h-full" className="h-full grid grid-rows-1 grid-cols-4 *:p-4">
-      <div className="w-full h-full flex items-center justify-center gap-2 relative hover:bg-card group">
+    <Group label="Соц. сети" groupClassName="w-full h-full" className="h-full grid grid-rows-2 grid-cols-2 *:p-4">
+      <div className="w-full h-full flex items-center justify-center gap-2 relative hover:bg-card group border-b">
         <Link
           to="https://github.com/yz13-dev"
           className="absolute inset-0 w-full h-full"
@@ -122,7 +122,7 @@ export const ScreenshotsSection = React.memo(() => (
         <span className="text-muted-foreground text-base group-hover:text-foreground group-hover:underline">Github</span>
         <ExternalLinkIcon size={16} className="text-muted-foreground group-hover:text-foreground" />
       </div>
-      <div className="w-full h-full flex items-center justify-center gap-2 relative hover:bg-card group">
+      <div className="w-full h-full flex items-center justify-center gap-2 relative hover:bg-card group border-b">
         <Link
           to="https://t.me/yz13_dev"
           className="absolute inset-0 w-full h-full"

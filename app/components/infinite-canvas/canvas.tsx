@@ -1,7 +1,9 @@
 "use client"
 import { cn } from "@yz13/ui/utils"
+import { ListIcon } from "lucide-react"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { ExtenderPublication } from "../../routes/page"
+import Projects from "../projects"
 import { useTranslate, useUpdateTranslate } from "./canvas-store"
 import {
   chunkArray,
@@ -40,7 +42,7 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
   // Constants
   const dimensions: Dimensions = {
     width: 2400,
-    height: 1310
+    height: 1800
   }
 
   // Viewport - используем статичные значения
@@ -75,11 +77,11 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
     if (!isDragging) return
 
     // requestAnimationFrame(() => {
-      const dx = e.clientX - lastPointerPos.current.x
-      const dy = e.clientY - lastPointerPos.current.y
+    const dx = e.clientX - lastPointerPos.current.x
+    const dy = e.clientY - lastPointerPos.current.y
 
-      updateTranslate(dx, dy)
-      lastPointerPos.current = { x: e.clientX, y: e.clientY }
+    updateTranslate(dx, dy)
+    lastPointerPos.current = { x: e.clientX, y: e.clientY }
     // })
   }
 
@@ -131,8 +133,20 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
             <MainContent isRoot={isRoot} />
             <div className="w-[calc(100%-var(--container-sm))] h-full flex flex-row divide-x">
               <LogoSection />
-              <ScreenshotsSection />
+              <aside className="w-96 h-full shrink-0">
+                <div className="w-full p-3 flex items-center gap-2 text-muted-foreground">
+                  <ListIcon size={14} />
+                  <span className="text-sm">Проекты</span>
+                </div>
+                <div className="px-3">
+                  <Projects projects={projects} />
+                </div>
+              </aside>
+              <div className="w-[calc(100%-var(--spacing)*96)] h-full"></div>
             </div>
+          </div>
+          <div className="w-full flex divide-x">
+            <ScreenshotsSection />
           </div>
           <div className="w-full h-full flex flex-col divide-y border-r">
             {
