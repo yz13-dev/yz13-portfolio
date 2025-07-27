@@ -28,6 +28,8 @@ export default function () {
         password
       })
 
+      console.log(result)
+
       if (result) {
         nav(next ? next : "/")
       }

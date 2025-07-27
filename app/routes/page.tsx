@@ -4,6 +4,7 @@ import InfiniteCanvas from "@/components/infinite-canvas/canvas";
 import { InfoListSkeleton } from "@/components/info-list";
 import { Logo } from "@/components/logo";
 import { ProjectsSkeleton } from "@/components/projects";
+import User from "@/components/user";
 import { getV1Store } from "@yz13/api";
 import type { GetV1Store200Item } from "@yz13/api/types";
 import { Button } from "@yz13/ui/button";
@@ -140,7 +141,6 @@ export default function () {
     setReady(true)
   }, [])
 
-  const isDev = import.meta.env.DEV
   if (!ready) return null;
   return (
     <div className="w-full h-dvh overflow-hidden">
@@ -148,19 +148,7 @@ export default function () {
         <Logo size={48} type="icon" />
       </div>
       <div className="absolute top-6 right-6 z-10">
-        {
-          isDev
-            ?
-            <Button asChild>
-              <Link to="/auth/signin">
-                Войти
-              </Link>
-            </Button>
-            :
-            <Button disabled>
-              Войти
-            </Button>
-        }
+        <User />
       </div>
       <InfiniteCanvas projects={projects} />
       {
