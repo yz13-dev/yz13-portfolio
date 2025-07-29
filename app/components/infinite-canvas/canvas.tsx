@@ -3,6 +3,8 @@ import { cn } from "@yz13/ui/utils"
 import { ListIcon } from "lucide-react"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { ExtenderPublication } from "../../routes/page"
+import Background from "../background"
+import { Logo } from "../logo"
 import Projects from "../projects"
 import { useTranslate, useUpdateTranslate } from "./canvas-store"
 import {
@@ -142,7 +144,10 @@ export default function InfiniteCanvas({ projects = [] }: { projects?: ExtenderP
                   <Projects projects={projects} />
                 </div>
               </aside>
-              <div className="w-[calc(100%-var(--spacing)*96)] h-full"></div>
+              <div className="w-full relative h-full overflow-hidden flex items-center justify-center">
+                <Logo size={64} type="full" />
+                <Background className="w-full h-full z-10" videoClassName="opacity-25" />
+              </div>
             </div>
           </div>
           <div className="w-full flex divide-x">

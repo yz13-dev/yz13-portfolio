@@ -6,9 +6,7 @@ import React, { useCallback } from "react"
 import { Link } from "react-router"
 import { ExtenderPublication } from "../../routes/page"
 import Availability from "../availability"
-import Background from "../background"
 import CallToAction from "../call-to-action"
-import { Logo } from "../logo"
 import { Group, GroupItem } from "./group"
 
 // Utility functions
@@ -30,12 +28,6 @@ export const MainContent = React.memo(({ isRoot }: { isRoot: boolean }) => {
   return (
     <MainWrapper root={isRoot} className="w-full h-full max-w-sm gap-6 backdrop-blur-md p-4 flex flex-col justify-between">
       <div className="space-y-4">
-        <div className="flex items-center justify-center relative gap-2 aspect-video w-full bg-secondary/20 border rounded-lg overflow-hidden">
-          <Logo size={56} type="icon" />
-          <span className="text-5xl font-pixel font-medium">YZ13</span>
-          <Background className="h-full" videoClassName="blur-lg" />
-        </div>
-
         <div>
           <h1 className="md:text-4xl text-3xl font-semibold">YZ13 - Фронтенд разработчик</h1>
         </div>
