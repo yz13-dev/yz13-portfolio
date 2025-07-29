@@ -1,14 +1,38 @@
+import { Route } from ".react-router/types/app/routes/auth/signin/+types/page";
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
-import { postV1AuthLogin } from "@yz13/api";
+import { Logo as AppLogo } from "@/components/projects";
+import { getV1StoreId, postV1AuthLogin } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
 import { Loader2Icon } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, redirect, useLoaderData, useNavigate } from "react-router";
+
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+
+  const appId = searchParams.get("appId")
+
+  if (!appId) return { app: null }
+
+  const next = searchParams.get("next")
+  const app = await getV1StoreId(appId)
+
+  if (!next && app?.public_url) {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("next", app.public_url)
+    const route = `${url.pathname}?${newSearchParams.toString()}`
+    return redirect(route)
+  }
+  return { app }
+
+}
 
 export default function () {
+  const { app } = useLoaderData<typeof loader>();
 
   const [next] = useQueryState("next")
 
@@ -45,16 +69,36 @@ export default function () {
     <div className="w-full h-dvh relative flex flex-col items-center justify-center">
       <DitheringBackground />
       <div className="max-w-3xl w-full h-fit border bg-background flex md:flex-row flex-col rounded-4xl">
-        <div className="md:w-1/2 w-full md:h-full h-1/2 pt-20 relative">
-          <Logo size={48} type="icon" className="size-12 absolute top-6 left-6" />
+        <div className="md:w-1/2 w-full md:h-full h-fit pt-20 relative">
+          <div className="flex items-start gap-1 absolute top-6 left-6">
+            <Logo size={48} type="icon" className="size-12" />
+
+            {
+              app &&
+              <div className="size-9 flex items-center justify-center">
+                <span>X</span>
+              </div>
+            }
+
+
+            {
+              app &&
+              <div className="h-9 min-w-9 relative border rounded-lg">
+                <AppLogo project={app} />
+              </div>
+            }
+
+          </div>
           <div className="px-6 pb-6 h-full space-y-2">
-            <h1 className="text-3xl font-semibold block">Вход</h1>
+            <h1 className="text-3xl font-semibold block">
+              Вход {app ? `в ${app.name}` : null}
+            </h1>
             <p className="text-lg block text-muted-foreground">
               Используйте аккаунт YZ13.
             </p>
           </div>
         </div>
-        <div className="md:w-1/2 w-full md:h-full h-1/2 pt-20 relative">
+        <div className="md:w-1/2 w-full md:h-full h-fit pt-20 relative">
           <div className="px-6 pb-6 h-full gap-4 flex flex-col justify-between">
             <Input
               placeholder="yz13@yz13.ru"

@@ -17,7 +17,7 @@ export const ProjectsSkeleton = () => {
   )
 }
 
-const Logo = ({ project, className = "" }: { project: GetV1Store200Item, className?: string }) => {
+export const Logo = ({ project, className = "" }: { project: GetV1Store200Item, className?: string }) => {
 
   const icon = project.icon as any;
 
