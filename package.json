@@ -14,7 +14,7 @@
     "@react-router/node": "^7.7.0",
     "@react-router/serve": "^7.7.0",
     "@vercel/edge-config": "^1.4.0",
-    "@yz13/api": "^0.1.4",
+    "@yz13/api": "^0.1.13",
     "@yz13/flags": "^0.0.3",
     "@yz13/ui": "^0.1.5",
     "ahooks": "^3.9.0",

@@ -1,4 +1,5 @@
 import { Typewriter } from "@/components/text-writter";
+import { randomNumber } from "@/utils/random-number";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 
@@ -6,6 +7,7 @@ type AvailabilityProps = {
   enabled?: boolean
   className?: string;
   size?: "sm" | "default" | "lg";
+  animated?: boolean;
 };
 
 const availableTexts = [
@@ -32,14 +34,22 @@ const unavailableTexts = [
 const Availability = ({
   enabled = false,
   className = "",
-  size = "default"
+  size = "default",
+  animated = true
 }: AvailabilityProps) => {
 
   const status: "available" | "unavailable" = enabled
     ? "available"
     : "unavailable";
 
-  const text = status === "available" ? availableTexts : unavailableTexts;
+  const animatedText = status === "available"
+    ? availableTexts
+    : unavailableTexts;
+  const randomText = status === "available"
+    ? availableTexts[randomNumber(0, availableTexts.length - 1)]
+    : unavailableTexts[randomNumber(0, unavailableTexts.length - 1)];
+
+  const text = animated ? animatedText : randomText;
 
   return (
     <div
@@ -84,16 +94,29 @@ const Availability = ({
         "data-[status=available]:text-foreground",
         "data-[status=unavailable]:text-muted-foreground",
       )}>
-        <Typewriter
-          text={text}
-          speed={100}
-          loop={true}
-          className={cn(
-            "group-data-[size=sm]:text-xs",
-            "group-data-[size=default]:text-sm",
-            "group-data-[size=lg]:text-base",
-          )}
-        />
+        {
+          animated
+            ?
+            <Typewriter
+              text={text}
+              speed={100}
+              loop={true}
+              className={cn(
+                "group-data-[size=sm]:text-xs",
+                "group-data-[size=default]:text-sm",
+                "group-data-[size=lg]:text-base",
+              )}
+            />
+            : <span
+              className={cn(
+                "group-data-[size=sm]:text-xs",
+                "group-data-[size=default]:text-sm",
+                "group-data-[size=lg]:text-base",
+              )}
+            >
+              {text}
+            </span>
+        }
       </div>
     </div>
   );
