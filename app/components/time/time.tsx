@@ -1,0 +1,57 @@
+import { cn } from "@yz13/ui/utils"
+import { useInterval } from "ahooks"
+import { format } from "date-fns"
+import { useEffect, useMemo, useState } from "react"
+import { getNewDate, useDate } from "./store"
+
+type Props = {
+  children?: React.ReactNode;
+}
+
+export const DateProvider = ({ children }: Props) => {
+
+  const [ready, setReady] = useState<boolean>(false)
+  const [prev, setPrev] = useState(new Date())
+  const date = useDate(state => state.date)
+  const setDate = useDate(state => state.setDate)
+
+
+  useInterval(() => {
+    const isChanged = format(date, "HH:mm")
+
+    if (isChanged) {
+      setPrev(date)
+      setDate(getNewDate())
+    }
+
+  }, ready ? 1000 : undefined)
+  useEffect(() => {
+    setReady(true)
+  }, [])
+  return children
+}
+
+type TimeProps = {
+  format?: string;
+  className?: string
+}
+export const Time = ({
+  className = "",
+  format: timeFormat = "HH:mm"
+}: TimeProps) => {
+  const date = useDate(state => state.date);
+  const offset = useMemo(() => date.getTimezoneOffset() / 60, [date])
+  return (
+    <span className={cn("", className)}>
+      {format(date, timeFormat)}
+    </span>
+  )
+}
+
+export const TimeOffset = ({ className = "" }: { className?: string }) => {
+  const date = useDate(state => state.date)
+  const offset = useMemo(() => date.getTimezoneOffset() / 60, [date])
+  return (
+    <span className={cn("", className)}>{offset} UTC</span>
+  )
+}
