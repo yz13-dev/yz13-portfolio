@@ -25,12 +25,12 @@ export const PricingDetailsSkeleton = () => {
         </div>
         <Button size="lg">{(0).toLocaleString()} ₽ <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
-      <div className="w-full grid lg:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
-        <Skeleton className="row-span-2 w-full h-96" />
+      <div className="w-full grid xl:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
+        <Skeleton className="2xl:row-span-2 row-span-1 w-full h-96" />
         <Skeleton className="row-span-1 w-full h-full" />
         <Skeleton className="row-span-1 w-full h-full" />
         <Skeleton className="row-span-1 w-full h-full" />
-        <Skeleton className="row-span-2 w-full h-96" />
+        <Skeleton className="2xl:row-span-2 row-span-1 w-full h-96" />
         <Skeleton className="row-span-1 w-full h-full" />
       </div>
     </>
@@ -73,10 +73,10 @@ export default function ({ pricing }: Props) {
                             "w-full flex flex-col group *:p-5 bg-card border",
                             isOdd
                               ? isOddChunk
-                                ? "row-span-2"
+                                ? "2xl:row-span-2 row-span-1"
                                 : "row-span-1"
                               : isEvenChunk
-                                ? "row-span-2"
+                                ? "2xl:row-span-2 row-span-1"
                                 : "row-span-1"
                           )}>
                           <div className={cn(
