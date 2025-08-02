@@ -17,7 +17,7 @@ export const ProjectsSkeleton = () => {
   )
 }
 
-export const Logo = ({ project, className = "" }: { project: GetV1Store200Item, className?: string }) => {
+export const ProjectLogo = ({ project, className = "" }: { project: GetV1Store200Item, className?: string }) => {
 
   const icon = project.icon as any;
 
@@ -92,7 +92,7 @@ export default function ({ projects = [] }: { projects?: GetV1Store200Item[] }) 
                 <ProjectRow key={project.id}>
                   <div className="flex items-center gap-2">
                     <ProjectRowLogo>
-                      <Logo project={project} className="rounded-sm" />
+                      <ProjectLogo project={project} className="rounded-sm" />
                     </ProjectRowLogo>
                     <div className="*:inline *:text-sm line-clamp-2">
                       <span className="text-foreground">{project.name}</span>
@@ -116,7 +116,7 @@ export default function ({ projects = [] }: { projects?: GetV1Store200Item[] }) 
               <ProjectRow key={project.id}>
                 <div className="flex items-center gap-2">
                   <ProjectRowLogo>
-                    <Logo project={project} className="rounded-sm" />
+                    <ProjectLogo project={project} className="rounded-sm" />
                   </ProjectRowLogo>
                   <div className="*:inline *:text-sm line-clamp-2">
                     <span className="text-foreground">{project.name}</span>

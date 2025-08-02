@@ -4,19 +4,10 @@ import { cn } from "@yz13/ui/utils"
 import { ArrowUpRightIcon, ExternalLinkIcon } from "lucide-react"
 import React, { useCallback } from "react"
 import { Link } from "react-router"
-import { ExtenderPublication } from "../../routes/page"
+import type { ExtenderPublication } from "../../routes/map/page"
 import Availability from "../availability"
 import CallToAction from "../call-to-action"
 import { Group, GroupItem } from "./group"
-
-// Utility functions
-export const chunkArray = <T extends any>(arr: T[], size: number): T[][] => {
-  const result = []
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size))
-  }
-  return result
-}
 
 // Memoized components
 export const MainContent = React.memo(({ isRoot }: { isRoot: boolean }) => {

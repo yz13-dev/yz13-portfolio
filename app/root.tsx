@@ -1,5 +1,6 @@
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { Links, LinksFunction, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { DateProvider } from "./components/time/time";
 import "./styles/globals.css";
 
 export const links: LinksFunction = () => [
@@ -67,7 +68,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="inter-sans pixelify-sans jetbrains-mono">
         <NuqsAdapter>
-          {children}
+          <DateProvider>
+            {children}
+          </DateProvider>
         </NuqsAdapter>
         <ScrollRestoration />
         <Scripts />
