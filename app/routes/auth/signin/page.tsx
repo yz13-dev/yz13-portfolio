@@ -75,7 +75,7 @@ export default function () {
 
             {
               app &&
-              <div className="size-9 flex items-center justify-center">
+              <div className="size-9 relative flex items-center justify-center">
                 <span>X</span>
               </div>
             }
@@ -83,7 +83,7 @@ export default function () {
 
             {
               app &&
-              <div className="h-9 min-w-9 relative border rounded-lg">
+              <div className="size-14 -top-3 relative">
                 <ProjectLogo project={app} />
               </div>
             }
