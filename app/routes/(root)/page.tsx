@@ -9,7 +9,7 @@ import { Button } from "@yz13/ui/button";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
 import { Suspense } from "react";
-import { Await, Link, useLoaderData } from "react-router";
+import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
 import FooterProjects, { FooterProjectsSkeleton } from "./footer-projects";
 import PricingDetails, { PricingDetailsSkeleton } from "./pricing-details";
 import PricingDuration, { PricingDurationSkeleton } from "./pricing-duration";
@@ -62,6 +62,52 @@ export const loader = async () => {
   }
 }
 
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  const errorTitle = error instanceof Error ? error.message : isRouteErrorResponse(error) ? `${error.status} ${error.statusText}` : "Unknown Error";
+
+  const errorDescription = error instanceof Error ? error.stack : isRouteErrorResponse(error) ? error.data : undefined;
+
+  return (
+    <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
+      <div className="md:w-1/2 w-full md:min-h-fit min-h-dvh md:h-full h-fit flex flex-col justify-between *:p-6 md:sticky static top-0">
+        <header className="w-full space-y-6">
+          <Logo size={28} type="full" />
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Time className="text-2xl font-medium text-foreground" />
+              <TimeOffset className="text-sm text-muted-foreground" />
+            </div>
+            <span className="text-2xl font-medium text-foreground">Tyumen, Russia</span>
+          </div>
+        </header>
+        <div className="w-full space-y-8">
+          <div className="w-full space-y-2 *:block">
+            <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">{title}</h1>
+            <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">
+              {description}
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button variant="secondary"><SendIcon />Чат</Button>
+          </div>
+        </div>
+      </div>
+      <div className="md:w-1/2 w-full md:h-full h-fit *:p-6">
+        <div className="w-full">
+          <span className="text-foreground md:text-4xl text-3xl font-semibold">{errorTitle}</span>
+        </div>
+        <div className="w-full">
+          <span className="text-muted-foreground md:text-2xl text-xl font-medium">
+            {errorDescription}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export const HydrateFallback = () => {
   return (
     <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
@@ -79,8 +125,8 @@ export const HydrateFallback = () => {
         <div className="w-full space-y-8">
           <AvailabilitySkeleton />
           <div className="w-full space-y-2 *:block">
-            <h1 className="text-foreground md:text-4xl text-3xl font-semibold">{title}</h1>
-            <p className="text-muted-foreground md:text-2xl text-xl font-medium">
+            <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">{title}</h1>
+            <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">
               {description}
             </p>
           </div>

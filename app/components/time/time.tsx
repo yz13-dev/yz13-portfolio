@@ -12,15 +12,14 @@ export const DateProvider = ({ children }: Props) => {
 
   const [ready, setReady] = useState<boolean>(false)
   const [prev, setPrev] = useState(new Date())
-  const date = useDate(state => state.date)
   const setDate = useDate(state => state.setDate)
 
 
   useInterval(() => {
-    const isChanged = format(prev, "HH:mm") !== format(date, "HH:mm");
+    const isChanged = format(prev, "HH:mm") !== format(getNewDate(), "HH:mm");
 
     if (isChanged) {
-      setPrev(date)
+      setPrev(getNewDate())
       setDate(getNewDate())
     }
 
