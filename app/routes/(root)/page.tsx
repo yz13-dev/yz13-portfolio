@@ -7,6 +7,7 @@ import { GetV1Pricing200Item, GetV1Store200Item } from "@yz13/api/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@yz13/ui/accordion";
 import { Button } from "@yz13/ui/button";
 import { Skeleton } from "@yz13/ui/skeleton";
+import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
 import { Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
@@ -89,8 +90,17 @@ export function ErrorBoundary() {
               {description}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <Button variant="secondary"><SendIcon />Чат</Button>
+          <div className={cn(
+            "flex md:flex-row flex-col items-center gap-3",
+            "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
+          )}>
+            <Button variant="secondary" asChild>
+              <Link to={telegram}>
+                <SendIcon />
+                <span className="md:hidden inline">Перейти в чат</span>
+                <span className="md:inline hidden">Чат</span>
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
@@ -130,9 +140,17 @@ export const HydrateFallback = () => {
               {description}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <Button variant="secondary"><SendIcon />Чат</Button>
-            <Button>Запланировать видеозвонок <ArrowRightIcon /></Button>
+          <div className={cn(
+            "flex md:flex-row flex-col items-center gap-3",
+            "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
+          )}>
+            <Button variant="secondary" asChild>
+              <Link to={telegram}>
+                <SendIcon />
+                <span className="md:hidden inline">Перейти в чат</span>
+                <span className="md:inline hidden">Чат</span>
+              </Link>
+            </Button>
           </div>
           {
             false &&
@@ -177,7 +195,7 @@ export default function () {
             <span className="text-2xl font-medium text-foreground">Tyumen, Russia</span>
           </div>
         </header>
-        <div className="w-full space-y-8">
+        <div className="w-full space-y-12">
           <Suspense fallback={<AvailabilitySkeleton />}>
             <Await resolve={available}>
               {(available) => <Availability size="lg" enabled={available} />}
@@ -189,8 +207,17 @@ export default function () {
               {description}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <Button variant="secondary"><SendIcon />Чат</Button>
+          <div className={cn(
+            "flex md:flex-row flex-col items-center gap-3",
+            "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
+          )}>
+            <Button variant="secondary" asChild>
+              <Link to={telegram}>
+                <SendIcon />
+                <span className="md:hidden inline">Перейти в чат</span>
+                <span className="md:inline hidden">Чат</span>
+              </Link>
+            </Button>
             <Suspense fallback={<Skeleton className="h-9 w-32" />}>
               <Await resolve={available}>
                 {(available) => <Button disabled={!available}>Запланировать видеозвонок <ArrowRightIcon /></Button>}
