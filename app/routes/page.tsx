@@ -10,7 +10,7 @@ import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { cn } from "@yz13/ui/utils";
-import { ArrowDownIcon, ArrowRightIcon, ChevronRightIcon, ExternalLinkIcon, PlusIcon, SendIcon } from "lucide-react";
+import { ArrowDownIcon, ArrowRightIcon, CheckIcon, ChevronRightIcon, ExternalLinkIcon, PlusIcon, SendIcon } from "lucide-react";
 import { Fragment } from "react";
 import { Link, useLoaderData } from "react-router";
 
@@ -247,16 +247,17 @@ export default function () {
                   <Fragment key={`chunk/${index}`}>
                     {
                       chunk
-                        .map((pricing, priceIndex, arr) => {
+                        .map((pricing, priceIndex) => {
                           const isOddChunk = priceIndex === 0;
                           const isEvenChunk = priceIndex === 1;
                           const active = isOdd ? isOddChunk : isEvenChunk;
+                          const details = pricing.details
                           return (
                             <div
                               key={pricing.id}
                               data-active={active}
                               className={cn(
-                                "w-full min-h-64 group p-3 border",
+                                "w-full flex flex-col group *:p-3 border",
                                 isOdd
                                   ? isOddChunk
                                     ? "row-span-2 bg-foreground !border-foreground/60"
@@ -266,21 +267,70 @@ export default function () {
                                     : "row-span-1 bg-card"
                               )}>
                               <div className={cn(
-                                "w-full flex gap-2 rounded-lg justify-between",
-                                active ? "flex-col h-full" : "flex-row items-center h-fit",
+                                "w-full h-fit flex gap-2 rounded-lg justify-between",
+                                active ? "flex-col" : "flex-row items-center",
                               )}>
-                                <div className="w-full space-y-2 *:block">
+                                <div className="w-full space-y-1 *:block">
                                   <span className="text-2xl font-medium group-data-[active=true]:text-background">{pricing.name}</span>
                                   <span className="text-base group-data-[active=true]:text-background/60 text-muted-foreground">{pricing.description}</span>
                                 </div>
-                                <div className="gap-2 flex w-fit items-center flex-col">
-                                  <span className="text-2xl shrink-0 font-medium group-data-[active=true]:text-background">{pricing.price.toLocaleString()} ₽</span>
-                                  <Button className="w-fit" size="lg" variant={active ? "secondary" : "default"}>
+                                {
+                                  !active &&
+                                  <div className="gap-2 flex w-fit items-center flex-col">
+                                    <span className="text-2xl shrink-0 font-medium">{pricing.price.toLocaleString()} ₽</span>
+                                    <Button className="w-fit" size="lg" variant={active ? "secondary" : "default"} disabled={!available}>
+                                      Заказать
+                                      <ArrowRightIcon />
+                                    </Button>
+                                  </div>
+                                }
+                              </div>
+                              <div className="w-full h-fit">
+                                <ul
+                                  className="*:py-2"
+                                >
+                                  {
+                                    details
+                                      .sort((a, b) => {
+                                        const aHasPricing = !!a.price_per_item;
+                                        const bHasPricing = !!b.price_per_item;
+                                        if (aHasPricing && !bHasPricing) return -1;
+                                        if (!aHasPricing && bHasPricing) return 1;
+                                        return 0;
+                                      })
+                                      .map((detail, index) => {
+                                        const hasPricing = !!detail.price_per_item;
+                                        return (
+                                          <li
+                                            key={`${detail.type}/${index}`}
+                                            className="flex items-center gap-2 group-data-[active=true]:text-background"
+                                          >
+                                            {
+                                              hasPricing
+                                                ? <PlusIcon size={16} className="shrink-0" />
+                                                : <CheckIcon size={16} className="shrink-0" />
+                                            }
+                                            <span className="text-sm">{detail.label}</span>
+                                            {
+                                              hasPricing &&
+                                              <span className="text-sm font-medium ml-auto">{(detail.price_per_item ?? 0).toLocaleString()} ₽</span>
+                                            }
+                                          </li>
+                                        )
+                                      })
+                                  }
+                                </ul>
+                              </div>
+                              {
+                                active &&
+                                <div className="gap-2 w-full h-full flex justify-end items-start flex-col">
+                                  <span className="text-4xl shrink-0 font-medium group-data-[active=true]:text-background">{pricing.price.toLocaleString()} ₽</span>
+                                  <Button className="w-full" size="lg" variant={active ? "secondary" : "default"} disabled={!available}>
                                     Заказать
                                     <ArrowRightIcon />
                                   </Button>
                                 </div>
-                              </div>
+                              }
                             </div>
                           )
                         })
