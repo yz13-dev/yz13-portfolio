@@ -3,7 +3,13 @@ import { Badge } from "@yz13/ui/badge"
 import { Skeleton } from "@yz13/ui/skeleton"
 import type { Pricing } from "./page"
 
-
+const Grid = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="w-full grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-2 *:h-9 *:px-3">
+      {children}
+    </div>
+  )
+}
 
 type Props = {
   pricing: Pricing[]
@@ -12,19 +18,19 @@ type Props = {
 export const PricingDurationSkeleton = () => {
   const badges = Array.from({ length: 6 }).map((_, index) => index)
   return (
-    <div className="w-full grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-2 *:h-9 *:px-3">
+    <Grid>
       {
         badges.map(badge =>
           <Skeleton key={`duration/skeleton/${badge}`} className="h-9 w-full" />
         )
       }
-    </div>
+    </Grid>
   )
 }
 
 export default function ({ pricing }: Props) {
   return (
-    <div className="w-full grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-2 *:h-9 *:px-3">
+    <Grid>
       {
         pricing
           .sort((a, b) => {
@@ -42,6 +48,6 @@ export default function ({ pricing }: Props) {
             )
           })
       }
-    </div>
+    </Grid>
   )
 }

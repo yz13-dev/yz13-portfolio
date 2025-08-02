@@ -1,8 +1,8 @@
-import { ProjectLogo } from "@/components/projects"
-import { Skeleton } from "@yz13/ui/skeleton"
-import { ExternalLinkIcon } from "lucide-react"
-import { Link } from "react-router"
-import type { Project } from "./page"
+import { ProjectLogo } from "@/components/project-logo";
+import { Skeleton } from "@yz13/ui/skeleton";
+import { ExternalLinkIcon } from "lucide-react";
+import { Link } from "react-router";
+import type { Project } from "./page";
 
 
 

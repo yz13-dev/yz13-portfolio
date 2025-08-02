@@ -51,20 +51,16 @@
 
 /* Контейнер с градиент маской для плавного появления/исчезновения */
 .infinite-scroll-container {
-  mask: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--background) 10%,
-    var(--background) 90%,
-    transparent 100%
-  );
-  -webkit-mask: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--background) 10%,
-    var(--background) 90%,
-    transparent 100%
-  );
+  mask: linear-gradient(90deg,
+      transparent 0%,
+      var(--background) 10%,
+      var(--background) 90%,
+      transparent 100%);
+  -webkit-mask: linear-gradient(90deg,
+      transparent 0%,
+      var(--background) 10%,
+      var(--background) 90%,
+      transparent 100%);
 }
 
 /* Рассчитайте duration так: чем больше значение - тем медленнее анимация */

@@ -1,7 +1,7 @@
 import type { Route } from ".react-router/types/app/routes/auth/signin/+types/page";
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
-import { ProjectLogo } from "@/components/projects";
+import { ProjectLogo } from "@/components/project-logo";
 import { getV1StoreId, postV1AuthLogin } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
@@ -75,7 +75,7 @@ export default function () {
 
             {
               app &&
-              <div className="size-9 flex items-center justify-center">
+              <div className="size-9 relative flex items-center justify-center">
                 <span>X</span>
               </div>
             }
@@ -83,7 +83,7 @@ export default function () {
 
             {
               app &&
-              <div className="h-9 min-w-9 relative border rounded-lg">
+              <div className="size-14 -top-3 relative">
                 <ProjectLogo project={app} />
               </div>
             }

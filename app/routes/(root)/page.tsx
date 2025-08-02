@@ -284,20 +284,26 @@ export default function () {
             type="multiple"
             className="rounded-lg bg-card border"
           >
-            <AccordionItem value="q-1" className="*:px-3">
-              <AccordionTrigger className="text-base">Как быстро начнется разработка?</AccordionTrigger>
+            <AccordionItem value="q-1" className="*:px-3 *:text-base">
+              <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                Как быстро начнется разработка?
+              </AccordionTrigger>
               <AccordionContent>
                 После определения целей разработки (1-2 созвона), работа начнется на следующий день. Кроме выходных дней.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="q-2" className="*:px-3">
-              <AccordionTrigger className="text-base">Есть ли лимит к поправкам?</AccordionTrigger>
+            <AccordionItem value="q-2" className="*:px-3 *:text-base">
+              <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                Есть ли лимит к поправкам?
+              </AccordionTrigger>
               <AccordionContent>
                 К небольшим поправкам - нет. К большим поправкам - да. В ценниках указана сумма за большие поправки. Небольшие идут бесплатно.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="q-3" className="*:px-3">
-              <AccordionTrigger className="text-base">Что я получу в конце разработки?</AccordionTrigger>
+            <AccordionItem value="q-3" className="*:px-3 *:text-base">
+              <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                Что я получу в конце разработки?
+              </AccordionTrigger>
               <AccordionContent>
                 В конце разработки вы получаете свой проект на GitHub и получаете доступ к базе данных и функционалу сайта.
                 Если вы заказали NPM-пакет, то вы получите доступ к нему и сможете установить его в своем проекте. При необходимости можно запросить архив вместо github репозитория.
@@ -305,7 +311,7 @@ export default function () {
             </AccordionItem>
           </Accordion>
         </div>
-        <footer className="flex xl:flex-row flex-col-reverse w-full h-git gap-8">
+        <footer className="flex 2xl:flex-row flex-col-reverse w-full h-git gap-8">
           <div className="flex flex-col gap-8 md:max-w-64 max-w-full">
             <div className="w-full flex flex-col gap-3">
               <Logo size={48} />
@@ -331,7 +337,7 @@ export default function () {
               </Suspense>
             </div>
           </div>
-          <div className="w-full h-fit flex sm:flex-row flex-col md:gap-0 gap-6 md:*:w-1/3 *:w-full">
+          <div className="w-full h-fit flex sm:flex-row flex-col gap-6 md:*:w-1/2 *:w-full">
             <div className="w-1/3 flex flex-col gap-3">
               <span>Проекты</span>
               <Suspense fallback={<FooterProjectsSkeleton />}>
@@ -342,14 +348,17 @@ export default function () {
                 </Await>
               </Suspense>
             </div>
-            <div className="w-1/3 flex flex-col gap-3">
-              <span>Ресурсы</span>
-              <ul>
-                <li className="flex items-center gap-2 h-9">
-                  <span className="text-sm">Лого</span>
-                </li>
-              </ul>
-            </div>
+            {
+              false &&
+              <div className="w-1/3 flex flex-col gap-3">
+                <span>Ресурсы</span>
+                <ul>
+                  <li className="flex items-center gap-2 h-9">
+                    <span className="text-sm">Лого</span>
+                  </li>
+                </ul>
+              </div>
+            }
             <div className="w-1/3 flex flex-col gap-3">
               <span>Ссылки</span>
               <ul className="*:text-muted-foreground">
