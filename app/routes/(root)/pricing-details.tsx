@@ -24,7 +24,7 @@ export const PricingDetailsSkeleton = () => {
         </div>
         <Button size="lg">{(0).toLocaleString()} ₽ <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
-      <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
+      <div className="w-full grid lg:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
         <Skeleton className="row-span-2 w-full h-96" />
         <Skeleton className="row-span-1 w-full h-full" />
         <Skeleton className="row-span-1 w-full h-full" />
@@ -51,7 +51,7 @@ export default function ({ pricing }: Props) {
         </div>
         <Button size="lg">{(cheapest.price ?? 0).toLocaleString()} ₽ <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
-      <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
+      <div className="w-full grid lg:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
         {
           chunkedPricing.map((chunk, index) => {
             const isOdd = index % 2 === 0;
