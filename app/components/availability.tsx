@@ -2,6 +2,7 @@ import { Typewriter } from "@/components/text-writter";
 import { randomNumber } from "@/utils/random-number";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
+import { useEffect, useMemo, useState } from "react";
 
 type AvailabilityProps = {
   enabled?: boolean
@@ -37,6 +38,7 @@ const Availability = ({
   size = "default",
   animated = true
 }: AvailabilityProps) => {
+  const [ready, setReady] = useState<boolean>(false)
 
   const status: "available" | "unavailable" = enabled
     ? "available"
@@ -45,12 +47,17 @@ const Availability = ({
   const animatedText = status === "available"
     ? availableTexts
     : unavailableTexts;
-  const randomText = status === "available"
-    ? availableTexts[randomNumber(0, availableTexts.length - 1)]
-    : unavailableTexts[randomNumber(0, unavailableTexts.length - 1)];
+  const randomText = useMemo(() => {
+    return status === "available"
+      ? availableTexts[randomNumber(0, availableTexts.length - 1)]
+      : unavailableTexts[randomNumber(0, unavailableTexts.length - 1)]
+  }, [status])
 
   const text = animated ? animatedText : randomText;
 
+  useEffect(() => {
+    setReady(true)
+  }, [])
   return (
     <div
       data-size={size}
@@ -95,18 +102,29 @@ const Availability = ({
         "data-[status=unavailable]:text-muted-foreground",
       )}>
         {
-          animated
+          ready
             ?
-            <Typewriter
-              text={text}
-              speed={100}
-              loop={true}
-              className={cn(
-                "group-data-[size=sm]:text-xs",
-                "group-data-[size=default]:text-sm",
-                "group-data-[size=lg]:text-base",
-              )}
-            />
+            animated
+              ?
+              <Typewriter
+                text={text}
+                speed={100}
+                loop={true}
+                className={cn(
+                  "group-data-[size=sm]:text-xs",
+                  "group-data-[size=default]:text-sm",
+                  "group-data-[size=lg]:text-base",
+                )}
+              />
+              : <span
+                className={cn(
+                  "group-data-[size=sm]:text-xs",
+                  "group-data-[size=default]:text-sm",
+                  "group-data-[size=lg]:text-base",
+                )}
+              >
+                {text}
+              </span>
             : <span
               className={cn(
                 "group-data-[size=sm]:text-xs",
@@ -114,7 +132,7 @@ const Availability = ({
                 "group-data-[size=lg]:text-base",
               )}
             >
-              {text}
+
             </span>
         }
       </div>

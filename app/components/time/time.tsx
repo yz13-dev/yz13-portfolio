@@ -17,7 +17,7 @@ export const DateProvider = ({ children }: Props) => {
 
 
   useInterval(() => {
-    const isChanged = format(date, "HH:mm")
+    const isChanged = format(prev, "HH:mm") !== format(date, "HH:mm");
 
     if (isChanged) {
       setPrev(date)
@@ -39,11 +39,19 @@ export const Time = ({
   className = "",
   format: timeFormat = "HH:mm"
 }: TimeProps) => {
+  const [ready, setReady] = useState<boolean>(false)
   const date = useDate(state => state.date);
-  const offset = useMemo(() => date.getTimezoneOffset() / 60, [date])
+
+  useEffect(() => {
+    setReady(true)
+  }, [])
   return (
     <span className={cn("", className)}>
-      {format(date, timeFormat)}
+      {
+        ready
+          ? format(date, timeFormat)
+          : "00:00"
+      }
     </span>
   )
 }
