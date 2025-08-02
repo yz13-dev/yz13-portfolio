@@ -1,4 +1,4 @@
-import { Route } from ".react-router/types/app/routes/auth/signin/+types/page";
+import type { Route } from ".react-router/types/app/routes/auth/signin/+types/page";
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/projects";
