@@ -11,10 +11,10 @@ import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
 import { Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
-import FooterProjects, { FooterProjectsSkeleton } from "./footer-projects";
-import PricingDetails, { PricingDetailsSkeleton } from "./pricing-details";
-import PricingDuration, { PricingDurationSkeleton } from "./pricing-duration";
-import RecentProjects, { RecentProjectsSkeleton } from "./recent-projects";
+import FooterProjects, { FooterProjectsError, FooterProjectsSkeleton } from "./footer-projects";
+import PricingDetails, { PricingDetailsError, PricingDetailsSkeleton } from "./pricing-details";
+import PricingDuration, { PricingDurationError, PricingDurationSkeleton } from "./pricing-duration";
+import RecentProjects, { RecentProjectsError, RecentProjectsSkeleton } from "./recent-projects";
 
 export type Project = GetV1Store200Item
 export type Pricing = GetV1Pricing200Item;
@@ -251,7 +251,10 @@ export default function () {
             <span className="text-2xl font-medium">Последние работы</span>
           </div>
           <Suspense fallback={<RecentProjectsSkeleton />}>
-            <Await resolve={publications}>
+            <Await
+              resolve={publications}
+              errorElement={<RecentProjectsError />}
+            >
               {
                 (projects) =>
                   <RecentProjects projects={projects} />
@@ -264,14 +267,20 @@ export default function () {
             <span className="text-2xl font-medium">Услуги и цены</span>
           </div>
           <Suspense fallback={<PricingDurationSkeleton />}>
-            <Await resolve={pricing}>
+            <Await
+              resolve={pricing}
+              errorElement={<PricingDurationError />}
+            >
               {(pricing) => <PricingDuration pricing={pricing} />}
             </Await>
           </Suspense>
         </div>
         <div className="space-y-6">
           <Suspense fallback={<PricingDetailsSkeleton />}>
-            <Await resolve={pricing}>
+            <Await
+              resolve={pricing}
+              errorElement={<PricingDetailsError />}
+            >
               {(pricing) => <PricingDetails pricing={pricing} />}
             </Await>
           </Suspense>
@@ -341,7 +350,10 @@ export default function () {
             <div className="w-1/3 flex flex-col gap-3">
               <span>Проекты</span>
               <Suspense fallback={<FooterProjectsSkeleton />}>
-                <Await resolve={publications}>
+                <Await
+                  resolve={publications}
+                  errorElement={<FooterProjectsError />}
+                >
                   {
                     (projects) => <FooterProjects projects={projects} />
                   }

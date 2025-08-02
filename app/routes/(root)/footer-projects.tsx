@@ -1,6 +1,6 @@
 import { ProjectLogo } from "@/components/project-logo";
 import { Skeleton } from "@yz13/ui/skeleton";
-import { ExternalLinkIcon } from "lucide-react";
+import { ExternalLinkIcon, MessageCircleWarningIcon } from "lucide-react";
 import { Link } from "react-router";
 import type { Project } from "./page";
 
@@ -9,6 +9,19 @@ import type { Project } from "./page";
 
 type Props = {
   projects?: Project[]
+}
+
+export const FooterProjectsError = () => {
+  return (
+    <ul className="space-y-1">
+      <li>
+        <div className="size-9">
+          <MessageCircleWarningIcon />
+          <span>Ошибка при загрузке</span>
+        </div>
+      </li>
+    </ul>
+  )
 }
 
 export const FooterProjectsSkeleton = () => {

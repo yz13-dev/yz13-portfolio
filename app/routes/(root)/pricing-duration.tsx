@@ -15,6 +15,14 @@ type Props = {
   pricing: Pricing[]
 }
 
+export const PricingDurationError = () => {
+  return (
+    <div className="w-full h-40 flex items-center justify-center">
+      <span>Ошибка при загрузке</span>
+    </div>
+  )
+}
+
 export const PricingDurationSkeleton = () => {
   const badges = Array.from({ length: 6 }).map((_, index) => index)
   return (
