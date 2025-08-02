@@ -6,6 +6,7 @@ import { chunk } from "@/utils/chunk";
 import { available } from "@/utils/flags";
 import { formatDuration } from "@/utils/pricing-durations";
 import { getV1Pricing, getV1Store } from "@yz13/api";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@yz13/ui/accordion";
 import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
@@ -131,9 +132,9 @@ export default function () {
         </header>
         <div className="w-full space-y-8">
           <Availability size="lg" enabled={available} />
-          <div className="w-full space-y-2 *:block">
-            <h1 className="text-foreground md:text-4xl text-3xl font-semibold">{title}</h1>
-            <p className="text-muted-foreground md:text-2xl text-xl font-medium">
+          <div className="w-full space-y-3 *:block">
+            <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">{title}</h1>
+            <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">
               {description}
             </p>
           </div>
@@ -345,20 +346,30 @@ export default function () {
           <div className="w-full">
             <span className="text-2xl font-medium">Вопросы и ответы</span>
           </div>
-          <ul className="*:py-3 *:px-5 *:rounded-full *:w-full *:border space-y-3">
-            <li className="flex items-center justify-between">
-              <span className="text-base">Вопрос #1</span>
-              <PlusIcon size={20} className="text-muted-foreground" />
-            </li>
-            <li className="flex items-center justify-between">
-              <span className="text-base">Вопрос #2</span>
-              <PlusIcon size={20} className="text-muted-foreground" />
-            </li>
-            <li className="flex items-center justify-between">
-              <span className="text-base">Вопрос #3</span>
-              <PlusIcon size={20} className="text-muted-foreground" />
-            </li>
-          </ul>
+          <Accordion
+            type="multiple"
+            className="rounded-lg bg-card border"
+          >
+            <AccordionItem value="q-1" className="*:px-3">
+              <AccordionTrigger className="text-base">Как быстро начнется разработка?</AccordionTrigger>
+              <AccordionContent>
+                После определения целей разработки (1-2 созвона), работа начнется на следующий день. Кроме выходных дней.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="q-2" className="*:px-3">
+              <AccordionTrigger className="text-base">Есть ли лимит к поправкам?</AccordionTrigger>
+              <AccordionContent>
+                К небольшим поправкам - нет. К большим поправкам - да. В ценниках указана сумма за большие поправки. Небольшие идут бесплатно.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="q-3" className="*:px-3">
+              <AccordionTrigger className="text-base">Что я получу в конце разработки?</AccordionTrigger>
+              <AccordionContent>
+                В конце разработки вы получаете свой проект на GitHub и получаете доступ к базе данных и функционалу сайта.
+                Если вы заказали NPM-пакет, то вы получите доступ к нему и сможете установить его в своем проекте. При необходимости можно запросить архив вместо github репозитория.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
         <footer className="flex xl:flex-row flex-col-reverse w-full h-git gap-8">
           <div className="flex flex-col gap-8 md:max-w-64 max-w-full">
