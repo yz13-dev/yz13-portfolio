@@ -6,6 +6,16 @@ type Props = {
   projects?: Project[]
 }
 
+export const RecentProjectsError = () => {
+  return (
+    <div className="w-full flex flex-col gap-3">
+      <Skeleton className="xl:h-[500px] h-[400px] w-full" />
+      <div className="h-6 flex items-center" />
+      <span>Ошибка при загрузке</span>
+    </div>
+  )
+}
+
 export const RecentProjectsSkeleton = () => {
   return (
     <div className="w-full flex flex-col gap-3">

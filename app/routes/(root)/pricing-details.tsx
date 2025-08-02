@@ -13,6 +13,24 @@ type Props = {
   pricing: Pricing[]
 }
 
+export const PricingDetailsError = () => {
+  return (
+    <>
+      <div className="w-full flex gap-2 items-center justify-between">
+        <span className="shrink-0 text-2xl font-medium text-muted-foreground">Цены начинаются от</span>
+        <div className="w-full md:flex hidden items-center pl-3">
+          <Separator className="shrink !h-[2px] !bg-muted" />
+          <ChevronRightIcon className="text-muted relative -left-3" />
+        </div>
+        <Button size="lg">{(0).toLocaleString()} ₽ <ArrowDownIcon className="animate-bounce" /></Button>
+      </div>
+      <div className="w-full aspect-video flex items-center justify-center">
+        <span>Ошибка при загрузке</span>
+      </div>
+    </>
+  )
+}
+
 export const PricingDetailsSkeleton = () => {
 
   return (
