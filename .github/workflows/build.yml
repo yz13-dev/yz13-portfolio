@@ -22,23 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Run type check
-        run: bun run typecheck
-
-      - name: Build project
-        run: bun run build
-        env:
-          VITE_EDGE_CONFIG: ${{ secrets.EDGE_CONFIG }}
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -47,4 +30,4 @@ jobs:
           docker build \
             --build-arg VITE_EDGE_CONFIG="${{ secrets.EDGE_CONFIG }}" \
             --build-arg VITE_SUPABASE_URL="${{ secrets.SUPABASE_URL }}" \
-            -t $IMAGE_NAME:$IMAGE_TAG . 
+            -t $IMAGE_NAME:$IMAGE_TAG .
