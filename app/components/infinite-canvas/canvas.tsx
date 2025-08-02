@@ -1,4 +1,5 @@
 "use client"
+import { chunk as chunkArray } from "@/utils/chunk"
 import { cn } from "@yz13/ui/utils"
 import { ListIcon } from "lucide-react"
 import React, { useEffect, useMemo, useRef, useState } from "react"
@@ -8,7 +9,6 @@ import { Logo } from "../logo"
 import Projects from "../projects"
 import { useTranslate, useUpdateTranslate } from "./canvas-store"
 import {
-  chunkArray,
   LogoSection,
   MainContent,
   ProjectChunk,
