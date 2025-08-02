@@ -34,12 +34,12 @@ export default function ({ projects = [] }: Props) {
       >
         {
           [...attachments, ...attachments]
-            .map((attachment) => {
+            .map((attachment, index) => {
               const title = attachment.title
               const description = attachment.description
               const attachments = attachment.attachments
               return (
-                <div key={attachment.id} className="flex shrink-0 flex-col gap-3 h-full">
+                <div key={`${attachment.id}/${index}`} className="flex shrink-0 flex-col gap-3 h-full">
                   <div className="flex items-center h-full gap-3">
                     {
                       attachments
@@ -47,7 +47,7 @@ export default function ({ projects = [] }: Props) {
                           return (
                             <img
                               className="block relative w-full xl:h-[500px] h-[400px] rounded-2xl border"
-                              key={attachment.id}
+                              key={`${attachment.id}/${item.url}/${index}`}
                               src={item.url}
                               alt={attachment.title}
                             />

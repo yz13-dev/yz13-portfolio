@@ -5,6 +5,7 @@ import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { ArrowDownIcon, ArrowRightIcon, CheckIcon, ChevronRightIcon, PlusIcon } from "lucide-react";
 import { Fragment } from "react";
+import { Link } from "react-router";
 import type { Pricing } from "./page";
 
 
@@ -51,7 +52,7 @@ export default function ({ pricing }: Props) {
         </div>
         <Button size="lg">{(cheapest.price ?? 0).toLocaleString()} ₽ <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
-      <div className="w-full grid lg:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
+      <div className="w-full grid xl:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
         {
           chunkedPricing.map((chunk, index) => {
             const isOdd = index % 2 === 0;
@@ -63,39 +64,29 @@ export default function ({ pricing }: Props) {
                       const isOddChunk = priceIndex === 0;
                       const isEvenChunk = priceIndex === 1;
                       const active = isOdd ? isOddChunk : isEvenChunk;
-                      const details = pricing.details
+                      const details = pricing.details;
+                      const priceLink = `/order/${pricing.type}`
                       return (
                         <div
                           key={pricing.id}
-                          data-active={active}
                           className={cn(
-                            "w-full flex flex-col group *:p-3 border",
+                            "w-full flex flex-col group *:p-5 bg-card border",
                             isOdd
                               ? isOddChunk
-                                ? "row-span-2 bg-foreground !border-foreground/60"
-                                : "row-span-1 bg-card"
+                                ? "row-span-2"
+                                : "row-span-1"
                               : isEvenChunk
-                                ? "row-span-2 bg-foreground !border-foreground/60"
-                                : "row-span-1 bg-card"
+                                ? "row-span-2"
+                                : "row-span-1"
                           )}>
                           <div className={cn(
                             "w-full h-fit flex gap-2 rounded-lg justify-between",
                             active ? "flex-col" : "flex-row items-center",
                           )}>
                             <div className="w-full space-y-1 *:block">
-                              <span className="text-2xl font-medium group-data-[active=true]:text-background">{pricing.name}</span>
-                              <span className="text-base group-data-[active=true]:text-background/60 text-muted-foreground">{pricing.description}</span>
+                              <span className="text-2xl font-medium">{pricing.name}</span>
+                              <span className="text-base text-muted-foreground">{pricing.description}</span>
                             </div>
-                            {
-                              !active &&
-                              <div className="gap-2 flex w-fit items-center flex-col">
-                                <span className="text-2xl shrink-0 font-medium">{pricing.price.toLocaleString()} ₽</span>
-                                <Button className="w-fit" size="lg" variant={active ? "secondary" : "default"}>
-                                  Заказать
-                                  <ArrowRightIcon />
-                                </Button>
-                              </div>
-                            }
                           </div>
                           <div className="w-full h-fit">
                             <ul
@@ -115,7 +106,7 @@ export default function ({ pricing }: Props) {
                                     return (
                                       <li
                                         key={`${detail.type}/${index}`}
-                                        className="flex items-center gap-2 group-data-[active=true]:text-background"
+                                        className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                                       >
                                         {
                                           hasPricing
@@ -133,16 +124,15 @@ export default function ({ pricing }: Props) {
                               }
                             </ul>
                           </div>
-                          {
-                            active &&
-                            <div className="gap-2 w-full h-full flex justify-end items-start flex-col">
-                              <span className="text-4xl shrink-0 font-medium group-data-[active=true]:text-background">{pricing.price.toLocaleString()} ₽</span>
-                              <Button className="w-full" size="lg" variant={active ? "secondary" : "default"}>
+                          <div className="gap-2 w-full h-full flex justify-end items-start flex-col">
+                            <span className="text-4xl shrink-0 font-medium">{pricing.price.toLocaleString()} ₽</span>
+                            <Button className="w-full text-base" size="lg" variant="default" asChild>
+                              <Link to={priceLink}>
                                 Заказать
-                                <ArrowRightIcon />
-                              </Button>
-                            </div>
-                          }
+                                <ArrowRightIcon className="size-5" />
+                              </Link>
+                            </Button>
+                          </div>
                         </div>
                       )
                     })

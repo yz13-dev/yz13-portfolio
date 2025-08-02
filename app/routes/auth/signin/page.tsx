@@ -1,7 +1,7 @@
 import type { Route } from ".react-router/types/app/routes/auth/signin/+types/page";
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
-import { ProjectLogo } from "@/components/projects";
+import { ProjectLogo } from "@/components/project-logo";
 import { getV1StoreId, postV1AuthLogin } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
