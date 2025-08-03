@@ -11,9 +11,8 @@ import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
 import { Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
-import FooterProjects, { FooterProjectsError, FooterProjectsSkeleton } from "./footer-projects";
-import PricingDetails, { PricingDetailsError, PricingDetailsSkeleton } from "./pricing-details";
-import PricingDuration, { PricingDurationError, PricingDurationSkeleton } from "./pricing-duration";
+import PricingDetails, { PricingDetailsSkeleton } from "./pricing-details";
+import PricingDuration, { PricingDurationSkeleton } from "./pricing-duration";
 import RecentProjects, { RecentProjectsError, RecentProjectsSkeleton } from "./recent-projects";
 
 export type Project = GetV1Store200Item
@@ -262,29 +261,41 @@ export default function () {
             </Await>
           </Suspense>
         </div>
-        <div className="space-y-6">
-          <div className="w-full">
-            <span className="text-2xl font-medium">Услуги и цены</span>
-          </div>
-          <Suspense fallback={<PricingDurationSkeleton />}>
-            <Await
-              resolve={pricing}
-              errorElement={<PricingDurationError />}
-            >
-              {(pricing) => <PricingDuration pricing={pricing} />}
-            </Await>
-          </Suspense>
-        </div>
-        <div className="space-y-6">
-          <Suspense fallback={<PricingDetailsSkeleton />}>
-            <Await
-              resolve={pricing}
-              errorElement={<PricingDetailsError />}
-            >
-              {(pricing) => <PricingDetails pricing={pricing} />}
-            </Await>
-          </Suspense>
-        </div>
+        <Suspense fallback={
+          <>
+            <div className="space-y-6">
+              <div className="w-full">
+                <span className="text-2xl font-medium">Услуги и цены</span>
+                <PricingDurationSkeleton />
+              </div>
+            </div>
+            <div className="space-y-6">
+              <PricingDetailsSkeleton />
+            </div>
+          </>
+        }>
+          <Await
+            resolve={pricing}
+          >
+            {
+              (pricing) => {
+                return (
+                  <>
+                    <div className="space-y-6">
+                      <div className="w-full">
+                        <span className="text-2xl font-medium">Услуги и цены</span>
+                      </div>
+                      <PricingDuration pricing={pricing} />
+                    </div>
+                    <div className="space-y-6">
+                      <PricingDetails pricing={pricing} />
+                    </div>
+                  </>
+                )
+              }
+            }
+          </Await>
+        </Suspense>
         <div className="space-y-6">
           <div className="w-full">
             <span className="text-2xl font-medium">Вопросы и ответы</span>
@@ -347,30 +358,6 @@ export default function () {
             </div>
           </div>
           <div className="w-full h-fit flex sm:flex-row flex-col gap-6 md:*:w-1/2 *:w-full">
-            <div className="w-1/3 flex flex-col gap-3">
-              <span>Проекты</span>
-              <Suspense fallback={<FooterProjectsSkeleton />}>
-                <Await
-                  resolve={publications}
-                  errorElement={<FooterProjectsError />}
-                >
-                  {
-                    (projects) => <FooterProjects projects={projects} />
-                  }
-                </Await>
-              </Suspense>
-            </div>
-            {
-              false &&
-              <div className="w-1/3 flex flex-col gap-3">
-                <span>Ресурсы</span>
-                <ul>
-                  <li className="flex items-center gap-2 h-9">
-                    <span className="text-sm">Лого</span>
-                  </li>
-                </ul>
-              </div>
-            }
             <div className="w-1/3 flex flex-col gap-3">
               <span>Ссылки</span>
               <ul className="*:text-muted-foreground">
