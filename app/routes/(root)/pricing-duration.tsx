@@ -1,6 +1,7 @@
 import { formatDuration } from "@/utils/pricing-durations"
 import { Badge } from "@yz13/ui/badge"
 import { Skeleton } from "@yz13/ui/skeleton"
+import { memo } from "react"
 import type { Pricing } from "./page"
 
 const Grid = ({ children }: { children: React.ReactNode }) => {
@@ -36,16 +37,11 @@ export const PricingDurationSkeleton = () => {
   )
 }
 
-export default function ({ pricing }: Props) {
+const PricingDuration = memo(({ pricing }: Props) => {
   return (
     <Grid>
       {
         pricing
-          .sort((a, b) => {
-            const aDuration = a.duration.reduce((acc, val) => acc + val, 0)
-            const bDuration = b.duration.reduce((acc, val) => acc + val, 0)
-            return aDuration - bDuration
-          })
           .map(price => {
             const duration = formatDuration(price.duration);
             return (
@@ -58,4 +54,6 @@ export default function ({ pricing }: Props) {
       }
     </Grid>
   )
-}
+})
+
+export default PricingDuration;

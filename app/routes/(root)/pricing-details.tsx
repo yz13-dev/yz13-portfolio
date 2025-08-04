@@ -1,4 +1,5 @@
 import { chunk } from "@/utils/chunk";
+import { formatPrice } from "@/utils/pricing";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
@@ -22,7 +23,7 @@ export const PricingDetailsError = () => {
           <Separator className="shrink !h-[2px] !bg-muted" />
           <ChevronRightIcon className="text-muted relative -left-3" />
         </div>
-        <Button size="lg">{(0).toLocaleString()} ₽ <ArrowDownIcon className="animate-bounce" /></Button>
+        <Button size="lg">{(0).toLocaleString()} <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
       <div className="w-full aspect-video flex items-center justify-center">
         <span>Ошибка при загрузке</span>
@@ -41,7 +42,7 @@ export const PricingDetailsSkeleton = () => {
           <Separator className="shrink !h-[2px] !bg-muted" />
           <ChevronRightIcon className="text-muted relative -left-3" />
         </div>
-        <Button size="lg">{(0).toLocaleString()} ₽ <ArrowDownIcon className="animate-bounce" /></Button>
+        <Button size="lg">{formatPrice(0)} <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
       <div className="w-full grid xl:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
         <Skeleton className="2xl:row-span-2 row-span-1 w-full h-96" />
@@ -68,7 +69,7 @@ export default function ({ pricing }: Props) {
           <Separator className="shrink !h-[2px] !bg-muted" />
           <ChevronRightIcon className="text-muted relative -left-3" />
         </div>
-        <Button size="lg">{(cheapest.price ?? 0).toLocaleString()} ₽ <ArrowDownIcon className="animate-bounce" /></Button>
+        <Button size="lg">{formatPrice(cheapest.price ?? 0)} <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
       <div className="w-full grid xl:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
         {
@@ -134,7 +135,7 @@ export default function ({ pricing }: Props) {
                                         <span className="text-sm">{detail.label}</span>
                                         {
                                           hasPricing &&
-                                          <span className="text-sm font-medium ml-auto">{(detail.price_per_item ?? 0).toLocaleString()} ₽</span>
+                                          <span className="text-sm font-medium ml-auto">{formatPrice(detail.price_per_item ?? 0)}</span>
                                         }
                                       </li>
                                     )
@@ -143,7 +144,7 @@ export default function ({ pricing }: Props) {
                             </ul>
                           </div>
                           <div className="gap-2 w-full h-full flex justify-end items-start flex-col">
-                            <span className="text-4xl shrink-0 font-medium">{pricing.price.toLocaleString()} ₽</span>
+                            <span className="text-4xl shrink-0 font-medium">{formatPrice(pricing.price)}</span>
                             <Button className="w-full text-base" size="lg" variant="default" asChild>
                               <Link to={priceLink}>
                                 Заказать
