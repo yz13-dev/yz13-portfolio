@@ -58,7 +58,6 @@ jobs:
             --zone-requests-limit 10 \
             --memory 1GB \
             --cores 1 \
-            --min-instances 1 \
             --core-fraction 100 \
             --execution-timeout 60s \
             --service-account-id $SERVICE_ACCOUNT_ID \
