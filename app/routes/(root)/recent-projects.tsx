@@ -1,4 +1,5 @@
 import { Skeleton } from "@yz13/ui/skeleton"
+import { cn } from "@yz13/ui/utils"
 import { ComponentProps, useState } from "react"
 import { Project } from "./page"
 
@@ -57,7 +58,7 @@ export default function ({ projects = [] }: Props) {
                         .map(item => {
                           return (
                             <Image
-                              className="block relative w-full xl:h-[500px] h-[400px] aspect-[4/3] rounded-2xl border"
+                              className="block relative w-full xl:h-[500px] h-[400px] aspect-[4/3] rounded-2xl border object-cover"
                               key={`${attachment.id}/${item.url}/${index}`}
                               src={item.url}
                               alt={attachment.title}
@@ -82,7 +83,7 @@ export default function ({ projects = [] }: Props) {
 
 
 type ImageProps = ComponentProps<"img">
-const Image = ({ src, alt, ...props }: ImageProps) => {
+const Image = ({ className = "", src, alt, ...props }: ImageProps) => {
 
   const [loading, setLoading] = useState(true);
 
@@ -93,6 +94,7 @@ const Image = ({ src, alt, ...props }: ImageProps) => {
       }
       <img
         src={src}
+        className={cn("", className)}
         alt={alt}
         onLoad={() => setLoading(false)}
         {...props}
