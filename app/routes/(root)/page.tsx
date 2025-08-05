@@ -9,11 +9,16 @@ import { Button } from "@yz13/ui/button";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
-import PricingDetails, { PricingDetailsSkeleton } from "./pricing-details";
-import PricingDuration, { PricingDurationSkeleton } from "./pricing-duration";
-import RecentProjects, { RecentProjectsError, RecentProjectsSkeleton } from "./recent-projects";
+import { PricingDetailsSkeleton } from "./pricing-details";
+import { PricingDurationSkeleton } from "./pricing-duration";
+import { RecentProjectsError, RecentProjectsSkeleton } from "./recent-projects";
+
+const PricingDetails = lazy(() => import("./pricing-details"));
+const PricingDuration = lazy(() => import("./pricing-duration"));
+
+const RecentProjects = lazy(() => import("./recent-projects"));
 
 export type Project = GetV1Store200Item
 export type Pricing = GetV1Pricing200Item;
