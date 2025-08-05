@@ -51,7 +51,7 @@ export const meta: MetaFunction = () => {
     { name: "theme-color", media: "(prefers-color-scheme: light)", content: "#ffffff" },
     { name: "theme-color", media: "(prefers-color-scheme: dark)", content: "#000000" },
     { name: "color-scheme", content: "light dark" },
-    { name: "apple-mobile-web-app-capable", content: "yes" },
+    { name: "mobile-web-app-capable", content: "yes" },
     { name: "apple-mobile-web-app-status-bar-style", content: "default" },
     { name: "robots", content: "index, max-image-preview:large" },
   ];

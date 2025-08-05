@@ -117,7 +117,7 @@ export function ErrorBoundary() {
   )
 }
 
-export const HydrateFallback = () => {
+export function HydrateFallback() {
   return (
     <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
       <div className="md:w-1/2 w-full md:min-h-fit min-h-dvh md:h-full h-fit flex flex-col justify-between *:p-6 md:sticky static top-0">
@@ -173,6 +173,23 @@ export const HydrateFallback = () => {
         </div>
       </div>
       <div className="md:w-1/2 w-full md:h-full h-fit *:p-6">
+
+        <div className="space-y-6">
+          <div className="w-full">
+            <span className="text-2xl font-medium">Последние работы</span>
+          </div>
+          <RecentProjectsSkeleton />
+        </div>
+
+        <div className="space-y-6">
+          <div className="w-full">
+            <span className="text-2xl font-medium">Услуги и цены</span>
+          </div>
+          <PricingDurationSkeleton />
+        </div>
+        <div className="space-y-6">
+          <PricingDetailsSkeleton />
+        </div>
 
       </div>
     </div>
@@ -312,15 +329,15 @@ export default function () {
             type="multiple"
             className="rounded-lg bg-card border"
           >
-            <AccordionItem value="q-1" className="*:px-4 *:text-base">
+            <AccordionItem value="q-1" className="*:px-5 *:text-base">
               <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
                 Как быстро начнется разработка?
               </AccordionTrigger>
               <AccordionContent>
-                После определения целей разработки (1-2 созвона), работа начнется на следующий день. Кроме выходных дней.
+                После определения задач разработки (1-2 созвона), работа обычно начнется на следующий день. Кроме выходных дней.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="q-2" className="*:px-3 *:text-base">
+            <AccordionItem value="q-2" className="*:px-5 *:text-base">
               <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
                 Есть ли лимит к поправкам?
               </AccordionTrigger>
@@ -328,7 +345,7 @@ export default function () {
                 К небольшим поправкам - нет. К большим поправкам - да. В ценниках указана сумма за большие поправки. Небольшие идут бесплатно.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="q-3" className="*:px-3 *:text-base">
+            <AccordionItem value="q-3" className="*:px-5 *:text-base">
               <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
                 Что я получу в конце разработки?
               </AccordionTrigger>
