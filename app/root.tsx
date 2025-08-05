@@ -5,6 +5,7 @@ import "./styles/globals.css";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "preconnect", href: "https://api.yz13.ru", crossOrigin: "use-credentials" },
   {
     rel: "preconnect",
     href: "https://fonts.gstatic.com",

@@ -143,7 +143,7 @@ export default function ({ pricing }: Props) {
                               }
                             </ul>
                           </div>
-                          <div className="gap-2 w-full h-full flex justify-end items-start flex-col">
+                          <div className="gap-4 w-full h-full flex justify-end items-start flex-col">
                             <span className="text-4xl shrink-0 font-medium">{formatPrice(pricing.price)}</span>
                             <Button className="w-full text-base" size="lg" variant="default" asChild>
                               <Link to={priceLink}>
