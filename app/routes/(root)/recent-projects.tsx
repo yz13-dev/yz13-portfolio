@@ -1,7 +1,7 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@yz13/ui/carousel"
 import { Skeleton } from "@yz13/ui/skeleton"
 import { cn } from "@yz13/ui/utils"
-import { ComponentProps, useState } from "react"
+import { ComponentProps } from "react"
 import { Project } from "./page"
 import { SectionContent } from "./section"
 
@@ -99,18 +99,12 @@ export default function ({ projects = [] }: Props) {
 type ImageProps = ComponentProps<"img">
 const Image = ({ className = "", src, alt, ...props }: ImageProps) => {
 
-  const [loading, setLoading] = useState(true);
-
   return (
     <object className="relative">
-      {
-        loading && <Skeleton className="w-full h-full absolute inset-0" />
-      }
       <img
         src={src}
         className={cn("", className)}
         alt={alt}
-        onLoad={() => setLoading(false)}
         {...props}
       />
     </object>
