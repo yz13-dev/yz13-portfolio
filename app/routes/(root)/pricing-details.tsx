@@ -8,6 +8,7 @@ import { ArrowDownIcon, ArrowRightIcon, CheckIcon, ChevronRightIcon, PlusIcon } 
 import { Fragment } from "react";
 import { Link } from "react-router";
 import type { Pricing } from "./page";
+import { SectionContent, SectionTitle } from "./section";
 
 
 type Props = {
@@ -18,7 +19,7 @@ export const PricingDetailsError = () => {
   return (
     <>
       <div className="w-full flex gap-2 items-center justify-between">
-        <span className="shrink-0 text-2xl font-medium text-muted-foreground">Цены начинаются от</span>
+        <span className="shrink-0 text-muted-foreground">Цены начинаются от</span>
         <div className="w-full md:flex hidden items-center pl-3">
           <Separator className="shrink !h-[2px] !bg-muted" />
           <ChevronRightIcon className="text-muted relative -left-3" />
@@ -37,21 +38,21 @@ export const PricingDetailsSkeleton = () => {
   return (
     <>
       <div className="w-full flex gap-2 items-center justify-between">
-        <span className="shrink-0 text-2xl font-medium text-muted-foreground">Цены начинаются от</span>
+        <SectionTitle className="shrink-0 text-muted-foreground">Цены начинаются от</SectionTitle>
         <div className="w-full md:flex hidden items-center pl-3">
           <Separator className="shrink !h-[2px] !bg-muted" />
           <ChevronRightIcon className="text-muted relative -left-3" />
         </div>
         <Button size="lg">{formatPrice(0)} <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
-      <div className="w-full grid xl:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
+      <SectionContent className="w-full grid xl:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
         <Skeleton className="2xl:row-span-2 row-span-1 w-full h-96" />
         <Skeleton className="row-span-1 w-full h-full" />
         <Skeleton className="row-span-1 w-full h-full" />
         <Skeleton className="row-span-1 w-full h-full" />
         <Skeleton className="2xl:row-span-2 row-span-1 w-full h-96" />
         <Skeleton className="row-span-1 w-full h-full" />
-      </div>
+      </SectionContent>
     </>
   )
 }
@@ -64,14 +65,14 @@ export default function ({ pricing }: Props) {
   return (
     <>
       <div className="w-full flex gap-2 items-center justify-between">
-        <span className="shrink-0 text-2xl font-medium text-muted-foreground">Цены начинаются от</span>
+        <SectionTitle className="shrink-0 text-muted-foreground">Цены начинаются от</SectionTitle>
         <div className="w-full md:flex hidden items-center pl-3">
           <Separator className="shrink !h-[2px] !bg-muted" />
           <ChevronRightIcon className="text-muted relative -left-3" />
         </div>
         <Button size="lg">{formatPrice(cheapest.price ?? 0)} <ArrowDownIcon className="animate-bounce" /></Button>
       </div>
-      <div className="w-full grid xl:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
+      <SectionContent className="w-full grid xl:grid-cols-2 grid-cols-1 gap-3 *:rounded-xl">
         {
           chunkedPricing.map((chunk, index) => {
             const isOdd = index % 2 === 0;
@@ -89,7 +90,7 @@ export default function ({ pricing }: Props) {
                         <div
                           key={pricing.id}
                           className={cn(
-                            "w-full flex flex-col group *:p-5 bg-card border",
+                            "w-full flex flex-col justify-between group *:p-5 bg-card border",
                             isOdd
                               ? isOddChunk
                                 ? "2xl:row-span-2 row-span-1"
@@ -98,52 +99,56 @@ export default function ({ pricing }: Props) {
                                 ? "2xl:row-span-2 row-span-1"
                                 : "row-span-1"
                           )}>
-                          <div className={cn(
-                            "w-full h-fit flex gap-2 rounded-lg justify-between",
-                            active ? "flex-col" : "flex-row items-center",
-                          )}>
-                            <div className="w-full space-y-1 *:block">
-                              <span className="text-2xl font-medium">{pricing.name}</span>
-                              <span className="text-base text-muted-foreground">{pricing.description}</span>
+                          <div className="w-full h-full">
+                            <div className="w-full h-fit sticky top-0">
+                              <div className={cn(
+                                "w-full h-fit flex gap-2 rounded-lg justify-between",
+                                active ? "flex-col" : "flex-row items-center",
+                              )}>
+                                <div className="w-full space-y-1 *:block">
+                                  <span className="text-2xl font-medium">{pricing.name}</span>
+                                  <span className="text-base text-muted-foreground">{pricing.description}</span>
+                                </div>
+                              </div>
+                              <div className="w-full h-fit">
+                                <ul
+                                  className="*:py-2"
+                                >
+                                  {
+                                    details
+                                      .sort((a, b) => {
+                                        const aHasPricing = !!a.price_per_item;
+                                        const bHasPricing = !!b.price_per_item;
+                                        if (aHasPricing && !bHasPricing) return -1;
+                                        if (!aHasPricing && bHasPricing) return 1;
+                                        return 0;
+                                      })
+                                      .map((detail, index) => {
+                                        const hasPricing = !!detail.price_per_item;
+                                        return (
+                                          <li
+                                            key={`${detail.type}/${index}`}
+                                            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                                          >
+                                            {
+                                              hasPricing
+                                                ? <PlusIcon size={16} className="shrink-0" />
+                                                : <CheckIcon size={16} className="shrink-0" />
+                                            }
+                                            <span className="text-sm">{detail.label}</span>
+                                            {
+                                              hasPricing &&
+                                              <span className="text-sm font-medium ml-auto">{formatPrice(detail.price_per_item ?? 0)}</span>
+                                            }
+                                          </li>
+                                        )
+                                      })
+                                  }
+                                </ul>
+                              </div>
                             </div>
                           </div>
-                          <div className="w-full h-fit">
-                            <ul
-                              className="*:py-2"
-                            >
-                              {
-                                details
-                                  .sort((a, b) => {
-                                    const aHasPricing = !!a.price_per_item;
-                                    const bHasPricing = !!b.price_per_item;
-                                    if (aHasPricing && !bHasPricing) return -1;
-                                    if (!aHasPricing && bHasPricing) return 1;
-                                    return 0;
-                                  })
-                                  .map((detail, index) => {
-                                    const hasPricing = !!detail.price_per_item;
-                                    return (
-                                      <li
-                                        key={`${detail.type}/${index}`}
-                                        className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-                                      >
-                                        {
-                                          hasPricing
-                                            ? <PlusIcon size={16} className="shrink-0" />
-                                            : <CheckIcon size={16} className="shrink-0" />
-                                        }
-                                        <span className="text-sm">{detail.label}</span>
-                                        {
-                                          hasPricing &&
-                                          <span className="text-sm font-medium ml-auto">{formatPrice(detail.price_per_item ?? 0)}</span>
-                                        }
-                                      </li>
-                                    )
-                                  })
-                              }
-                            </ul>
-                          </div>
-                          <div className="gap-4 w-full h-full flex justify-end items-start flex-col">
+                          <div className="gap-4 w-full h-fit flex justify-end items-start flex-col">
                             <span className="text-4xl shrink-0 font-medium">{formatPrice(pricing.price)}</span>
                             <Button className="w-full text-base" size="lg" variant="default" asChild>
                               <Link to={priceLink}>
@@ -160,7 +165,7 @@ export default function ({ pricing }: Props) {
             )
           })
         }
-      </div>
+      </SectionContent>
     </>
   )
 }

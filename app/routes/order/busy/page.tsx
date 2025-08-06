@@ -9,7 +9,7 @@ export default function () {
       <div className="w-full max-w-lg space-y-8">
         <div className="w-full space-y-2 *:block">
           <h1 className="text-2xl font-medium">
-            В данный момент нет возможности запланировать видеозвонок
+            В данный момент нет возможности запланировать видеозвонок или заказать услугу.
           </h1>
           <p className="text-muted-foreground">
             Попробуйте позже

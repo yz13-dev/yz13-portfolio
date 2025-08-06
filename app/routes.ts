@@ -11,7 +11,7 @@ export default [
     route("/auth/signup", "./routes/auth/signup/page.tsx"),
   ]),
   layout("./routes/order/layout.tsx", [
+    route("/order/:type", "./routes/order/[type]/page.tsx"),
     route("/order/busy", "./routes/order/busy/page.tsx"),
-    route("/order/website", "./routes/order/website/page.tsx"),
   ])
 ] satisfies RouteConfig;

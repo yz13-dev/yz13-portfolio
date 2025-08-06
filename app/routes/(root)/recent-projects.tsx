@@ -1,8 +1,9 @@
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@yz13/ui/carousel"
 import { Skeleton } from "@yz13/ui/skeleton"
 import { cn } from "@yz13/ui/utils"
 import { ComponentProps, useState } from "react"
 import { Project } from "./page"
-
+import { SectionContent } from "./section"
 
 type Props = {
   projects?: Project[]
@@ -10,74 +11,87 @@ type Props = {
 
 export const RecentProjectsError = () => {
   return (
-    <div className="w-full flex flex-col gap-3">
-      <Skeleton className="xl:h-[500px] h-[400px] w-full" />
-      <div className="h-6 flex items-center" />
-      <span>Ошибка при загрузке</span>
-    </div>
+    <SectionContent className="w-full flex flex-col gap-3">
+      <article
+        className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 py-6"
+      >
+        <div>
+          <h3 className="lg:text-4xl text-2xl font-medium text-foreground">Ошибка при загрузке</h3>
+          <p className="lg:text-2xl text-base font-medium text-muted-foreground">Проверьте соединение и попробуйте еще раз</p>
+        </div>
+      </article>
+    </SectionContent>
   )
 }
 
 export const RecentProjectsSkeleton = () => {
+  const articles = Array.from({ length: 2 }).map((_, index) => index)
   return (
-    <div className="w-full flex flex-col gap-3">
-      <Skeleton className="xl:h-[500px] h-[400px] aspect-[4/3] w-full" />
-      <Skeleton className="w-1/3 h-6" />
-    </div>
+    <SectionContent className="space-y-6">
+      {
+        articles
+          .map((item) => {
+            return (
+              <article
+                key={`recent-projects/skeleton/${item}`}
+                className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 py-6"
+              >
+                <div className="space-y-2">
+                  <Skeleton className="w-1/2 h-10" />
+                  <Skeleton className="w-1/3 h-8" />
+                </div>
+                <div>
+                  <Skeleton className="w-full aspect-video" />
+                </div>
+              </article>
+            )
+          })
+      }
+    </SectionContent>
   )
 }
 
 export default function ({ projects = [] }: Props) {
-  const attachments = projects
-    .filter(pub => !!pub.attachments.length)
-    .map(pub => ({
-      id: pub.id,
-      title: pub.name,
-      description: pub.description,
-      attachments: pub.attachments
-    }))
+
   return (
-    <div className="w-full h-fit overflow-x-hidden infinite-scroll-container">
-      <div
-        style={{
-          '--duration': '60s'
-        } as React.CSSProperties}
-        className="flex items-center gap-4 w-max infinite-scroll-track"
-      >
-        {
-          [...attachments, ...attachments]
-            .map((attachment, index) => {
-              const title = attachment.title
-              const description = attachment.description
-              const attachments = attachment.attachments
-              return (
-                <div key={`${attachment.id}/${index}`} className="flex shrink-0 flex-col gap-3 h-full">
-                  <div className="flex items-center h-full gap-3">
-                    {
-                      attachments
-                        .map(item => {
+    <SectionContent className="space-y-6">
+      {
+        projects
+          .filter(project => !!project.attachments.length)
+          .map(project => {
+            const attachments = project.attachments;
+            return (
+              <article key={project.id} className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 py-6">
+                <div className="*:block space-y-2">
+                  <h3 className="lg:text-4xl text-2xl font-semibold text-foreground">{project.name}</h3>
+                  <p className="lg:text-2xl text-base font-medium text-muted-foreground">{project.description}</p>
+                </div>
+                <div>
+                  <Carousel className="w-full shrink">
+                    <CarouselContent>
+                      {
+                        attachments.map(attachment => {
                           return (
-                            <Image
-                              className="block relative w-full xl:h-[500px] h-[400px] aspect-[4/3] rounded-2xl border object-cover"
-                              key={`${attachment.id}/${item.url}/${index}`}
-                              src={item.url}
-                              alt={attachment.title}
-                            />
+                            <CarouselItem key={attachment.url}>
+                              <Image
+                                src={attachment.url}
+                                alt={project.name}
+                                className="w-full h-full rounded-xl"
+                              />
+                            </CarouselItem>
                           )
                         })
-                    }
-                  </div>
-                  <div className="flex items-center gap-2 *:text-base">
-                    <span className="text-foreground line-clamp-1">
-                      {title} - {description}
-                    </span>
-                  </div>
+                      }
+                    </CarouselContent>
+                    <CarouselPrevious className="left-3" />
+                    <CarouselNext className="right-3" />
+                  </Carousel>
                 </div>
-              )
-            })
-        }
-      </div>
-    </div>
+              </article>
+            )
+          })
+      }
+    </SectionContent>
   )
 }
 

@@ -6,6 +6,7 @@ import { getV1Pricing, getV1Store } from "@yz13/api";
 import type { GetV1Pricing200Item, GetV1Store200Item } from "@yz13/api/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@yz13/ui/accordion";
 import { Button } from "@yz13/ui/button";
+import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
@@ -14,6 +15,7 @@ import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from 
 import { PricingDetailsSkeleton } from "./pricing-details";
 import { PricingDurationSkeleton } from "./pricing-duration";
 import { RecentProjectsError, RecentProjectsSkeleton } from "./recent-projects";
+import { Section, SectionContent, SectionTitle } from "./section";
 
 const PricingDetails = lazy(() => import("./pricing-details"));
 const PricingDuration = lazy(() => import("./pricing-duration"));
@@ -181,14 +183,14 @@ export function HydrateFallback() {
 
         <div className="space-y-6">
           <div className="w-full">
-            <span className="text-2xl font-medium">Последние работы</span>
+            <span >Последние работы</span>
           </div>
           <RecentProjectsSkeleton />
         </div>
 
         <div className="space-y-6">
           <div className="w-full">
-            <span className="text-2xl font-medium">Услуги и цены</span>
+            <span >Услуги и цены</span>
           </div>
           <PricingDurationSkeleton />
         </div>
@@ -222,12 +224,12 @@ export default function () {
               {(available) => <Availability size="lg" enabled={available} />}
             </Await>
           </Suspense>
-          <div className="w-full space-y-3 *:block">
+          <main className="w-full space-y-3 *:block">
             <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">{title}</h1>
             <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">
               {description}
             </p>
-          </div>
+          </main>
           <div className={cn(
             "flex md:flex-row flex-col items-center gap-3",
             "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
@@ -266,10 +268,10 @@ export default function () {
           }
         </div>
       </div>
-      <div className="md:w-1/2 w-full md:h-full h-fit *:px-6 *:py-12">
-        <div className="space-y-6">
+      <div className="md:w-1/2 w-full h-fit *:px-6 space-y-12 py-12">
+        <Section className="space-y-6">
           <div className="w-full">
-            <span className="text-2xl font-medium">Последние работы</span>
+            <SectionTitle >Последние работы</SectionTitle>
           </div>
           <Suspense fallback={<RecentProjectsSkeleton />}>
             <Await
@@ -282,18 +284,18 @@ export default function () {
               }
             </Await>
           </Suspense>
-        </div>
+        </Section>
         <Suspense fallback={
           <>
-            <div className="space-y-6">
+            <Section className="space-y-6">
               <div className="w-full">
-                <span className="text-2xl font-medium">Услуги и цены</span>
+                <SectionTitle >Услуги и цены</SectionTitle>
               </div>
               <PricingDurationSkeleton />
-            </div>
-            <div className="space-y-6">
+            </Section>
+            <Section className="space-y-6">
               <PricingDetailsSkeleton />
-            </div>
+            </Section>
           </>
         }>
           <Await
@@ -311,59 +313,61 @@ export default function () {
                 })
                 return (
                   <>
-                    <div className="space-y-6">
+                    <Section className="space-y-6">
                       <div className="w-full">
-                        <span className="text-2xl font-medium">Услуги и цены</span>
+                        <SectionTitle >Услуги и цены</SectionTitle>
                       </div>
                       <PricingDuration pricing={sorted} />
-                    </div>
-                    <div className="space-y-6">
+                    </Section>
+                    <Section className="space-y-6">
                       <PricingDetails pricing={sorted} />
-                    </div>
+                    </Section>
                   </>
                 )
               }
             }
           </Await>
         </Suspense>
-        <div className="space-y-6">
+        <Section className="space-y-6">
           <div className="w-full">
-            <span className="text-2xl font-medium">Вопросы и ответы</span>
+            <SectionTitle >Вопросы и ответы</SectionTitle>
           </div>
-          <Accordion
-            type="multiple"
-            className="rounded-lg bg-card border"
-          >
-            <AccordionItem value="q-1" className="*:px-5 *:text-base">
-              <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
-                Как быстро начнется разработка?
-              </AccordionTrigger>
-              <AccordionContent>
-                После определения задач разработки (1-2 созвона), работа обычно начнется на следующий день. Кроме выходных дней.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q-2" className="*:px-5 *:text-base">
-              <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
-                Есть ли лимит к поправкам?
-              </AccordionTrigger>
-              <AccordionContent>
-                К небольшим поправкам - нет. К большим поправкам - да. В ценниках указана сумма за большие поправки. Небольшие идут бесплатно.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q-3" className="*:px-5 *:text-base">
-              <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
-                Что я получу в конце разработки?
-              </AccordionTrigger>
-              <AccordionContent>
-                В конце разработки вы получаете свой проект на GitHub и получаете доступ к базе данных и функционалу сайта.
-                Если вы заказали NPM-пакет, то вы получите доступ к нему и сможете установить его в своем проекте. При необходимости можно запросить архив вместо github репозитория.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
+          <SectionContent>
+            <Accordion
+              type="multiple"
+              className="rounded-lg bg-card border"
+            >
+              <AccordionItem value="q-1" className="*:px-5 *:text-base">
+                <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                  Как быстро начнется разработка?
+                </AccordionTrigger>
+                <AccordionContent>
+                  После определения задач разработки (1-2 созвона), работа обычно начнется на следующий день. Кроме выходных дней.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="q-2" className="*:px-5 *:text-base">
+                <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                  Есть ли лимит к поправкам?
+                </AccordionTrigger>
+                <AccordionContent>
+                  К небольшим поправкам - нет. К большим поправкам - да. В ценниках указана сумма за большие поправки. Небольшие идут бесплатно.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="q-3" className="*:px-5 *:text-base">
+                <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                  Что я получу в конце разработки?
+                </AccordionTrigger>
+                <AccordionContent>
+                  В конце разработки вы получаете свой проект на GitHub и получаете доступ к базе данных и функционалу сайта.
+                  Если вы заказали NPM-пакет, то вы получите доступ к нему и сможете установить его в своем проекте. При необходимости можно запросить архив вместо github репозитория.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </SectionContent>
+        </Section>
         <footer className={cn(
           "flex 2xl:flex-row flex-col-reverse w-full h-git gap-6",
-          "md:*:w-1/2 *:w-full *:gap-6"
+          "md:*:w-1/2 *:w-full *:gap-6 bg-card rounded-4xl border py-6"
         )}>
           <div className="flex flex-col">
             <div className="w-full flex flex-col gap-3">
@@ -390,6 +394,7 @@ export default function () {
               </Suspense>
             </div>
           </div>
+          <Separator className="2xl:hidden block" />
           <div className="w-full h-fit flex sm:flex-row flex-col md:*:w-1/2 *:w-full">
             <div className="w-1/3 flex flex-col gap-3">
               <span>Ссылки</span>

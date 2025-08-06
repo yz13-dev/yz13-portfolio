@@ -6,7 +6,7 @@ import type { Pricing } from "./page"
 
 const Grid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="w-full grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-2 *:h-9 *:px-3">
+    <div className="w-full grid xl:grid-cols-2 grid-cols-1 gap-2 *:px-3 *:py-1 *:h-11">
       {children}
     </div>
   )
@@ -46,8 +46,8 @@ const PricingDuration = memo(({ pricing }: Props) => {
             const duration = formatDuration(price.duration);
             return (
               <Badge key={price.id} variant="outline" className="flex items-center justify-between w-full">
-                <span className="text-base font-medium">{price.name}</span>
-                <span className="text-sm text-muted-foreground/60">От {duration}</span>
+                <span className="lg:text-2xl text-lg font-medium">{price.name}</span>
+                <span className="ld:text-base text-sm text-muted-foreground/60">От {duration}</span>
               </Badge>
             )
           })
