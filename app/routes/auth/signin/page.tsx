@@ -55,7 +55,11 @@ export default function () {
       console.log(result)
 
       if (result) {
-        nav(next ? next : "/")
+        if (next) {
+          const isUrl = next.startsWith("http")
+          if (isUrl) window.location.href = next
+          else nav(next)
+        } else nav("/")
       }
 
     } catch (error) {

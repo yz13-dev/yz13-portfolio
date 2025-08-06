@@ -1,7 +1,10 @@
+import { Button } from "@yz13/ui/button"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@yz13/ui/carousel"
 import { Skeleton } from "@yz13/ui/skeleton"
 import { cn } from "@yz13/ui/utils"
+import { ArrowRightIcon } from "lucide-react"
 import { ComponentProps } from "react"
+import { Link } from "react-router"
 import { Project } from "./page"
 import { SectionContent } from "./section"
 
@@ -62,9 +65,19 @@ export default function ({ projects = [] }: Props) {
             const attachments = project.attachments;
             return (
               <article key={project.id} className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 py-6">
-                <div className="*:block space-y-2">
-                  <h3 className="lg:text-4xl text-2xl font-semibold text-foreground">{project.name}</h3>
-                  <p className="lg:text-2xl text-base font-medium text-muted-foreground">{project.description}</p>
+                <div className="flex flex-col justify-between">
+                  <div className="w-full *:block space-y-2">
+                    <h3 className="lg:text-4xl text-2xl font-semibold text-foreground">{project.name}</h3>
+                    <p className="lg:text-2xl text-base font-medium text-muted-foreground">{project.description}</p>
+                  </div>
+                  {
+                    project.public_url &&
+                    <Button className="w-fit" size="lg" asChild>
+                      <Link to={project.public_url}>
+                        <span>Перейти</span><ArrowRightIcon />
+                      </Link>
+                    </Button>
+                  }
                 </div>
                 <div>
                   <Carousel className="w-full shrink">
