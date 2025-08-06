@@ -100,7 +100,7 @@ export default function ({ pricing }: Props) {
                                 : "row-span-1"
                           )}>
                           <div className="w-full h-full">
-                            <div className="w-full h-fit sticky top-0">
+                            <div className="w-full h-fit sticky space-y-3 top-0">
                               <div className={cn(
                                 "w-full h-fit flex gap-2 rounded-lg justify-between",
                                 active ? "flex-col" : "flex-row items-center",
