@@ -65,7 +65,7 @@ export default function ({ projects = [] }: Props) {
             const attachments = project.attachments;
             return (
               <article key={project.id} className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 py-6">
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col gap-6 justify-between">
                   <div className="w-full *:block space-y-2">
                     <h3 className="lg:text-4xl text-2xl font-semibold text-foreground">{project.name}</h3>
                     <p className="lg:text-2xl text-base font-medium text-muted-foreground">{project.description}</p>
