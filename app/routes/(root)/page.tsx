@@ -268,9 +268,9 @@ export default function () {
           }
         </div>
       </div>
-      <div className="md:w-1/2 w-full h-fit border-l space-y-6 py-6">
-        <Section className="space-y-6">
-          <div className="w-full px-6">
+      <div className="md:w-1/2 w-full h-fit">
+        <Section>
+          <div className="w-full p-6">
             <SectionTitle >Последние работы</SectionTitle>
           </div>
           <Suspense fallback={<RecentProjectsSkeleton />}>
@@ -287,13 +287,13 @@ export default function () {
         </Section>
         <Suspense fallback={
           <>
-            <Section className="space-y-6 px-6">
+            <Section className="space-y-6 p-6">
               <div className="w-full">
                 <SectionTitle >Услуги и цены</SectionTitle>
               </div>
               <PricingDurationSkeleton />
             </Section>
-            <Section className="space-y-6 px-6">
+            <Section className="space-y-6 p-6">
               <PricingDetailsSkeleton />
             </Section>
           </>
@@ -313,13 +313,13 @@ export default function () {
                 })
                 return (
                   <>
-                    <Section className="space-y-6 px-6">
+                    <Section className="space-y-6 p-6">
                       <div className="w-full">
                         <SectionTitle >Услуги и цены</SectionTitle>
                       </div>
                       <PricingDuration pricing={sorted} />
                     </Section>
-                    <Section className="space-y-6 px-6">
+                    <Section className="space-y-6 p-6">
                       <PricingDetails pricing={sorted} />
                     </Section>
                   </>
@@ -328,7 +328,7 @@ export default function () {
             }
           </Await>
         </Suspense>
-        <Section className="space-y-6 px-6">
+        <Section className="space-y-6 p-6">
           <div className="w-full">
             <SectionTitle >Вопросы и ответы</SectionTitle>
           </div>
@@ -365,72 +365,74 @@ export default function () {
             </Accordion>
           </SectionContent>
         </Section>
-        <footer className={cn(
-          "flex 2xl:flex-row flex-col-reverse w-full h-git gap-6",
-          "md:*:w-1/2 *:w-full *:gap-6 bg-card border-y p-6"
-        )}>
-          <div className="flex flex-col">
-            <div className="w-full flex flex-col gap-3">
-              <Logo size={48} />
-              <div className="*:block space-y-1">
-                <span className="text-base text-foreground font-semibold">{title}</span>
-                <span className="text-sm text-muted-foreground">{description}</span>
+        <div className="w-full pl-6">
+          <footer className={cn(
+            "flex 2xl:flex-row flex-col-reverse w-full h-git gap-6",
+            "md:*:w-1/2 *:w-full *:gap-6 bg-card border-y border-l rounded-l-4xl p-6"
+          )}>
+            <div className="flex flex-col">
+              <div className="w-full flex flex-col gap-3">
+                <Logo size={48} />
+                <div className="*:block space-y-1">
+                  <span className="text-base text-foreground font-semibold">{title}</span>
+                  <span className="text-sm text-muted-foreground">{description}</span>
+                </div>
+              </div>
+              <div className="w-full flex flex-col *:w-full gap-3 *:h-10">
+                <Suspense fallback={<Skeleton className="h-9 w-32" />}>
+                  <Await resolve={available}>
+                    {(available) => <Button disabled={!available}>
+                      <span className="sm:inline hidden">Запланировать видеозвонок</span>
+                      <span className="sm:hidden inline">Видеозвонок</span>
+                      <ArrowRightIcon />
+                    </Button>}
+                  </Await>
+                </Suspense>
+                <Suspense fallback={<AvailabilitySkeleton />}>
+                  <Await resolve={available}>
+                    {(available) => <Availability size="default" animated={false} enabled={available} className="justify-center" />}
+                  </Await>
+                </Suspense>
               </div>
             </div>
-            <div className="w-full flex flex-col *:w-full gap-3 *:h-10">
-              <Suspense fallback={<Skeleton className="h-9 w-32" />}>
-                <Await resolve={available}>
-                  {(available) => <Button disabled={!available}>
-                    <span className="sm:inline hidden">Запланировать видеозвонок</span>
-                    <span className="sm:hidden inline">Видеозвонок</span>
-                    <ArrowRightIcon />
-                  </Button>}
-                </Await>
-              </Suspense>
-              <Suspense fallback={<AvailabilitySkeleton />}>
-                <Await resolve={available}>
-                  {(available) => <Availability size="default" animated={false} enabled={available} className="justify-center" />}
-                </Await>
-              </Suspense>
+            <Separator className="2xl:hidden block" />
+            <div className="w-full h-fit flex sm:flex-row flex-col md:*:w-1/2 *:w-full">
+              <div className="w-1/3 flex flex-col gap-3">
+                <span>Ссылки</span>
+                <ul className="*:text-muted-foreground">
+                  <li className="flex items-center gap-2 h-9">
+                    <Link
+                      to={telegram}
+                      className="text-sm inline-flex items-center gap-1.5 hover:underline hover:text-foreground"
+                    >
+                      Telegram
+                      <ExternalLinkIcon size={12} />
+                    </Link>
+                  </li>
+                  <li className="flex items-center gap-2 h-9">
+                    <Link
+                      to={twitter}
+                      className="text-sm inline-flex items-center gap-1.5 hover:underline hover:text-foreground"
+                    >
+                      X/Twitter
+                      <ExternalLinkIcon size={12} />
+                    </Link>
+                  </li>
+                  <li className="flex items-center gap-2 h-9">
+                    <Link
+                      to={github}
+                      className="text-sm inline-flex items-center gap-1.5 hover:underline hover:text-foreground"
+                    >
+                      Github
+                      <ExternalLinkIcon size={12} />
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <Separator className="2xl:hidden block" />
-          <div className="w-full h-fit flex sm:flex-row flex-col md:*:w-1/2 *:w-full">
-            <div className="w-1/3 flex flex-col gap-3">
-              <span>Ссылки</span>
-              <ul className="*:text-muted-foreground">
-                <li className="flex items-center gap-2 h-9">
-                  <Link
-                    to={telegram}
-                    className="text-sm inline-flex items-center gap-1.5 hover:underline hover:text-foreground"
-                  >
-                    Telegram
-                    <ExternalLinkIcon size={12} />
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2 h-9">
-                  <Link
-                    to={twitter}
-                    className="text-sm inline-flex items-center gap-1.5 hover:underline hover:text-foreground"
-                  >
-                    X/Twitter
-                    <ExternalLinkIcon size={12} />
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2 h-9">
-                  <Link
-                    to={github}
-                    className="text-sm inline-flex items-center gap-1.5 hover:underline hover:text-foreground"
-                  >
-                    Github
-                    <ExternalLinkIcon size={12} />
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </footer>
-        <div className="flex px-6 items-center justify-between">
+          </footer>
+        </div>
+        <div className="flex p-6 items-center justify-between">
           <span className="text-xs text-muted-foreground">YZ13 2025</span>
           <span className="text-xs text-muted-foreground">Фронтенд разработчик</span>
         </div>

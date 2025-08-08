@@ -45,7 +45,7 @@ const PricingDuration = memo(({ pricing }: Props) => {
           .map(price => {
             const duration = formatDuration(price.duration);
             return (
-              <Badge key={price.id} variant="outline" className="flex items-center justify-between w-full">
+              <Badge key={price.id} variant="outline" className="flex items-center bg-card justify-between w-full">
                 <span className="lg:text-2xl text-lg font-medium">{price.name}</span>
                 <span className="ld:text-base text-sm text-muted-foreground/60">От {duration}</span>
               </Badge>
