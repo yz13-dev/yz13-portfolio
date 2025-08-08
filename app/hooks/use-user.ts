@@ -1,6 +1,6 @@
 import { getV1AuthMe } from "@yz13/api";
 import { GetV1UsersUid200 } from "@yz13/api/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type User = GetV1UsersUid200
 
@@ -21,6 +21,9 @@ export default function (): [User | null, boolean] {
     }
   }
 
+  useEffect(() => {
+    refresh()
+  }, [])
   return [user, loading] as const;
 }
 
