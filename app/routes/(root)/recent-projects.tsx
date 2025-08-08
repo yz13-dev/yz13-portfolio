@@ -30,14 +30,14 @@ export const RecentProjectsError = () => {
 export const RecentProjectsSkeleton = () => {
   const articles = Array.from({ length: 2 }).map((_, index) => index)
   return (
-    <SectionContent className="space-y-6">
+    <SectionContent className="divide-y border-y">
       {
         articles
           .map((item) => {
             return (
               <article
                 key={`recent-projects/skeleton/${item}`}
-                className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 py-6"
+                className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 p-6"
               >
                 <div className="space-y-2">
                   <Skeleton className="w-1/2 h-10" />
@@ -57,14 +57,14 @@ export const RecentProjectsSkeleton = () => {
 export default function ({ projects = [] }: Props) {
 
   return (
-    <SectionContent className="space-y-6">
+    <SectionContent className="divide-y border-y">
       {
         projects
           .filter(project => !!project.attachments.length)
           .map(project => {
             const attachments = project.attachments;
             return (
-              <article key={project.id} className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 py-6">
+              <article key={project.id} className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 p-6 hover:bg-secondary/20">
                 <div className="flex flex-col gap-6 justify-between">
                   <div className="w-full *:block space-y-2">
                     <h3 className="lg:text-4xl text-2xl font-semibold text-foreground">{project.name}</h3>

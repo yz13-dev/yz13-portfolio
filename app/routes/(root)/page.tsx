@@ -268,9 +268,9 @@ export default function () {
           }
         </div>
       </div>
-      <div className="md:w-1/2 w-full h-fit *:px-6 space-y-12 py-12">
+      <div className="md:w-1/2 w-full h-fit border-l space-y-6 py-6">
         <Section className="space-y-6">
-          <div className="w-full">
+          <div className="w-full px-6">
             <SectionTitle >Последние работы</SectionTitle>
           </div>
           <Suspense fallback={<RecentProjectsSkeleton />}>
@@ -287,13 +287,13 @@ export default function () {
         </Section>
         <Suspense fallback={
           <>
-            <Section className="space-y-6">
+            <Section className="space-y-6 px-6">
               <div className="w-full">
                 <SectionTitle >Услуги и цены</SectionTitle>
               </div>
               <PricingDurationSkeleton />
             </Section>
-            <Section className="space-y-6">
+            <Section className="space-y-6 px-6">
               <PricingDetailsSkeleton />
             </Section>
           </>
@@ -313,13 +313,13 @@ export default function () {
                 })
                 return (
                   <>
-                    <Section className="space-y-6">
+                    <Section className="space-y-6 px-6">
                       <div className="w-full">
                         <SectionTitle >Услуги и цены</SectionTitle>
                       </div>
                       <PricingDuration pricing={sorted} />
                     </Section>
-                    <Section className="space-y-6">
+                    <Section className="space-y-6 px-6">
                       <PricingDetails pricing={sorted} />
                     </Section>
                   </>
@@ -328,7 +328,7 @@ export default function () {
             }
           </Await>
         </Suspense>
-        <Section className="space-y-6">
+        <Section className="space-y-6 px-6">
           <div className="w-full">
             <SectionTitle >Вопросы и ответы</SectionTitle>
           </div>
@@ -367,7 +367,7 @@ export default function () {
         </Section>
         <footer className={cn(
           "flex 2xl:flex-row flex-col-reverse w-full h-git gap-6",
-          "md:*:w-1/2 *:w-full *:gap-6 bg-card rounded-4xl border py-6"
+          "md:*:w-1/2 *:w-full *:gap-6 bg-card border-y p-6"
         )}>
           <div className="flex flex-col">
             <div className="w-full flex flex-col gap-3">
@@ -430,7 +430,7 @@ export default function () {
             </div>
           </div>
         </footer>
-        <div className="flex items-center justify-between">
+        <div className="flex px-6 items-center justify-between">
           <span className="text-xs text-muted-foreground">YZ13 2025</span>
           <span className="text-xs text-muted-foreground">Фронтенд разработчик</span>
         </div>
