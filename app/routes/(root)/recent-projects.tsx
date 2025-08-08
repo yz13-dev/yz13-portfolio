@@ -44,7 +44,7 @@ export const RecentProjectsSkeleton = () => {
                   <Skeleton className="w-1/3 h-8" />
                 </div>
                 <div>
-                  <Skeleton className="w-full aspect-video" />
+                  <Skeleton className="w-full aspect-[4/2.7]" />
                 </div>
               </article>
             )
@@ -85,7 +85,7 @@ export default function ({ projects = [] }: Props) {
                       {
                         attachments.map(attachment => {
                           return (
-                            <CarouselItem key={attachment.url}>
+                            <CarouselItem key={attachment.url} className="aspect-[4/2.7]">
                               <Image
                                 src={attachment.url}
                                 alt={project.name}
