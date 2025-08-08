@@ -1,6 +1,6 @@
 import { getV1AuthMe } from "@yz13/api";
 import { GetV1UsersUid200 } from "@yz13/api/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export type User = GetV1UsersUid200
 
@@ -9,12 +9,37 @@ export default function (): [User | null, boolean] {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
-
-  useEffect(() => {
+  const refresh = async () => {
     setLoading(true)
-    getV1AuthMe()
-      .then(user => setUser(user))
-      .finally(() => setLoading(false))
-  }, [])
-  return [user, loading]
+    try {
+      const user = await getV1AuthMe()
+      setUser(user)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return [user, loading] as const;
+}
+
+
+export const useRefreshUser = () => {
+
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const refresh = async () => {
+    setLoading(true)
+    try {
+      const user = await getV1AuthMe()
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+
+  return [refresh, loading] as const;
 }

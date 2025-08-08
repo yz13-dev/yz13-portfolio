@@ -1,6 +1,7 @@
 import Availability, { AvailabilitySkeleton } from "@/components/availability";
 import { Logo } from "@/components/logo";
 import { Time, TimeOffset } from "@/components/time/time";
+import User from "@/components/user";
 import { available } from "@/utils/flags";
 import { getV1Pricing, getV1Store } from "@yz13/api";
 import type { GetV1Pricing200Item, GetV1Store200Item } from "@yz13/api/types";
@@ -230,22 +231,25 @@ export default function () {
               {description}
             </p>
           </main>
-          <div className={cn(
-            "flex md:flex-row flex-col items-center gap-3",
-            "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
-          )}>
-            <Button variant="secondary" asChild>
-              <Link to={telegram}>
-                <SendIcon />
-                <span className="md:hidden inline">Перейти в чат</span>
-                <span className="md:inline hidden">Чат</span>
-              </Link>
-            </Button>
-            <Suspense fallback={<Skeleton className="h-9 w-32" />}>
-              <Await resolve={available}>
-                {(available) => <Button disabled={!available}>Запланировать видеозвонок <ArrowRightIcon /></Button>}
-              </Await>
-            </Suspense>
+          <div className="flex flex-row justify-between gap-3">
+            <div className={cn(
+              "flex md:flex-row flex-col items-center gap-3",
+              "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
+            )}>
+              <Button variant="secondary" asChild>
+                <Link to={telegram}>
+                  <SendIcon />
+                  <span className="md:hidden inline">Перейти в чат</span>
+                  <span className="md:inline hidden">Чат</span>
+                </Link>
+              </Button>
+              <Suspense fallback={<Skeleton className="h-9 w-32" />}>
+                <Await resolve={available}>
+                  {(available) => <Button disabled={!available}>Запланировать видеозвонок <ArrowRightIcon /></Button>}
+                </Await>
+              </Suspense>
+            </div>
+            <User />
           </div>
           {
             false &&
