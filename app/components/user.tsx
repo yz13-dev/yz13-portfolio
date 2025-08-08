@@ -16,14 +16,14 @@ export default function () {
 
   if (!user) {
     if (isDev) return (
-      <Button asChild className="h-12 text-lg [&>svg]:!size-5" size="lg">
+      <Button asChild className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
         <Link to="/auth/signin">
           Войти
         </Link>
       </Button>
     )
     return (
-      <Button disabled className="h-12 text-lg [&>svg]:!size-5" size="lg">
+      <Button disabled className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
         Войти
       </Button>
     )

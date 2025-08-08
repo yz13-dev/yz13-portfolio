@@ -231,9 +231,9 @@ export default function () {
               {description}
             </p>
           </main>
-          <div className="flex flex-row justify-between gap-3">
+          <div className="flex md:flex-row flex-col-reverse justify-between md:items-center items-end w-full gap-3">
             <div className={cn(
-              "flex md:flex-row flex-col items-center gap-3",
+              "flex md:flex-row flex-col items-center gap-3 md:w-fit w-full",
               "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
             )}>
               <Button variant="secondary" asChild>
