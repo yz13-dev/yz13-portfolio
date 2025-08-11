@@ -289,86 +289,88 @@ export default function () {
             </Await>
           </Suspense>
         </Section>
-        <Suspense fallback={
-          <>
-            <Section className="space-y-6 p-6">
-              <div className="w-full">
-                <SectionTitle >Услуги и цены</SectionTitle>
-              </div>
-              <PricingDurationSkeleton />
-            </Section>
-            <Section className="space-y-6 p-6">
-              <PricingDetailsSkeleton />
-            </Section>
-          </>
-        }>
-          <Await
-            resolve={pricing}
-          >
-            {
-              (pricing) => {
-                const sorted = pricing.sort((a, b) => {
-                  const aDuration = a.duration.reduce((prev, current) => prev + current, 0)
-                  const bDuration = b.duration.reduce((prev, current) => prev + current, 0)
-                  const aPricing = a.price;
-                  const bPricing = b.price;
-                  if (aDuration === bDuration) return aPricing - bPricing;
-                  return aDuration - bDuration
-                })
-                return (
-                  <>
-                    <Section className="space-y-6 p-6">
-                      <div className="w-full">
-                        <SectionTitle >Услуги и цены</SectionTitle>
-                      </div>
-                      <PricingDuration pricing={sorted} />
-                    </Section>
-                    <Section className="space-y-6 p-6">
-                      <PricingDetails pricing={sorted} />
-                    </Section>
-                  </>
-                )
-              }
-            }
-          </Await>
-        </Suspense>
-        <Section className="space-y-6 p-6">
-          <div className="w-full">
-            <SectionTitle >Вопросы и ответы</SectionTitle>
-          </div>
-          <SectionContent>
-            <Accordion
-              type="multiple"
-              className="rounded-lg bg-card border"
+        <div className="w-full divide-y">
+          <Suspense fallback={
+            <>
+              <Section className="space-y-6 p-6">
+                <div className="w-full">
+                  <SectionTitle >Услуги и цены</SectionTitle>
+                </div>
+                <PricingDurationSkeleton />
+              </Section>
+              <Section className="space-y-6 p-6">
+                <PricingDetailsSkeleton />
+              </Section>
+            </>
+          }>
+            <Await
+              resolve={pricing}
             >
-              <AccordionItem value="q-1" className="*:px-5 *:text-base">
-                <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
-                  Как быстро начнется разработка?
-                </AccordionTrigger>
-                <AccordionContent>
-                  После определения задач разработки (1-2 созвона), работа обычно начнется на следующий день. Кроме выходных дней.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="q-2" className="*:px-5 *:text-base">
-                <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
-                  Есть ли лимит к поправкам?
-                </AccordionTrigger>
-                <AccordionContent>
-                  К небольшим поправкам - нет. К большим поправкам - да. В ценниках указана сумма за большие поправки. Небольшие идут бесплатно.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="q-3" className="*:px-5 *:text-base">
-                <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
-                  Что я получу в конце разработки?
-                </AccordionTrigger>
-                <AccordionContent>
-                  В конце разработки вы получаете свой проект на GitHub и получаете доступ к базе данных и функционалу сайта.
-                  Если вы заказали NPM-пакет, то вы получите доступ к нему и сможете установить его в своем проекте. При необходимости можно запросить архив вместо github репозитория.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </SectionContent>
-        </Section>
+              {
+                (pricing) => {
+                  const sorted = pricing.sort((a, b) => {
+                    const aDuration = a.duration.reduce((prev, current) => prev + current, 0)
+                    const bDuration = b.duration.reduce((prev, current) => prev + current, 0)
+                    const aPricing = a.price;
+                    const bPricing = b.price;
+                    if (aDuration === bDuration) return aPricing - bPricing;
+                    return aDuration - bDuration
+                  })
+                  return (
+                    <>
+                      <Section className="space-y-6 p-6">
+                        <div className="w-full">
+                          <SectionTitle >Услуги и цены</SectionTitle>
+                        </div>
+                        <PricingDuration pricing={sorted} />
+                      </Section>
+                      <Section className="space-y-6 p-6">
+                        <PricingDetails pricing={sorted} />
+                      </Section>
+                    </>
+                  )
+                }
+              }
+            </Await>
+          </Suspense>
+          <Section className="space-y-6 p-6">
+            <div className="w-full">
+              <SectionTitle >Вопросы и ответы</SectionTitle>
+            </div>
+            <SectionContent>
+              <Accordion
+                type="multiple"
+                className="rounded-lg bg-card border"
+              >
+                <AccordionItem value="q-1" className="*:px-5 *:text-base">
+                  <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                    Как быстро начнется разработка?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    После определения задач разработки (1-2 созвона), работа обычно начнется на следующий день. Кроме выходных дней.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="q-2" className="*:px-5 *:text-base">
+                  <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                    Есть ли лимит к поправкам?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    К небольшим поправкам - нет. К большим поправкам - да. В ценниках указана сумма за большие поправки. Небольшие идут бесплатно.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="q-3" className="*:px-5 *:text-base">
+                  <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
+                    Что я получу в конце разработки?
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    В конце разработки вы получаете свой проект на GitHub и получаете доступ к базе данных и функционалу сайта.
+                    Если вы заказали NPM-пакет, то вы получите доступ к нему и сможете установить его в своем проекте. При необходимости можно запросить архив вместо github репозитория.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </SectionContent>
+          </Section>
+        </div>
         <div className="w-full">
           <footer className={cn(
             "flex 2xl:flex-row flex-col-reverse w-full h-git gap-6",
