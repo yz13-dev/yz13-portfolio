@@ -3,31 +3,24 @@ import { postV1AuthLogout } from "@yz13/api"
 import { Avatar, AvatarFallback, AvatarImage } from "@yz13/ui/avatar"
 import { Button } from "@yz13/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@yz13/ui/dropdown-menu"
-import { LogOutIcon } from "lucide-react"
-import { ReactNode } from "react"
+import { LogInIcon, LogOutIcon } from "lucide-react"
+import type { ReactNode } from "react"
 import { Link, useNavigate } from "react-router"
-
-const isDev = import.meta.env.DEV
 
 
 export default function () {
 
   const [user] = useUser()
 
-  if (!user) {
-    if (isDev) return (
-      <Button asChild className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
+  if (!user)
+    return (
+      <Button disabled className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" asChild>
         <Link to="/auth/signin">
           Войти
+          <LogInIcon />
         </Link>
       </Button>
     )
-    return (
-      <Button disabled className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
-        Войти
-      </Button>
-    )
-  }
   return (
     <UserDropdown>
       <Avatar className="size-12">

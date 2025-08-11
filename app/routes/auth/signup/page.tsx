@@ -22,7 +22,10 @@ export default function Page() {
         </div>
         <div className="md:w-1/2 w-full md:h-full h-1/2 pt-20 relative">
           <div className="px-6 pb-6 h-full gap-4 flex flex-col justify-between">
-            <Input placeholder="yz13@yz13.ru" className="h-10 text-base" />
+            <Input
+              placeholder="example@yz13.ru"
+              className="h-10 text-base"
+            />
             <div className="w-full">
               <span className="text-muted-foreground text-sm">
                 После регистрации вы получите доступ к <Link to="/apps" className="font-medium text-foreground hover:underline">сервисам</Link> <Badge variant="secondary">YZ13</Badge>

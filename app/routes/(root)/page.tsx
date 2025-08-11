@@ -231,10 +231,10 @@ export default function () {
               {description}
             </p>
           </main>
-          <div className="flex md:flex-row flex-col-reverse justify-between md:items-center items-end w-full gap-3">
+          <div className="flex lg:flex-row flex-col-reverse justify-between lg:items-center items-end w-full gap-3">
             <div className={cn(
-              "flex md:flex-row flex-col items-center gap-3 md:w-fit w-full",
-              "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
+              "flex lg:flex-row flex-col items-center gap-3 lg:w-fit w-full",
+              "*:h-12 *:!px-6 lg:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
             )}>
               <Button variant="secondary" asChild>
                 <Link to={telegram}>
@@ -272,7 +272,7 @@ export default function () {
           }
         </div>
       </div>
-      <div className="md:w-1/2 w-full h-fit">
+      <div className="md:w-1/2 w-full h-fit bg-card rounded-t-4xl border">
         <Section>
           <div className="w-full p-6">
             <SectionTitle >Последние работы</SectionTitle>
@@ -369,10 +369,10 @@ export default function () {
             </Accordion>
           </SectionContent>
         </Section>
-        <div className="w-full pl-6">
+        <div className="w-full">
           <footer className={cn(
             "flex 2xl:flex-row flex-col-reverse w-full h-git gap-6",
-            "md:*:w-1/2 *:w-full *:gap-6 bg-card border-y border-l rounded-l-4xl p-6"
+            "lg:*:w-1/2 *:w-full *:gap-6 py-6 px-6 border-y"
           )}>
             <div className="flex flex-col">
               <div className="w-full flex flex-col gap-3">

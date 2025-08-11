@@ -105,7 +105,7 @@ export default function () {
         <div className="md:w-1/2 w-full md:h-full h-fit pt-20 relative">
           <div className="px-6 pb-6 h-full gap-4 flex flex-col justify-between">
             <Input
-              placeholder="yz13@yz13.ru"
+              placeholder="example@yz13.ru"
               className="h-10 text-base"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
