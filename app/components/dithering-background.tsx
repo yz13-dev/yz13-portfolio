@@ -66,12 +66,12 @@ const fragmentShader = `
     vec2 st = vUv;
 
     // Создаем органичный шум для топографии
-    float noiseValue = fbm(st * 0.75 + time * 0.005);
+    float noiseValue = fbm(st * 1.5 + time * 0.005);
 
     // Добавляем волновые эффекты
-    float wave1 = sin(st.x * 20.0 + time * 0.075) * 0.3;
-    float wave2 = sin(st.y * 10.0 + time * 0.075) * 0.3;
-    float wave3 = sin((st.x + st.y) * 6.0 + time * 0.075) * 0.2;
+    float wave1 = sin(st.x * 30.0 + time * 0.075) * 0.3;
+    float wave2 = sin(st.y * 20.0 + time * 0.075) * 0.3;
+    float wave3 = sin((st.x + st.y) * 12.0 + time * 0.075) * 0.2;
 
     // Комбинируем шум и волны
     float combined = noiseValue + wave1 + wave2 + wave3;
@@ -236,7 +236,7 @@ export default function DitheringBackground({
               fgColor="var(--foreground)"
               bgColor="transparent"
               characters=" .:;#%RM@"
-              resolution={0.110}
+              resolution={0.09}
               color={false}
               invert={false}
             />
