@@ -209,6 +209,7 @@ export function HydrateFallback() {
 
 export default function () {
   const { publications, available, pricing } = useLoaderData<typeof loader>();
+
   return (
     <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
       <DitheringBackground className="opacity-15" />

@@ -69,9 +69,9 @@ const fragmentShader = `
     float noiseValue = fbm(st * 1.5 + time * 0.005);
 
     // Добавляем волновые эффекты
-    float wave1 = sin(st.x * 30.0 + time * 0.075) * 0.3;
-    float wave2 = sin(st.y * 20.0 + time * 0.075) * 0.3;
-    float wave3 = sin((st.x + st.y) * 12.0 + time * 0.075) * 0.2;
+    float wave1 = sin(st.x * 10.0 + time * 0.15) * 0.5;
+    float wave2 = sin(st.y * 10.0 + time * 0.15) * 0.5;
+    float wave3 = sin((st.x + st.y) * 10.0 + time * 0.15) * 0.5;
 
     // Комбинируем шум и волны
     float combined = noiseValue + wave1 + wave2 + wave3;
@@ -223,7 +223,7 @@ export default function DitheringBackground({
           layersVisible ? "opacity-100" : "opacity-0"
         )}>
           <Canvas
-            camera={{ position: [0, 0, 3], fov: 75 }}
+            camera={{ position: [0, 0, 3], fov: 80 }}
             style={{ background: 'transparent' }}
           >
             <ambientLight intensity={0.6} />
@@ -235,7 +235,7 @@ export default function DitheringBackground({
             <AsciiRenderer
               fgColor="var(--foreground)"
               bgColor="transparent"
-              characters=" .:;#%RM@"
+              characters=" .:;/?%#@"
               resolution={0.09}
               color={false}
               invert={false}
