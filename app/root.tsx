@@ -1,3 +1,4 @@
+import { TooltipProvider } from "@yz13/ui/tooltip";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { Links, LinksFunction, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration } from "react-router";
 import { DateProvider } from "./components/time/time";
@@ -70,7 +71,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body className="inter-sans pixelify-sans jetbrains-mono">
         <NuqsAdapter>
           <DateProvider>
-            {children}
+            <TooltipProvider>
+              {children}
+            </TooltipProvider>
           </DateProvider>
         </NuqsAdapter>
         <ScrollRestoration />

@@ -1,5 +1,6 @@
 import Availability, { AvailabilitySkeleton } from "@/components/availability";
 import DitheringBackground from "@/components/dithering-background";
+import GithubContributions, { CalendarSkeleton } from "@/components/github-contributions";
 import { Logo } from "@/components/logo";
 import { Time, TimeOffset } from "@/components/time/time";
 import User from "@/components/user";
@@ -80,7 +81,7 @@ export function ErrorBoundary() {
 
   return (
     <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
-      <DitheringBackground className="absolute inset-0" />
+      <DitheringBackground className="opacity-15" />
       <div className="md:w-1/2 w-full md:min-h-fit min-h-dvh md:h-full h-fit flex flex-col justify-between *:p-6 md:sticky static top-0">
         <header className="w-full space-y-6">
           <Logo size={28} type="full" />
@@ -130,7 +131,7 @@ export function ErrorBoundary() {
 export function HydrateFallback() {
   return (
     <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
-      <DitheringBackground className="absolute inset-0" />
+      <DitheringBackground className="opacity-15" />
       <div className="md:w-1/2 w-full md:min-h-fit min-h-dvh md:h-full h-fit flex flex-col justify-between *:p-6 md:sticky static top-0">
         <header className="w-full space-y-6">
           <Logo size={28} type="full" />
@@ -191,6 +192,12 @@ export function HydrateFallback() {
           </div>
           <RecentProjectsSkeleton />
         </div>
+
+        <Section className="space-y-6 p-6">
+          <SectionContent>
+            <CalendarSkeleton loading />
+          </SectionContent>
+        </Section>
 
         <div className="space-y-6">
           <div className="w-full">
@@ -294,6 +301,11 @@ export default function () {
                 }
               </Await>
             </Suspense>
+          </Section>
+          <Section className="space-y-6 p-6">
+            <SectionContent>
+              <GithubContributions username="yz13-dev" />
+            </SectionContent>
           </Section>
           <div className="w-full divide-y">
             <Suspense fallback={
