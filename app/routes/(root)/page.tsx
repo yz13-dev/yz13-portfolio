@@ -284,7 +284,7 @@ export default function () {
           }
         </div>
       </div>
-      <div className="md:w-1/2 w-full h-fit lg:p-6 p-0">
+      <div className="md:w-1/2 w-full h-fit lg:px-6 px-0 lg:pb-6 pb-0 lg:pt-[70dvh] pt-6">
         <div className="w-full bg-card/10 backdrop-blur-sm rounded-t-4xl lg:rounded-b-4xl rounded-n-none border">
           <Section>
             <div className="w-full p-6">
