@@ -211,7 +211,7 @@ export default function DitheringBackground({
   }, [])
 
   return (
-    <div className={cn("w-full h-dvh absolute top-0 left-0", className)}>
+    <div className={cn("w-full h-dvh absolute top-0 z-[-1] left-0", className)}>
       <div
         className={cn(
           "w-full h-full relative",
