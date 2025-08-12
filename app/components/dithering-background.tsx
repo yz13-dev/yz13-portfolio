@@ -1,176 +1,250 @@
 "use client"
+import { AsciiRenderer } from "@react-three/drei"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { cn } from "@yz13/ui/utils"
-import { motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
-
-type DitheringStyle = "blocks" | "ascii"
+import * as THREE from "three"
 
 interface DitheringBackgroundProps {
   className?: string
-  style?: DitheringStyle
 }
 
-const DITHER_STYLES = {
-  blocks: ["█", "▓", "▒", "░", "·", " "],
-  ascii: ["@", "#", "%", "&", "*", "+", "=", "-", ":", ".", " "],
-}
+// Вертексный шейдер для плоскостей
+const vertexShader = `
+  varying vec2 vUv;
+  varying float vElevation;
 
+  void main() {
+    vUv = uv;
+    vElevation = position.z;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`
 
-export default function DitheringBackground({ style = "blocks", className = "" }: DitheringBackgroundProps) {
-  const [grid, setGrid] = useState<string[][]>([])
-  const [gridSize, setGridSize] = useState({ width: 300, height: 150 })
-  const animationRef = useRef<number | undefined>(undefined)
-  const timeRef = useRef(0)
-  const intensityGridRef = useRef<number[][]>([])
+// Фрагментный шейдер с шумом для топографии
+const fragmentShader = `
+  uniform float time;
+  uniform float lightness;
+  varying vec2 vUv;
+  varying float vElevation;
 
-  const [ready, setReady] = useState<boolean>(false);
+  // Функция для генерации псевдослучайных чисел
+  float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+  }
 
-  const ref = useRef<HTMLDivElement>(null);
+  // Функция для генерации шума
+  float noise(vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
 
-  const DITHER_CHARS = DITHER_STYLES[style]
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
 
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+  }
+
+  // Функция для генерации фрактального шума
+  float fbm(vec2 st) {
+    float value = 0.0;
+    float amplitude = 0.5;
+    float frequency = 1.0;
+
+    for (int i = 0; i < 6; i++) {
+      value += amplitude * noise(st * frequency);
+      st *= 2.0;
+      amplitude *= 0.5;
+      frequency *= 1.5;
+    }
+    return value;
+  }
+
+  void main() {
+    vec2 st = vUv;
+
+    // Создаем органичный шум для топографии
+    float noiseValue = fbm(st * 0.75 + time * 0.005);
+
+    // Добавляем волновые эффекты
+    float wave1 = sin(st.x * 20.0 + time * 0.075) * 0.3;
+    float wave2 = sin(st.y * 10.0 + time * 0.075) * 0.3;
+    float wave3 = sin((st.x + st.y) * 6.0 + time * 0.075) * 0.2;
+
+    // Комбинируем шум и волны
+    float combined = noiseValue + wave1 + wave2 + wave3;
+
+    // Применяем lightness для создания слоев
+    float finalValue = combined * lightness;
+
+    // Создаем топографический эффект
+    gl_FragColor = vec4(vec3(finalValue), 1.0);
+  }
+`
+
+// Компонент для топографической плоскости
+function TopographicPlane({
+  lightness,
+  rotation,
+  position,
+  scale,
+  visible
+}: {
+  lightness: number
+  rotation: [number, number, number]
+  position: [number, number, number]
+  scale: number
+  visible: boolean
+}) {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const materialRef = useRef<THREE.ShaderMaterial>(null)
+
+  // Создаем шейдерный материал
   useEffect(() => {
-    setReady(true)
-  }, [])
-  useEffect(() => {
-    const div = ref.current;
-    if (!div) return;
-    // Вычисляем размер сетки на основе размера экрана
-    const calculateGridSize = () => {
-      const charWidth = 4
-      const charHeight = 6
-
-      const width = Math.ceil(div.clientWidth / charWidth) + 20
-      const height = Math.ceil(div.clientHeight / charHeight) + 20
-
-      setGridSize({ width, height })
+    if (materialRef.current) {
+      materialRef.current.uniforms.lightness = { value: lightness }
+      materialRef.current.uniforms.time = { value: 0 }
     }
+  }, [lightness])
 
-    calculateGridSize()
-
-    const handleResize = () => {
-      calculateGridSize()
+  // Анимация шейдера
+  useFrame((state) => {
+    if (materialRef.current) {
+      materialRef.current.uniforms.time.value = state.clock.elapsedTime
     }
+  })
 
-    div.addEventListener("resize", handleResize)
-
-    return () => {
-      div.removeEventListener("resize", handleResize)
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (gridSize.width > 0 && gridSize.height > 0) {
-      // Инициализация сетки интенсивности
-      const initIntensityGrid = () => {
-        const newIntensityGrid: number[][] = []
-        for (let y = 0; y < gridSize.height; y++) {
-          const row: number[] = []
-          for (let x = 0; x < gridSize.width; x++) {
-            row.push(Math.random())
-          }
-          newIntensityGrid.push(row)
-        }
-        intensityGridRef.current = newIntensityGrid
-      }
-
-      // Инициализация символьной сетки
-      const initGrid = () => {
-        const newGrid: string[][] = []
-        for (let y = 0; y < gridSize.height; y++) {
-          const row: string[] = []
-          for (let x = 0; x < gridSize.width; x++) {
-            const intensity = intensityGridRef.current[y][x]
-            const charIndex = Math.floor(intensity * (DITHER_CHARS.length - 1))
-            row.push(DITHER_CHARS[charIndex])
-          }
-          newGrid.push(row)
-        }
-        setGrid(newGrid)
-      }
-
-      // Анимационная функция с плавными переходами
-      const animate = () => {
-        timeRef.current += 0.008
-
-        // Обновляем интенсивность с интерполяцией
-        const newIntensityGrid = intensityGridRef.current.map((row, y) =>
-          row.map((currentIntensity, x) => {
-            // Вычисляем целевую интенсивность
-            const wave1 = Math.sin(x * 0.05 + timeRef.current) * 0.5 + 0.5
-            const wave2 = Math.sin(y * 0.08 + timeRef.current * 0.7) * 0.5 + 0.5
-            const wave3 = Math.sin((x + y) * 0.04 + timeRef.current * 0.5) * 0.5 + 0.5
-
-            const combined = (wave1 + wave2 + wave3) / 3
-            const noise = Math.random() * 0.005
-            const targetIntensity = Math.max(0, Math.min(1, combined + noise))
-
-            // Плавная интерполяция к целевой интенсивности
-            const lerpFactor = 0.05
-            return currentIntensity + (targetIntensity - currentIntensity) * lerpFactor
-          }),
-        )
-
-        intensityGridRef.current = newIntensityGrid
-
-        // Обновляем символьную сетку на основе новой интенсивности
-        setGrid((prevGrid) => {
-          return prevGrid.map((row, y) =>
-            row.map((_, x) => {
-              const intensity = intensityGridRef.current[y][x]
-              const charIndex = Math.floor(intensity * (DITHER_CHARS.length - 1))
-              return DITHER_CHARS[charIndex]
-            }),
-          )
-        })
-
-        animationRef.current = requestAnimationFrame(animate)
-      }
-
-      initIntensityGrid()
-      initGrid()
-      animate()
-
-      return () => {
-        if (animationRef.current) {
-          cancelAnimationFrame(animationRef.current)
-        }
-      }
-    }
-  }, [gridSize, DITHER_CHARS])
   return (
-    <div
-      ref={ref}
-      className={cn("w-full h-dvh absolute overflow-hidden top-0 z-[-1] left-0", className)}
+    <mesh
+      ref={meshRef}
+      position={position}
+      rotation={rotation}
+      scale={scale}
+      visible={visible}
     >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: ready ? 1 : 0 }}
-        transition={{ duration: 1 }}
+      <planeGeometry args={[8, 8, 64, 64]} />
+      <shaderMaterial
+        ref={materialRef}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        transparent
+        uniforms={{
+          time: { value: 0 },
+          lightness: { value: lightness }
+        }}
+      />
+    </mesh>
+  )
+}
+
+// Компонент для топографической сцены
+function TopographicScene({ layersVisible }: { layersVisible: boolean }) {
+  const { camera } = useThree()
+
+  // Анимация камеры
+  useFrame(() => {
+
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 3;
+
+    camera.lookAt(0, 0, 0)
+  })
+
+  return (
+    <>
+      {/* 5 плоскостей с разной прозрачностью и вращением */}
+      {/*<TopographicPlane
+        lightness={0.2}
+        rotation={[0, 0, 0]}
+        position={[0, 0, -0.5]}
+        scale={1}
+        visible={layersVisible}
+      />*/}
+      {/*<TopographicPlane
+        lightness={0.4}
+        rotation={[0, 0, 0]}
+        position={[0.1, 0.05, -0.3]}
+        scale={1}
+        visible={layersVisible}
+      />
+      <TopographicPlane
+        lightness={0.6}
+        rotation={[0, 0, 0]}
+        position={[-0.05, 0.1, -0.1]}
+        scale={1}
+        visible={layersVisible}
+      />*/}
+      {/*<TopographicPlane
+        lightness={0.8}
+        rotation={[0, 0, 0]}
+        position={[0.05, -0.05, 0.1]}
+        scale={1}
+        visible={layersVisible}
+      />*/}
+      <TopographicPlane
+        lightness={1.0}
+        rotation={[0, 0, 0]}
+        position={[-0.1, 0.05, 0.3]}
+        scale={1}
+        visible={layersVisible}
+      />
+    </>
+  )
+}
+
+
+export default function DitheringBackground({
+  className = ""
+}: DitheringBackgroundProps) {
+  const [layersVisible, setLayersVisible] = useState(false)
+
+  // Показываем слои с задержкой
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLayersVisible(true)
+    }, 800) // Задержка 800ms
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  return (
+    <div className={cn("w-full h-dvh absolute top-0 left-0", className)}>
+      <div
         className={cn(
           "w-full h-full relative",
-          "grayscale bg-gradient-to-b from-background via-transparent to-background blur-xl"
+          // "grayscale bg-gradient-to-b from-background via-transparent to-background"
         )}
       >
-        <div className="absolute inset-0 w-full h-full bg-background opacity-50">
-          <pre
-            className="text-foreground/50 text-base leading-none font-mono whitespace-pre opacity-70 w-full h-full"
-            style={{
-              letterSpacing: "0px",
-              lineHeight: "0.6em",
-            }}
+        <div className={cn(
+          "absolute inset-0 w-full h-full transition-opacity duration-1000",
+          layersVisible ? "opacity-100" : "opacity-0"
+        )}>
+          <Canvas
+            camera={{ position: [0, 0, 3], fov: 75 }}
+            style={{ background: 'transparent' }}
           >
-            {grid.map((row, y) => (
-              <div key={y}>{row.join("")}</div>
-            ))}
-          </pre>
+            <ambientLight intensity={0.6} />
+            <pointLight position={[10, 10, 10]} intensity={0.8} />
+            <pointLight position={[-10, -10, -10]} intensity={0.4} />
+
+            <TopographicScene layersVisible={layersVisible} />
+
+            <AsciiRenderer
+              fgColor="var(--foreground)"
+              bgColor="transparent"
+              characters=" .:;#%RM@"
+              resolution={0.110}
+              color={false}
+              invert={false}
+            />
+          </Canvas>
         </div>
 
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-card via-transparent to-background" />
-      </motion.div>
+        {/* <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-card via-transparent to-background" /> */}
+      </div>
     </div>
   )
 }

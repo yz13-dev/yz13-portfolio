@@ -80,6 +80,7 @@ export function ErrorBoundary() {
 
   return (
     <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
+      <DitheringBackground className="absolute inset-0" />
       <div className="md:w-1/2 w-full md:min-h-fit min-h-dvh md:h-full h-fit flex flex-col justify-between *:p-6 md:sticky static top-0">
         <header className="w-full space-y-6">
           <Logo size={28} type="full" />
@@ -129,6 +130,7 @@ export function ErrorBoundary() {
 export function HydrateFallback() {
   return (
     <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
+      <DitheringBackground className="absolute inset-0" />
       <div className="md:w-1/2 w-full md:min-h-fit min-h-dvh md:h-full h-fit flex flex-col justify-between *:p-6 md:sticky static top-0">
         <header className="w-full space-y-6">
           <Logo size={28} type="full" />
@@ -209,7 +211,7 @@ export default function () {
   const { publications, available, pricing } = useLoaderData<typeof loader>();
   return (
     <div className="w-full h-dvh flex md:flex-row flex-col overflow-y-auto">
-      <DitheringBackground className="absolute inset-0" />
+      <DitheringBackground className="opacity-15" />
       <div className="md:w-1/2 w-full md:min-h-fit min-h-dvh md:h-full h-fit flex flex-col justify-between *:p-6 md:sticky static top-0">
         <header className="w-full space-y-6">
           <Logo size={28} type="full" />
