@@ -235,8 +235,8 @@ export default function DitheringBackground({
             <AsciiRenderer
               fgColor="var(--foreground)"
               bgColor="transparent"
-              characters=" .:;/|#%@"
-              resolution={0.09}
+              characters=" .,:;!?#%@"
+              resolution={0.08}
               color={false}
               invert={false}
             />
