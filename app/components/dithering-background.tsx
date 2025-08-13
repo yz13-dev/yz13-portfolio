@@ -213,8 +213,7 @@ export default function DitheringBackground({
   return (
     <div className={cn("w-full h-dvh absolute top-0 z-[-1] left-0", className)}>
       <div
-        className={cn(
-          "w-full h-full relative",
+        className={cn("w-full h-full relative mask-radial-from-background mask-radial-to-transparent",
           // "grayscale bg-gradient-to-b from-background via-transparent to-background"
         )}
       >
