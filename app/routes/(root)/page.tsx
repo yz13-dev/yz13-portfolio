@@ -15,6 +15,7 @@ import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
+import { Resources } from "./nav/resources";
 import { PricingDetailsSkeleton } from "./pricing-details";
 import { PricingDurationSkeleton } from "./pricing-duration";
 import { RecentProjectsError, RecentProjectsSkeleton } from "./recent-projects";
@@ -222,7 +223,20 @@ export default function () {
       <DitheringBackground />
       <div className="w-full md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
         <header className="w-full space-y-6">
-          <Logo size={28} type="full" />
+          <div className="flex justify-between w-full">
+            <div className="flex items-center gap-2">
+              <Logo size={28} type="full" />
+              {
+                false &&
+                <div className="px-3 flex items-center gap-2">
+                  <Resources />
+                  <Button variant="ghost">Услуги и цены</Button>
+                </div>
+              }
+            </div>
+            <div className="flex items-center gap-2">
+            </div>
+          </div>
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
               <Time className="text-2xl font-medium text-foreground" />

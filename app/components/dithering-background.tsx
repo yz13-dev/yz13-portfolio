@@ -69,8 +69,8 @@ const fragmentShader = `
     float noiseValue = fbm(st * 1.5 + time * 0.005);
 
     // Добавляем волновые эффекты
-    float wave1 = sin(st.x * 10.0 + time * 0.15) * 0.5;
-    float wave2 = sin(st.y * 10.0 + time * 0.15) * 0.5;
+    float wave1 = sin(st.x * 15.0 + time * 0.15) * 0.5;
+    float wave2 = sin(st.y * 15.0 + time * 0.15) * 0.5;
     float wave3 = sin((st.x + st.y) * 10.0 + time * 0.15) * 0.5;
 
     // Комбинируем шум и волны
@@ -154,44 +154,13 @@ function TopographicScene({ layersVisible }: { layersVisible: boolean }) {
   })
 
   return (
-    <>
-      {/* 5 плоскостей с разной прозрачностью и вращением */}
-      {/*<TopographicPlane
-        lightness={0.2}
-        rotation={[0, 0, 0]}
-        position={[0, 0, -0.5]}
-        scale={1}
-        visible={layersVisible}
-      />*/}
-      {/*<TopographicPlane
-        lightness={0.4}
-        rotation={[0, 0, 0]}
-        position={[0.1, 0.05, -0.3]}
-        scale={1}
-        visible={layersVisible}
-      />
-      <TopographicPlane
-        lightness={0.6}
-        rotation={[0, 0, 0]}
-        position={[-0.05, 0.1, -0.1]}
-        scale={1}
-        visible={layersVisible}
-      />*/}
-      {/*<TopographicPlane
-        lightness={0.8}
-        rotation={[0, 0, 0]}
-        position={[0.05, -0.05, 0.1]}
-        scale={1}
-        visible={layersVisible}
-      />*/}
-      <TopographicPlane
-        lightness={1.0}
-        rotation={[0, 0, 0]}
-        position={[-0.1, 0.05, 0.3]}
-        scale={1}
-        visible={layersVisible}
-      />
-    </>
+    <TopographicPlane
+      lightness={1.0}
+      rotation={[0, 0, 0]}
+      position={[-0.1, 0.05, 0.3]}
+      scale={1}
+      visible={layersVisible}
+    />
   )
 }
 
@@ -222,7 +191,7 @@ export default function DitheringBackground({
           layersVisible ? "opacity-15" : "opacity-0"
         )}>
           <Canvas
-            camera={{ position: [0, 0, 3], fov: 80 }}
+            camera={{ position: [0, 0, 3], fov: 75 }}
             style={{ background: 'transparent' }}
           >
             <ambientLight intensity={0.6} />
@@ -234,14 +203,14 @@ export default function DitheringBackground({
             <AsciiRenderer
               fgColor="var(--foreground)"
               bgColor="transparent"
-              characters=" .,:;!?#%@"
+              characters=" .,;:!?#%@"
               resolution={0.08}
               color={false}
               invert={false}
             />
           </Canvas>
         </div>
-        <div className="absolute inset-0 w-full h-full" />
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-background via-transparent to-transparent" />
       </div>
     </div>
   )
