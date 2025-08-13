@@ -219,7 +219,7 @@ export default function DitheringBackground({
       >
         <div className={cn(
           "absolute inset-0 w-full h-full transition-opacity duration-1000",
-          layersVisible ? "opacity-100" : "opacity-0"
+          layersVisible ? "opacity-15" : "opacity-0"
         )}>
           <Canvas
             camera={{ position: [0, 0, 3], fov: 80 }}
@@ -241,7 +241,7 @@ export default function DitheringBackground({
             />
           </Canvas>
         </div>
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-background via-transparent to-background" />
+        <div className="absolute inset-0 w-full h-full" />
       </div>
     </div>
   )
