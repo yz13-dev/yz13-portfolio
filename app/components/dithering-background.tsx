@@ -213,7 +213,7 @@ export default function DitheringBackground({
   return (
     <div className={cn("w-full h-dvh absolute top-0 z-[-1] left-0", className)}>
       <div
-        className={cn("w-full h-full relative mask-radial-from-background mask-radial-to-transparent",
+        className={cn("w-full h-full relative",
           // "grayscale bg-gradient-to-b from-background via-transparent to-background"
         )}
       >
@@ -241,8 +241,7 @@ export default function DitheringBackground({
             />
           </Canvas>
         </div>
-
-        {/* <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-card via-transparent to-background" /> */}
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-background via-transparent to-background" />
       </div>
     </div>
   )

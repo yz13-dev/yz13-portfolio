@@ -81,7 +81,7 @@ export function ErrorBoundary() {
 
   return (
     <>
-      <DitheringBackground className="opacity-15" />
+      <DitheringBackground />
       <div className="w-full md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
         <header className="w-full space-y-6">
           <Logo size={28} type="full" />
@@ -131,7 +131,7 @@ export function ErrorBoundary() {
 export function HydrateFallback() {
   return (
     <>
-      <DitheringBackground className="opacity-15" />
+      <DitheringBackground />
       <div className="w-full md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
         <header className="w-full space-y-6">
           <Logo size={28} type="full" />
@@ -219,7 +219,7 @@ export default function () {
 
   return (
     <>
-      <DitheringBackground className="opacity-15" />
+      <DitheringBackground />
       <div className="w-full md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
         <header className="w-full space-y-6">
           <Logo size={28} type="full" />
