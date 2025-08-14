@@ -1,9 +1,10 @@
 import { Button } from "@yz13/ui/button"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@yz13/ui/carousel"
+import { Separator } from "@yz13/ui/separator"
 import { Skeleton } from "@yz13/ui/skeleton"
 import { cn } from "@yz13/ui/utils"
 import { ArrowRightIcon } from "lucide-react"
-import { ComponentProps } from "react"
+import { ComponentProps, Fragment } from "react"
 import { Link } from "react-router"
 import { Project } from "./page"
 import { SectionContent } from "./section"
@@ -30,23 +31,25 @@ export const RecentProjectsError = () => {
 export const RecentProjectsSkeleton = () => {
   const articles = Array.from({ length: 2 }).map((_, index) => index)
   return (
-    <SectionContent className="divide-y border-y">
+    <SectionContent>
       {
         articles
           .map((item) => {
             return (
-              <article
-                key={`recent-projects/skeleton/${item}`}
-                className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 p-6 min-h-[350px]"
-              >
-                <div className="space-y-2">
-                  <Skeleton className="w-1/2 h-10" />
-                  <Skeleton className="w-1/3 h-8" />
-                </div>
-                <div>
-                  <Skeleton className="w-full aspect-[4/2.7]" />
-                </div>
-              </article>
+              <Fragment key={`recent-projects/skeleton/${item}`}>
+                <Separator className="w-full" />
+                <article
+                  className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 p-6 min-h-[350px] max-w-[1600px] mx-auto"
+                >
+                  <div className="space-y-2">
+                    <Skeleton className="w-1/2 h-10" />
+                    <Skeleton className="w-1/3 h-8" />
+                  </div>
+                  <div>
+                    <Skeleton className="w-full aspect-[4/2.7]" />
+                  </div>
+                </article>
+              </Fragment>
             )
           })
       }
@@ -57,50 +60,55 @@ export const RecentProjectsSkeleton = () => {
 export default function ({ projects = [] }: Props) {
 
   return (
-    <SectionContent className="divide-y border-y">
+    <SectionContent className="w-full">
       {
         projects
           .filter(project => !!project.attachments.length)
           .map(project => {
             const attachments = project.attachments;
             return (
-              <article key={project.id} className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 p-6 hover:bg-secondary/20 min-h-[350px]">
-                <div className="flex flex-col gap-6 justify-between">
-                  <div className="w-full *:block space-y-2">
-                    <h3 className="lg:text-4xl text-2xl font-semibold text-foreground">{project.name}</h3>
-                    <p className="lg:text-2xl text-base font-medium text-muted-foreground">{project.description}</p>
+              <Fragment key={project.id}>
+                <Separator className="w-full" />
+                <article
+                  className="w-full 2xl:*:w-1/2 *:w-full flex 2xl:flex-row flex-col gap-3 p-6 min-h-[350px] max-w-[1600px] mx-auto"
+                >
+                  <div className="flex flex-col gap-6 justify-between">
+                    <div className="w-full *:block space-y-2">
+                      <h3 className="lg:text-4xl text-2xl font-semibold text-foreground">{project.name}</h3>
+                      <p className="lg:text-2xl text-base font-medium text-muted-foreground">{project.description}</p>
+                    </div>
+                    {
+                      project.public_url &&
+                      <Button className="w-fit" size="lg" asChild>
+                        <Link to={project.public_url}>
+                          <span>Перейти</span><ArrowRightIcon />
+                        </Link>
+                      </Button>
+                    }
                   </div>
-                  {
-                    project.public_url &&
-                    <Button className="w-fit" size="lg" asChild>
-                      <Link to={project.public_url}>
-                        <span>Перейти</span><ArrowRightIcon />
-                      </Link>
-                    </Button>
-                  }
-                </div>
-                <div>
-                  <Carousel className="w-full shrink">
-                    <CarouselContent>
-                      {
-                        attachments.map(attachment => {
-                          return (
-                            <CarouselItem key={attachment.url} className="aspect-[4/2.7]">
-                              <Image
-                                src={attachment.url}
-                                alt={project.name}
-                                className="w-full h-full rounded-xl"
-                              />
-                            </CarouselItem>
-                          )
-                        })
-                      }
-                    </CarouselContent>
-                    <CarouselPrevious className="left-3" />
-                    <CarouselNext className="right-3" />
-                  </Carousel>
-                </div>
-              </article>
+                  <div>
+                    <Carousel className="w-full shrink">
+                      <CarouselContent>
+                        {
+                          attachments.map(attachment => {
+                            return (
+                              <CarouselItem key={attachment.url} className="aspect-[4/2.7]">
+                                <Image
+                                  src={attachment.url}
+                                  alt={project.name}
+                                  className="w-full h-full rounded-xl"
+                                />
+                              </CarouselItem>
+                            )
+                          })
+                        }
+                      </CarouselContent>
+                      <CarouselPrevious className="left-3" />
+                      <CarouselNext className="right-3" />
+                    </Carousel>
+                  </div>
+                </article>
+              </Fragment>
             )
           })
       }

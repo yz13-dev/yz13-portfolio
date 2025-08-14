@@ -20,5 +20,5 @@ export const SectionTitle = ({ children, className = "" }: SectionCommonProps) =
 }
 
 export const SectionContent = ({ children, className = "" }: SectionCommonProps) => {
-  return <div className={className}>{children}</div>
+  return <div className={cn("", className)}>{children}</div>
 }

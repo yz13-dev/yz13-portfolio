@@ -15,6 +15,7 @@ import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
+import { Brands } from "./brands";
 import { Resources } from "./nav/resources";
 import { PricingDetailsSkeleton } from "./pricing-details";
 import { PricingDurationSkeleton } from "./pricing-duration";
@@ -33,27 +34,13 @@ const telegram = "https://t.me/yz13_dev"
 const twitter = "https://x.com/yz13_dev"
 const github = "https://githib.com/yz13-dev"
 
-const title = "YZ13 - Фронтенд который не подведет";
-const description = "Разработаю сайт, страницы, приложение и компоненты разной сложности";
+export const Title = () => {
+  return <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">YZ13 - Фронтенд который не&nbsp;подведет</h1>
+}
 
-// Создаем массив брендов для бесконечной прокрутки
-const brands = [
-  { type: 'square', id: 1 },
-  { type: 'video', id: 2 },
-  { type: 'square', id: 3 },
-  { type: 'square', id: 4 },
-  { type: 'video', id: 5 },
-  { type: 'square', id: 6 },
-  { type: 'square', id: 7 },
-  { type: 'video', id: 8 },
-  { type: 'square', id: 9 },
-  { type: 'square', id: 10 },
-  { type: 'video', id: 11 },
-  { type: 'square', id: 12 },
-  { type: 'square', id: 13 },
-  { type: 'video', id: 14 },
-  { type: 'square', id: 15 },
-]
+export const Description = () => {
+  return <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">Разработаю сайт, страницы, приложение и&nbsp;компоненты разной сложности</p>
+}
 
 export const loader = async () => {
   try {
@@ -95,12 +82,10 @@ export function ErrorBoundary() {
           </div>
         </header>
         <div className="w-full space-y-8">
-          <div className="w-full space-y-2 *:block">
-            <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">{title}</h1>
-            <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">
-              {description}
-            </p>
-          </div>
+          <main className="w-full space-y-3 max-w-3xl *:block">
+            <Title />
+            <Description />
+          </main>
           <div className={cn(
             "flex md:flex-row flex-col items-center gap-3",
             "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
@@ -115,7 +100,7 @@ export function ErrorBoundary() {
           </div>
         </div>
       </div>
-      <div className="w-full max-w-7xl mt-[5%] mx-auto">
+      <div className="w-full max-w-[1600px] mt-[5%] mx-auto">
         <div className="w-full">
           <span className="text-foreground md:text-4xl text-3xl font-semibold">{errorTitle}</span>
         </div>
@@ -146,12 +131,10 @@ export function HydrateFallback() {
         </header>
         <div className="w-full space-y-8">
           <AvailabilitySkeleton />
-          <div className="w-full space-y-2 *:block">
-            <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">{title}</h1>
-            <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">
-              {description}
-            </p>
-          </div>
+          <main className="w-full space-y-3 max-w-3xl *:block">
+            <Title />
+            <Description />
+          </main>
           <div className={cn(
             "flex md:flex-row flex-col items-center gap-3",
             "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
@@ -164,28 +147,9 @@ export function HydrateFallback() {
               </Link>
             </Button>
           </div>
-          {
-            false &&
-            <div className="w-full space-y-3">
-              <span className="text-muted-foreground text-sm block">Бренды, доверившиеся мне</span>
-              <div className="w-full h-16 overflow-hidden infinite-scroll-container">
-                <div className="h-full flex w-max items-center gap-3 infinite-scroll-track">
-                  {
-                    [...brands, ...brands]
-                      .map((brand) => (
-                        <div
-                          key={brand.id}
-                          className={`h-full ${brand.type === 'video' ? 'aspect-video' : 'aspect-square'} bg-secondary rounded-sm`}
-                        />
-                      ))
-                  }
-                </div>
-              </div>
-            </div>
-          }
         </div>
       </div>
-      <div className="w-full max-w-7xl mt-[5%] mx-auto">
+      <div className="w-full max-w-[1600px] mt-[5%] mx-auto">
 
         <div className="space-y-6">
           <div className="w-full">
@@ -221,7 +185,7 @@ export default function () {
   return (
     <>
       <DitheringBackground />
-      <div className="w-full md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
+      <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
         <header className="w-full space-y-6">
           <div className="flex justify-between w-full">
             <div className="flex items-center gap-2">
@@ -242,7 +206,7 @@ export default function () {
               <Time className="text-2xl font-medium text-foreground" />
               <TimeOffset className="text-sm text-muted-foreground" />
             </div>
-            <span className="text-2xl font-medium text-foreground">Tyumen, Russia</span>
+            <span className="text-2xl font-medium text-foreground w-fit">Tyumen, Russia</span>
           </div>
         </header>
         <div className="w-full space-y-12">
@@ -252,10 +216,8 @@ export default function () {
             </Await>
           </Suspense>
           <main className="w-full space-y-3 max-w-3xl *:block">
-            <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">{title}</h1>
-            <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">
-              {description}
-            </p>
+            <Title />
+            <Description />
           </main>
           <div className="flex lg:flex-row flex-col-reverse justify-between lg:items-center items-end w-full gap-3">
             <div className={cn(
@@ -277,30 +239,12 @@ export default function () {
             </div>
             <User />
           </div>
-          {
-            false &&
-            <div className="w-full space-y-3">
-              <span className="text-muted-foreground text-sm block">Бренды, доверившиеся мне</span>
-              <div className="w-full h-16 overflow-hidden infinite-scroll-container">
-                <div className="h-full flex w-max items-center gap-3 infinite-scroll-track">
-                  {
-                    [...brands, ...brands]
-                      .map((brand) => (
-                        <div
-                          key={brand.id}
-                          className={`h-full ${brand.type === 'video' ? 'aspect-video' : 'aspect-square'} bg-secondary rounded-sm`}
-                        />
-                      ))
-                  }
-                </div>
-              </div>
-            </div>
-          }
         </div>
       </div>
-      <div className="w-full max-w-7xl mt-[5%] mx-auto">
+      <div className="w-full">
+        <Brands />
         <Section>
-          <div className="w-full p-6">
+          <div className="w-full p-6 max-w-[1600px] mx-auto">
             <SectionTitle >Последние работы</SectionTitle>
           </div>
           <Suspense fallback={<RecentProjectsSkeleton />}>
@@ -315,21 +259,24 @@ export default function () {
             </Await>
           </Suspense>
         </Section>
-        <Section className="space-y-6 p-6">
+        <Separator className="w-full" />
+        <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
           <SectionContent>
             <GithubContributions username="yz13-dev" />
           </SectionContent>
         </Section>
-        <div className="w-full divide-y">
+        <div className="w-full">
           <Suspense fallback={
             <>
-              <Section className="space-y-6 p-6">
+              <Separator className="w-full" />
+              <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
                 <div className="w-full">
                   <SectionTitle >Услуги и цены</SectionTitle>
                 </div>
                 <PricingDurationSkeleton />
               </Section>
-              <Section className="space-y-6 p-6">
+              <Separator className="w-full" />
+              <Section className="space-y-6 p-6 max-w-[1600px] mx-auto">
                 <PricingDetailsSkeleton />
               </Section>
             </>
@@ -349,13 +296,15 @@ export default function () {
                   })
                   return (
                     <>
-                      <Section className="space-y-6 p-6">
+                      <Separator className="w-full" />
+                      <Section className="p-6 max-w-[1600px] mx-auto border-x space-y-6">
                         <div className="w-full">
                           <SectionTitle >Услуги и цены</SectionTitle>
                         </div>
                         <PricingDuration pricing={sorted} />
                       </Section>
-                      <Section className="space-y-6 p-6">
+                      <Separator className="w-full" />
+                      <Section className="max-w-[1600px] mx-auto">
                         <PricingDetails pricing={sorted} />
                       </Section>
                     </>
@@ -364,14 +313,15 @@ export default function () {
               }
             </Await>
           </Suspense>
-          <Section className="space-y-6 p-6">
-            <div className="w-full">
-              <SectionTitle >Вопросы и ответы</SectionTitle>
+          <Separator className="w-full" />
+          <Section className="flex lg:flex-row flex-col border-x max-w-[1600px] mx-auto gap-4">
+            <div className="lg:w-1/3 w-full p-6">
+              <SectionTitle>Вопросы и ответы</SectionTitle>
             </div>
-            <SectionContent>
+            <SectionContent className="lg:w-2/3 w-full border-l py-12">
               <Accordion
                 type="multiple"
-                className="rounded-lg bg-card border"
+                className="border-y"
               >
                 <AccordionItem value="q-1" className="*:px-5 *:text-base">
                   <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
@@ -402,17 +352,22 @@ export default function () {
             </SectionContent>
           </Section>
         </div>
+        <Separator className="w-full" />
         <div className="w-full">
           <footer className={cn(
-            "flex 2xl:flex-row flex-col-reverse w-full h-git gap-6",
-            "lg:*:w-1/2 *:w-full *:gap-6 py-6 px-6 border-y"
+            "flex md:flex-row flex-col-reverse w-full h-git",
+            "*:p-6 *:gap-6 md:divide-x divide-x-0 max-w-[1600px] mx-auto border-x"
           )}>
             <div className="flex flex-col">
               <div className="w-full flex flex-col gap-3">
                 <Logo size={48} />
                 <div className="*:block space-y-1">
-                  <span className="text-base text-foreground font-semibold">{title}</span>
-                  <span className="text-sm text-muted-foreground">{description}</span>
+                  <span className="text-base text-foreground font-semibold">
+                    YZ13 - Фронтенд который не&nbsp;подведет
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    Разработаю сайт, страницы, приложение и&nbsp;компоненты разной сложности
+                  </span>
                 </div>
               </div>
               <div className="w-full flex flex-col *:w-full gap-3 *:h-10">
@@ -432,7 +387,7 @@ export default function () {
                 </Suspense>
               </div>
             </div>
-            <Separator className="2xl:hidden block" />
+            <Separator className="md:hidden !p-0 block" />
             <div className="w-full h-fit flex sm:flex-row flex-col md:*:w-1/2 *:w-full">
               <div className="w-1/3 flex flex-col gap-3">
                 <span>Ссылки</span>
@@ -469,7 +424,8 @@ export default function () {
             </div>
           </footer>
         </div>
-        <div className="flex p-6 items-center justify-between">
+        <Separator className="w-full" />
+        <div className="flex p-6 items-center justify-between max-w-[1600px] border-x mx-auto">
           <span className="text-xs text-muted-foreground">YZ13 2025</span>
           <span className="text-xs text-muted-foreground">Фронтенд разработчик</span>
         </div>

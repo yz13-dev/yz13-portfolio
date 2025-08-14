@@ -6,7 +6,9 @@ import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 
 interface DitheringBackgroundProps {
-  className?: string
+  size?: "sm" | "default" | "lg"
+  className?: string,
+  withGradientOverylay?: boolean
 }
 
 // Вертексный шейдер для плоскостей
@@ -166,51 +168,54 @@ function TopographicScene({ layersVisible }: { layersVisible: boolean }) {
 
 
 export default function DitheringBackground({
-  className = ""
+  className = "",
+  size = "default",
+  withGradientOverylay = true
 }: DitheringBackgroundProps) {
   const [layersVisible, setLayersVisible] = useState(false)
 
   // Показываем слои с задержкой
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLayersVisible(true)
-    }, 800) // Задержка 800ms
-
-    return () => clearTimeout(timer)
+    setLayersVisible(true)
   }, [])
+
+  const resolution = size === "default" ? 0.08 : size === "lg" ? 0.04 : 0.1
 
   return (
     <div className={cn("w-full h-dvh absolute top-0 z-[-1] left-0", className)}>
       <div
         className={cn("w-full h-full relative",
-          // "grayscale bg-gradient-to-b from-background via-transparent to-background"
         )}
       >
         <div className={cn(
           "absolute inset-0 w-full h-full transition-opacity duration-1000",
-          layersVisible ? "opacity-15" : "opacity-0"
+          layersVisible ? "opacity-30" : "opacity-0"
         )}>
           <Canvas
             camera={{ position: [0, 0, 3], fov: 75 }}
-            style={{ background: 'transparent' }}
+            style={{ background: 'transparent', fontFamily: "var(--font-mono)" }}
+            className="jetbrains-mono"
           >
-            <ambientLight intensity={0.6} />
-            <pointLight position={[10, 10, 10]} intensity={0.8} />
-            <pointLight position={[-10, -10, -10]} intensity={0.4} />
+            {/*<ambientLight intensity={0.6} />*/}
+            {/*<pointLight position={[10, 10, 10]} intensity={0.8} />*/}
+            {/*<pointLight position={[-10, -10, -10]} intensity={0.4} />*/}
 
             <TopographicScene layersVisible={layersVisible} />
 
             <AsciiRenderer
               fgColor="var(--foreground)"
               bgColor="transparent"
-              characters=" .,;:!?#%@"
-              resolution={0.08}
+              characters=" .,;:!?%&@"
+              resolution={resolution}
               color={false}
               invert={false}
             />
           </Canvas>
         </div>
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-background via-transparent to-transparent" />
+        {
+          withGradientOverylay &&
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-background via-transparent to-background" />
+        }
       </div>
     </div>
   )
