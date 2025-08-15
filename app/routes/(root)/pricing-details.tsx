@@ -68,11 +68,11 @@ export default function ({ pricing }: Props) {
               от {formatPrice(cheapest.price ?? 0)}
             </SectionTitle>
             <div className="flex items-center gap-4">
-              <Button size="lg">
+              <Button size="lg" disabled>
                 <NotebookTabsIcon />
                 Цены
               </Button>
-              <Button size="lg" variant="secondary">
+              <Button size="lg" variant="secondary" disabled>
                 Запланировать видеозвонок
                 <ArrowRightIcon />
               </Button>
