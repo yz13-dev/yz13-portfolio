@@ -242,23 +242,29 @@ export default function () {
         </div>
       </div>
       <div className="w-full">
-        <Brands />
-        <Section>
-          <div className="w-full p-6 max-w-[1600px] mx-auto">
-            <SectionTitle >Последние работы</SectionTitle>
-          </div>
-          <Suspense fallback={<RecentProjectsSkeleton />}>
-            <Await
-              resolve={publications}
-              errorElement={<RecentProjectsError />}
-            >
-              {
-                (projects) =>
-                  <RecentProjects projects={projects} />
-              }
-            </Await>
-          </Suspense>
-        </Section>
+        {
+          false &&
+          <Brands />
+        }
+        {
+          false &&
+          <Section>
+            <div className="w-full p-6 max-w-[1600px] mx-auto">
+              <SectionTitle >Последние работы</SectionTitle>
+            </div>
+            <Suspense fallback={<RecentProjectsSkeleton />}>
+              <Await
+                resolve={publications}
+                errorElement={<RecentProjectsError />}
+              >
+                {
+                  (projects) =>
+                    <RecentProjects projects={projects} />
+                }
+              </Await>
+            </Suspense>
+          </Section>
+        }
         <Separator className="w-full" />
         <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
           <SectionContent>
