@@ -68,12 +68,12 @@ const fragmentShader = `
     vec2 st = vUv;
 
     // Создаем органичный шум для топографии
-    float noiseValue = fbm(st * 1.5 + time * 0.005);
+    float noiseValue = fbm(st * 100.0 + time * 0.05);
 
     // Добавляем волновые эффекты
-    float wave1 = sin(st.x * 15.0 + time * 0.15) * 0.5;
-    float wave2 = sin(st.y * 15.0 + time * 0.15) * 0.5;
-    float wave3 = sin((st.x + st.y) * 10.0 + time * 0.15) * 0.5;
+    float wave1 = sin(st.x * 30.0 + time * 0.2) * 0.2;
+    float wave2 = sin(st.y * 30.0 + time * 0.2) * 0.2;
+    float wave3 = sin((st.x + st.y) * 10.0 + time * 0.2) * 0.6;
 
     // Комбинируем шум и волны
     float combined = noiseValue + wave1 + wave2 + wave3;

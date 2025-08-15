@@ -100,16 +100,6 @@ export function ErrorBoundary() {
           </div>
         </div>
       </div>
-      <div className="w-full max-w-[1600px] mt-[5%] mx-auto">
-        <div className="w-full">
-          <span className="text-foreground md:text-4xl text-3xl font-semibold">{errorTitle}</span>
-        </div>
-        <div className="w-full">
-          <span className="text-muted-foreground md:text-2xl text-xl font-medium">
-            {errorDescription}
-          </span>
-        </div>
-      </div>
     </>
   )
 }
