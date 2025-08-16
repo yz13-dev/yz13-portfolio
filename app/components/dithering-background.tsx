@@ -192,7 +192,7 @@ export default function DitheringBackground({
           layersVisible ? "opacity-30" : "opacity-0"
         )}>
           <Canvas
-            camera={{ position: [0, 0, 3], fov: 75 }}
+            camera={{ position: [0, 0, 3], fov: 75, aspect: 16 / 9 }}
             style={{ background: 'transparent', fontFamily: "var(--font-mono)" }}
             className="jetbrains-mono"
           >

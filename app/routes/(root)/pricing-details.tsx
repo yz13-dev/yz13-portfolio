@@ -3,6 +3,7 @@ import { formatPrice } from "@/utils/pricing";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { ArrowDownIcon, ArrowRightIcon, ChevronRightIcon, NotebookTabsIcon } from "lucide-react";
+import { Link } from "react-router";
 import type { Pricing } from "./page";
 import { SectionTitle } from "./section";
 
@@ -68,9 +69,11 @@ export default function ({ pricing }: Props) {
               от {formatPrice(cheapest.price ?? 0)}
             </SectionTitle>
             <div className="flex items-center gap-4">
-              <Button size="lg" disabled>
-                <NotebookTabsIcon />
-                Цены
+              <Button size="lg" asChild>
+                <Link to="/pricing">
+                  <NotebookTabsIcon />
+                  Цены
+                </Link>
               </Button>
               <Button size="lg" variant="secondary" disabled>
                 Запланировать видеозвонок
