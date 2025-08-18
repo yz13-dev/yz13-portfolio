@@ -70,7 +70,7 @@ export default function ({ pricing }: Props) {
             </SectionTitle>
             <div className="flex items-center gap-4">
               <Button size="lg" asChild>
-                <Link to="/pricing">
+                <Link to="/pricing" prefetch="render">
                   <NotebookTabsIcon />
                   Цены
                 </Link>
