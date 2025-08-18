@@ -272,7 +272,7 @@ export default function () {
                 <PricingDurationSkeleton />
               </Section>
               <Separator className="w-full" />
-              <Section className="space-y-6 p-6 max-w-[1600px] mx-auto">
+              <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
                 <PricingDetailsSkeleton />
               </Section>
             </>
