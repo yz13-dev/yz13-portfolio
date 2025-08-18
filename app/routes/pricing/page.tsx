@@ -28,6 +28,35 @@ export const loader = async () => {
   }
 }
 
+export function HydrateFallback() {
+  return (
+    <>
+      <header className="max-w-[1600px] h-14 px-6 mx-auto">
+        <div className="border-x w-full h-full flex items-center px-6">
+          <Link to="/">
+            <Logo size={28} type="full" />
+          </Link>
+        </div>
+      </header>
+      <div className="max-w-[1600px] divide-y px-6 mx-auto">
+        <div className="p-6 border">
+          <div className="*:block space-y-2">
+            <h1 className="text-4xl font-semibold">
+              Цены
+            </h1>
+            <p className="text-2xl text-muted-foreground">
+              От компонентов до MVP
+            </p>
+          </div>
+        </div>
+        <div className="w-full h-[400px] border-x relative">
+          <DitheringBackground className="h-full w-full" withGradientOverylay={false} />
+        </div>
+      </div>
+    </>
+  )
+}
+
 export default function () {
   const { pricing } = useLoaderData<typeof loader>();
 
