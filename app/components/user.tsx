@@ -3,6 +3,7 @@ import { postV1AuthLogout } from "@yz13/api"
 import { Avatar, AvatarFallback, AvatarImage } from "@yz13/ui/avatar"
 import { Button } from "@yz13/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@yz13/ui/dropdown-menu"
+import { Skeleton } from "@yz13/ui/skeleton"
 import { LogInIcon, LogOutIcon } from "lucide-react"
 import type { ReactNode } from "react"
 import { Link, useNavigate } from "react-router"
@@ -10,8 +11,9 @@ import { Link, useNavigate } from "react-router"
 
 export default function () {
 
-  const [user] = useUser()
+  const [user, loading] = useUser()
 
+  if (loading) return <Skeleton className="h-12 w-28" />
   if (!user)
     return (
       <Button disabled className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" asChild>
