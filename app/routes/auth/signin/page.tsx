@@ -31,6 +31,13 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 }
 
+export function HydrateFallback() {
+  return (
+    <div className="w-full h-dvh relative flex flex-col items-center justify-center">
+      <DitheringBackground />
+    </div>
+  )
+}
 export default function () {
   const { app } = useLoaderData<typeof loader>();
 

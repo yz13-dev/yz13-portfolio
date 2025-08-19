@@ -5,8 +5,15 @@ import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
 import { Link } from "react-router";
 
+export function HydrateFallback() {
+  return (
+    <div className="w-full h-dvh relative flex flex-col items-center justify-center">
+      <DitheringBackground />
+    </div>
+  )
+}
 
-export default function Page() {
+export default function () {
   return (
     <div className="w-full h-dvh relative flex flex-col items-center justify-center">
       <DitheringBackground />
