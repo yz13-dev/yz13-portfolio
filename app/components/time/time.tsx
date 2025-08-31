@@ -48,9 +48,9 @@ export const Time = ({
       {
         ready
           ? <>
-            <SlidingNumber number={date.getHours()} />
+            <SlidingNumber padStart number={date.getHours()} />
             :
-            <SlidingNumber number={date.getMinutes()} />
+            <SlidingNumber padStart number={date.getMinutes()} />
           </>
           : <span>00:00</span>
       }
