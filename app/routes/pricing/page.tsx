@@ -6,22 +6,17 @@ import { getV1Pricing } from "@yz13/api"
 import { GetV1Pricing200Item } from "@yz13/api/types"
 import { Button } from "@yz13/ui/button"
 import { ArrowRightIcon, CheckIcon, MinusIcon } from "lucide-react"
-import { Link, useLoaderData } from "react-router"
+import { Suspense } from "react"
+import { Await, Link, useLoaderData } from "react-router"
+import Loading from "./loading"
 
 type Pricing = GetV1Pricing200Item;
 
-export const loader = async () => {
+export const loader = () => {
   try {
-    const pricing = await getV1Pricing();
+    const pricing = getV1Pricing();
 
-    const sorted = pricing
-      .sort((a, b) => {
-        const aPricing = a.price;
-        const bPricing = b.price;
-        return aPricing - bPricing
-      })
-
-    return { pricing: sorted }
+    return { pricing }
   } catch (error) {
     console.error(error)
     return { pricing: [] }
@@ -83,59 +78,74 @@ export default function () {
         <div className="w-full h-[400px] border-x relative">
           <DitheringBackground className="h-full w-full" withGradientOverylay={false} />
         </div>
-        <div className="w-full divide-y *:border-x border-b">
-          <div className="lg:grid hidden grid-cols-7 w-full *:h-full divide-x *:p-3">
-            <div className="w-full h-full">
-              <span className="text-base text-muted-foreground font-normal">
-                Опции и описание
-              </span>
-            </div>
+        <Suspense fallback={<Loading />}>
+          <Await resolve={pricing}>
             {
-              pricing
-                .map((price, index) => {
-
-                  const isFourth = index === 3
-
-                  return (
-                    <div
-                      key={price.id}
-                      className="w-full flex 2xl:flex-row flex-col 2xl:items-center items-start shrink-0 justify-between 2xl:gap-3 gap-1.5 h-fit"
-                    >
-                      <div className="*:block xl:space-y-1 space-y-0 shrink-0">
-                        <span className="xl:text-base text-sm line-clamp-1 text-muted-foreground font-medium">{price.name}</span>
-                        <span className="block xl:text-2xl text-lg font-medium">
-                          От {formatPrice(price.price)}
+              (pricing) => {
+                return (
+                  <div className="w-full divide-y *:border-x border-b">
+                    <div className="lg:grid hidden grid-cols-7 w-full *:h-full divide-x *:p-3">
+                      <div className="w-full h-full">
+                        <span className="text-base text-muted-foreground font-normal">
+                          Опции и описание
                         </span>
                       </div>
-                      <Button
-                        className="2xl:w-fit w-full"
-                        variant={isFourth ? "default" : "outline"}
-                        disabled
-                      >
-                        <span className="2xl:hidden inline">Заказать</span>
-                        <ArrowRightIcon />
-                      </Button>
+                      {
+                        pricing
+                          .sort((a, b) => {
+                            const aPricing = a.price;
+                            const bPricing = b.price;
+                            return aPricing - bPricing
+                          })
+                          .map((price, index) => {
+
+                            const isFourth = index === 3
+
+                            return (
+                              <div
+                                key={price.id}
+                                className="w-full flex 2xl:flex-row flex-col 2xl:items-center items-start shrink-0 justify-between 2xl:gap-3 gap-1.5 h-fit"
+                              >
+                                <div className="*:block xl:space-y-1 space-y-0 shrink-0">
+                                  <span className="xl:text-base text-sm line-clamp-1 text-muted-foreground font-medium">{price.name}</span>
+                                  <span className="block xl:text-2xl text-lg font-medium">
+                                    От {formatPrice(price.price)}
+                                  </span>
+                                </div>
+                                <Button
+                                  className="2xl:w-fit w-full"
+                                  variant={isFourth ? "default" : "outline"}
+                                  disabled
+                                >
+                                  <span className="2xl:hidden inline">Заказать</span>
+                                  <ArrowRightIcon />
+                                </Button>
+                              </div>
+                            )
+                          })
+                      }
                     </div>
-                  )
-                })
+                    <PricingRow
+                      label="Доступ к репозиторию"
+                      priceId="repo"
+                      pricing={pricing}
+                    />
+                    <PricingRow
+                      label="Базовое SEO"
+                      priceId="seo-base"
+                      pricing={pricing}
+                    />
+                    <PricingRow
+                      label="Адаптация под мобильные устройства"
+                      priceId="mobile-opt"
+                      pricing={pricing}
+                    />
+                  </div>
+                )
+              }
             }
-          </div>
-          <PricingRow
-            label="Доступ к репозиторию"
-            priceId="repo"
-            pricing={pricing}
-          />
-          <PricingRow
-            label="Базовое SEO"
-            priceId="seo-base"
-            pricing={pricing}
-          />
-          <PricingRow
-            label="Адаптация под мобильные устройства"
-            priceId="mobile-opt"
-            pricing={pricing}
-          />
-        </div>
+          </Await>
+        </Suspense>
       </div>
     </>
   )
