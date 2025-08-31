@@ -1,3 +1,4 @@
+import { SlidingNumber } from "@yz13/ui/animated/sliding-number"
 import { cn } from "@yz13/ui/utils"
 import { useInterval } from "ahooks"
 import { format } from "date-fns"
@@ -31,12 +32,10 @@ export const DateProvider = ({ children }: Props) => {
 }
 
 type TimeProps = {
-  format?: string;
   className?: string
 }
 export const Time = ({
   className = "",
-  format: timeFormat = "HH:mm"
 }: TimeProps) => {
   const [ready, setReady] = useState<boolean>(false)
   const date = useDate(state => state.date);
@@ -45,13 +44,17 @@ export const Time = ({
     setReady(true)
   }, [])
   return (
-    <span className={cn("", className)}>
+    <div className={cn("flex items-center font-sans", className)}>
       {
         ready
-          ? format(date, timeFormat)
-          : "00:00"
+          ? <>
+            <SlidingNumber number={date.getHours()} />
+            :
+            <SlidingNumber number={date.getMinutes()} />
+          </>
+          : <span>00:00</span>
       }
-    </span>
+    </div>
   )
 }
 

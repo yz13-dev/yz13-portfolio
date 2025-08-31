@@ -8,6 +8,7 @@ import { available } from "@/utils/flags";
 import { getV1Pricing, getV1Store } from "@yz13/api";
 import type { GetV1Pricing200Item, GetV1Store200Item } from "@yz13/api/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@yz13/ui/accordion";
+import { SlidingNumber } from "@yz13/ui/animated/sliding-number";
 import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
@@ -422,7 +423,10 @@ export default function () {
         </div>
         <Separator className="w-full" />
         <div className="flex p-6 items-center justify-between max-w-[1600px] border-x mx-auto">
-          <span className="text-xs text-muted-foreground">YZ13 2025</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">YZ13</span>
+            <SlidingNumber number={(new Date).getFullYear()} className="text-xs text-muted-foreground" />
+          </div>
           <span className="text-xs text-muted-foreground">Фронтенд разработчик</span>
         </div>
       </div>
