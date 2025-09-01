@@ -5,8 +5,8 @@ import { Logo } from "@/components/logo";
 import { Time, TimeOffset } from "@/components/time/time";
 import User from "@/components/user";
 import { available } from "@/utils/flags";
-import { getV1Pricing, getV1Store } from "@yz13/api";
-import type { GetV1Pricing200Item, GetV1Store200Item } from "@yz13/api/types";
+import { getPricingV1, getStoreV1 } from "@yz13/api";
+import type { GetPricingV1200Item, GetStoreV1200Item } from "@yz13/api/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@yz13/ui/accordion";
 import { SlidingNumber } from "@yz13/ui/animated/sliding-number";
 import { Button } from "@yz13/ui/button";
@@ -28,8 +28,8 @@ const PricingDuration = lazy(() => import("./pricing-duration"));
 
 const RecentProjects = lazy(() => import("./recent-projects"));
 
-export type Project = GetV1Store200Item
-export type Pricing = GetV1Pricing200Item;
+export type Project = GetStoreV1200Item;
+export type Pricing = GetPricingV1200Item;
 
 const telegram = "https://t.me/yz13_dev"
 const twitter = "https://x.com/yz13_dev"
@@ -45,8 +45,8 @@ export const Description = () => {
 
 export const loader = async () => {
   try {
-    const pricing = getV1Pricing()
-    const publications = getV1Store()
+    const pricing = getPricingV1()
+    const publications = getStoreV1()
 
     const isAvailable = available();
 

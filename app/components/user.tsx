@@ -1,5 +1,5 @@
 import useUser, { useRefreshUser } from "@/hooks/use-user"
-import { postV1AuthLogout } from "@yz13/api"
+import { postAuthV1Logout } from "@yz13/api"
 import { Avatar, AvatarFallback, AvatarImage } from "@yz13/ui/avatar"
 import { Button } from "@yz13/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@yz13/ui/dropdown-menu"
@@ -44,7 +44,7 @@ const UserDropdown = ({ children }: UserDropdownProps) => {
 
   const signout = async () => {
     try {
-      await postV1AuthLogout()
+      await postAuthV1Logout()
 
       refresh()
 

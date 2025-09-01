@@ -2,19 +2,19 @@ import DitheringBackground from "@/components/dithering-background"
 import { Logo } from "@/components/logo"
 import { useMobile } from "@/hooks/use-mobile"
 import { formatPrice } from "@/utils/pricing"
-import { getV1Pricing } from "@yz13/api"
-import { GetV1Pricing200Item } from "@yz13/api/types"
+import { getPricingV1 } from "@yz13/api"
+import { GetPricingV1200Item } from "@yz13/api/types"
 import { Button } from "@yz13/ui/button"
 import { ArrowRightIcon, CheckIcon, MinusIcon } from "lucide-react"
 import { Suspense } from "react"
 import { Await, Link, useLoaderData } from "react-router"
 import Loading from "./loading"
 
-type Pricing = GetV1Pricing200Item;
+type Pricing = GetPricingV1200Item;
 
 export const loader = () => {
   try {
-    const pricing = getV1Pricing();
+    const pricing = getPricingV1();
 
     return { pricing }
   } catch (error) {

@@ -2,7 +2,7 @@ import type { Route } from ".react-router/types/app/routes/auth/signin/+types/pa
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/project-logo";
-import { getV1StoreId, postV1AuthLogin } from "@yz13/api";
+import { getStoreV1Id, postAuthV1Login } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
 import { Loader2Icon } from "lucide-react";
@@ -19,7 +19,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   if (!appId) return { app: null }
 
   const next = searchParams.get("next")
-  const app = await getV1StoreId(appId)
+  const app = await getStoreV1Id(appId)
 
   if (!next && app?.public_url) {
     const newSearchParams = new URLSearchParams(searchParams);
@@ -54,7 +54,7 @@ export default function () {
     setLoading(true)
     try {
 
-      const result = await postV1AuthLogin({
+      const result = await postAuthV1Login({
         email,
         password
       })

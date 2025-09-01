@@ -44,7 +44,7 @@ export default function () {
                   Уже есть аккаунт?
                 </Link>
               </Button>
-              <Button>Продолжить</Button>
+              <Button disabled>Продолжить</Button>
             </div>
           </div>
         </div>
