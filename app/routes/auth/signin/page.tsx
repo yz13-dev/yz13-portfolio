@@ -2,12 +2,14 @@ import type { Route } from ".react-router/types/app/routes/auth/signin/+types/pa
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/project-logo";
+import { validateEmail } from "@/utils/email";
 import { getStoreV1Id, postAuthV1Login } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
+import { Skeleton } from "@yz13/ui/skeleton";
 import { Loader2Icon } from "lucide-react";
 import { useQueryState } from "nuqs";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, redirect, useLoaderData, useNavigate } from "react-router";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
@@ -35,9 +37,12 @@ export function HydrateFallback() {
   return (
     <div className="w-full h-dvh relative flex flex-col items-center justify-center">
       <DitheringBackground />
+      <Skeleton className="max-w-3xl w-full h-72 rounded-4xl" />
     </div>
   )
 }
+
+
 export default function () {
   const { app } = useLoaderData<typeof loader>();
 
@@ -49,6 +54,12 @@ export default function () {
   const [loading, setLoading] = useState<boolean>(false)
 
   const nav = useNavigate()
+
+  const disabled = useMemo(() => {
+    const shortPassword = password.length < 6
+    const invalidEmail = !validateEmail(email)
+    return loading || !email || !password || shortPassword || invalidEmail
+  }, [email, password, loading])
 
   const login = async () => {
     setLoading(true)
@@ -135,7 +146,7 @@ export default function () {
                   </Link>
                 </Button>
               }
-              <Button disabled={loading} onClick={login}>{loading && <Loader2Icon className="animate-spin" />}Продолжить</Button>
+              <Button disabled={disabled} onClick={login}>{loading && <Loader2Icon className="animate-spin" />}Продолжить</Button>
             </div>
           </div>
         </div>
