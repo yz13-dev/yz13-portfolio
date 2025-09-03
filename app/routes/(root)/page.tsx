@@ -167,7 +167,7 @@ export default function () {
           {/*<Brands />*/}
 
         </div>
-        <div className="flex flex-col w-full mx-auto gap-6">
+        <div className="flex flex-col w-full mx-auto gap-12">
           <div className="flex flex-col gap-3">
             <Suspense fallback={<Skeleton className="h-14 w-40" />}>
               <Await resolve={publications}>
