@@ -214,7 +214,7 @@ export default function DitheringBackground({
         </div>
         {
           withGradientOverylay &&
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-background via-transparent to-background" />
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-background via-transparent to-transparent" />
         }
       </div>
     </div>

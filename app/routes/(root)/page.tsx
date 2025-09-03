@@ -13,11 +13,10 @@ import { Button } from "@yz13/ui/button";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
-import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
+import { ArrowRightIcon, ExternalLinkIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
 import { Brands } from "./brands";
-import { Resources } from "./nav/resources";
 import { PricingDetailsSkeleton } from "./pricing-details";
 import { PricingDurationSkeleton } from "./pricing-duration";
 import { RecentProjectsError, RecentProjectsSkeleton } from "./recent-projects";
@@ -71,35 +70,24 @@ export function ErrorBoundary() {
   return (
     <>
       <DitheringBackground />
-      <div className="w-full md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
-        <header className="w-full space-y-6">
-          <Logo size={28} type="full" />
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <Time className="text-2xl font-medium text-foreground" />
-              <TimeOffset className="text-sm text-muted-foreground" />
-            </div>
-            <span className="text-2xl font-medium text-foreground">Tyumen, Russia</span>
-          </div>
-        </header>
-        <div className="w-full space-y-8">
-          <main className="w-full space-y-3 max-w-3xl *:block">
-            <Title />
-            <Description />
-          </main>
-          <div className={cn(
-            "flex md:flex-row flex-col items-center gap-3",
-            "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
-          )}>
-            <Button variant="secondary" asChild>
-              <Link to={telegram}>
-                <SendIcon />
-                <span className="md:hidden inline">Перейти в чат</span>
-                <span className="md:inline hidden">Чат</span>
-              </Link>
-            </Button>
-          </div>
+      <DitheringBackground />
+      <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
+        <div className="w-full h-full absolute inset-0 flex items-center justify-center">
+
+          {/*<Brands />*/}
+
         </div>
+        <div className="w-full h-fit mx-auto flex items-center justify-between">
+          <div className="w-fit flex flex-row items-center gap-4">
+            <Logo size={40} type="full" />
+            <div className="flex flex-col gap-0">
+              <Time className="text-lg font-medium text-foreground" />
+              <TimeOffset className="text-xs text-muted-foreground" />
+            </div>
+          </div>
+          <User />
+        </div>
+
       </div>
     </>
   )
@@ -109,45 +97,43 @@ export function HydrateFallback() {
   return (
     <>
       <DitheringBackground />
-      <div className="w-full md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
-        <header className="w-full space-y-6">
-          <Logo size={28} type="full" />
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-medium text-foreground">00:00</span>
-              <span className="text-sm text-muted-foreground">-5 UTC</span>
-            </div>
-            <span className="text-2xl font-medium text-foreground">Tyumen, Russia</span>
-          </div>
-        </header>
-        <div className="w-full space-y-8">
-          <AvailabilitySkeleton />
-          <main className="w-full space-y-3 max-w-3xl *:block">
-            <Title />
-            <Description />
-          </main>
-          <div className={cn(
-            "flex md:flex-row flex-col items-center gap-3",
-            "*:h-12 *:!px-6 md:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
-          )}>
-            <Button variant="secondary" asChild>
-              <Link to={telegram}>
-                <SendIcon />
-                <span className="md:hidden inline">Перейти в чат</span>
-                <span className="md:inline hidden">Чат</span>
-              </Link>
-            </Button>
-          </div>
+      <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
+        <div className="w-full h-full absolute inset-0 flex items-center justify-center">
+
+          {/*<Brands />*/}
+
         </div>
+        <div className="w-full h-fit mx-auto flex items-center justify-between">
+          <div className="w-fit flex flex-row items-center gap-4">
+            <Logo size={40} type="full" />
+            <div className="flex flex-col gap-0">
+              <Time className="text-lg font-medium text-foreground" />
+              <TimeOffset className="text-xs text-muted-foreground" />
+            </div>
+          </div>
+          <User />
+        </div>
+
       </div>
       <div className="w-full max-w-[1600px] mt-[5%] mx-auto">
+        <Separator className="w-full" />
+        <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
+          <SectionContent>
+            <main className="space-y-6 max-w-4xl *:block">
+              <Title />
+              <Description />
+            </main>
+          </SectionContent>
+        </Section>
 
-        <div className="space-y-6">
-          <div className="w-full">
+        <Separator className="w-full" />
+
+        <Section className="space-y-6">
+          <SectionContent className="w-full">
             <span >Последние работы</span>
-          </div>
+          </SectionContent>
           <RecentProjectsSkeleton />
-        </div>
+        </Section>
 
         <Section className="space-y-6 p-6">
           <SectionContent>
@@ -176,61 +162,23 @@ export default function () {
   return (
     <>
       <DitheringBackground />
-      <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col justify-between *:p-6">
-        <header className="w-full space-y-6">
-          <div className="flex justify-between w-full">
-            <div className="flex items-center gap-2">
-              <Logo size={28} type="full" />
-              {
-                false &&
-                <div className="px-3 flex items-center gap-2">
-                  <Resources />
-                  <Button variant="ghost">Услуги и цены</Button>
-                </div>
-              }
-            </div>
-            <div className="flex items-center gap-2">
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <Time className="text-2xl font-medium text-foreground" />
-              <TimeOffset className="text-sm text-muted-foreground" />
-            </div>
-            <span className="text-2xl font-medium text-foreground w-fit">Tyumen, Russia</span>
-          </div>
-        </header>
-        <div className="w-full space-y-12">
-          <Suspense fallback={<AvailabilitySkeleton />}>
-            <Await resolve={available}>
-              {(available) => <Availability size="lg" enabled={available} />}
-            </Await>
-          </Suspense>
-          <main className="w-full space-y-3 max-w-3xl *:block">
-            <Title />
-            <Description />
-          </main>
-          <div className="flex lg:flex-row flex-col-reverse justify-between lg:items-center items-end w-full gap-3">
-            <div className={cn(
-              "flex lg:flex-row flex-col items-center gap-3 lg:w-fit w-full",
-              "*:h-12 *:!px-6 lg:*:w-fit *:w-full *:text-lg *:[&>svg]:!size-5"
-            )}>
-              <Button variant="secondary" asChild>
-                <Link to={telegram}>
-                  <SendIcon />
-                  <span className="md:hidden inline">Перейти в чат</span>
-                  <span className="md:inline hidden">Чат</span>
-                </Link>
-              </Button>
-              <Suspense fallback={<Skeleton className="h-9 w-32" />}>
-                <Await resolve={available}>
-                  {(available) => <Button disabled={!available}>Запланировать видеозвонок <ArrowRightIcon /></Button>}
-                </Await>
-              </Suspense>
-            </div>
-            <User />
-          </div>
+      <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
+        <div className="w-full h-full absolute inset-0 flex items-center justify-center">
+
+          {/*<Brands />*/}
+
         </div>
+        <div className="w-full h-fit mx-auto flex items-center justify-between">
+          <div className="w-fit flex flex-row items-center gap-4">
+            <Logo size={40} type="full" />
+            <div className="flex flex-col gap-0">
+              <Time className="text-lg font-medium text-foreground" />
+              <TimeOffset className="text-xs text-muted-foreground" />
+            </div>
+          </div>
+          <User />
+        </div>
+
       </div>
       <div className="w-full">
         {
@@ -256,6 +204,15 @@ export default function () {
             </Suspense>
           </Section>
         }
+        <Separator className="w-full" />
+        <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
+          <SectionContent>
+            <main className="space-y-6 max-w-4xl *:block">
+              <Title />
+              <Description />
+            </main>
+          </SectionContent>
+        </Section>
         <Separator className="w-full" />
         <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
           <SectionContent>
