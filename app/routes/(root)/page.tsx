@@ -168,17 +168,34 @@ export default function () {
           {/*<Brands />*/}
 
         </div>
-        <div className="w-full h-fit mx-auto flex items-center justify-between">
-          <div className="w-fit flex flex-row items-center gap-4">
-            <Logo size={40} type="full" />
-            <div className="flex flex-col gap-0">
-              <Time className="text-lg font-medium text-foreground" />
-              <TimeOffset className="text-xs text-muted-foreground" />
-            </div>
+        <div className="flex flex-col w-full mx-auto gap-6">
+          <div className="w-full items-center flex gap-3">
+            <button
+              type="button"
+              className="w-fit h-14 rounded-md bg-card flex items-center justify-center px-4 relative ring-2 ring-border/20 hover:ring-border transition-all"
+            >
+              <Link
+                to="https://yzlab.ru"
+                target="_blank"
+                className="absolute inset-0"
+              />
+              <span className="text-4xl font-bold">YZLAB</span>
+              <div className="absolute -right-1.5 -top-1.5 flex items-center justify-center p-1 rounded-full bg-secondary border">
+                <ExternalLinkIcon size={12} />
+              </div>
+            </button>
           </div>
-          <User />
+          <div className="w-full h-fit mx-auto flex items-center justify-between">
+            <div className="w-fit flex flex-row items-center gap-4">
+              <Logo size={40} type="full" />
+              <div className="flex flex-col gap-0">
+                <Time className="text-lg font-medium text-foreground" />
+                <TimeOffset className="text-xs text-muted-foreground" />
+              </div>
+            </div>
+            <User />
+          </div>
         </div>
-
       </div>
       <div className="w-full">
         {
