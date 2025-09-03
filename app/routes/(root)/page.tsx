@@ -162,11 +162,11 @@ export default function () {
     <>
       <DitheringBackground />
       <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
-        <div className="w-full h-full absolute inset-0 flex items-center justify-center">
+        {/*<div className="w-full h-full absolute inset-0 flex items-center justify-center">*/}
 
-          {/*<Brands />*/}
+        {/*<Brands />*/}
 
-        </div>
+        {/*</div>*/}
         <div className="flex flex-col w-full mx-auto gap-12">
           <div className="flex flex-col gap-3">
             <Suspense fallback={<Skeleton className="h-14 w-40" />}>
