@@ -115,15 +115,6 @@ export function HydrateFallback() {
 
       </div>
       <div className="w-full max-w-[1600px] mt-[5%] mx-auto">
-        <Separator className="w-full" />
-        <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
-          <SectionContent>
-            <main className="space-y-6 max-w-4xl *:block">
-              <Title />
-              <Description />
-            </main>
-          </SectionContent>
-        </Section>
 
         <Separator className="w-full" />
 
@@ -167,8 +158,9 @@ export default function () {
         {/*<Brands />*/}
 
         {/*</div>*/}
-        <div className="flex flex-col w-full mx-auto gap-12">
-          <div className="flex flex-col gap-3">
+        <div className="flex flex-col w-full mx-auto gap-8">
+
+          <div className="flex flex-row flex-wrap items-start gap-3">
             <Suspense fallback={<Skeleton className="h-14 w-40" />}>
               <Await resolve={publications}>
                 {
@@ -225,6 +217,11 @@ export default function () {
               </Await>
             </Suspense>
           </div>
+
+          <main className="space-y-6 max-w-4xl *:block">
+            <Title />
+            <Description />
+          </main>
           <div className="w-full h-fit mx-auto flex items-center justify-between">
             <div className="w-fit flex flex-row items-center gap-4">
               <Logo size={40} type="full" />
@@ -261,15 +258,6 @@ export default function () {
             </Suspense>
           </Section>
         }
-        <Separator className="w-full" />
-        <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
-          <SectionContent>
-            <main className="space-y-6 max-w-4xl *:block">
-              <Title />
-              <Description />
-            </main>
-          </SectionContent>
-        </Section>
         <Separator className="w-full" />
         <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
           <SectionContent>
