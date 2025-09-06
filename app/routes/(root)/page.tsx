@@ -19,13 +19,11 @@ import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from 
 import { Brands } from "./brands";
 import { PricingDetailsSkeleton } from "./pricing-details";
 import { PricingDurationSkeleton } from "./pricing-duration";
-import { RecentProjectsError, RecentProjectsSkeleton } from "./recent-projects";
+import RecentProjects, { RecentProjectsSkeleton } from "./recent-projects";
 import { Section, SectionContent, SectionTitle } from "./section";
 
 const PricingDetails = lazy(() => import("./pricing-details"));
 const PricingDuration = lazy(() => import("./pricing-duration"));
-
-const RecentProjects = lazy(() => import("./recent-projects"));
 
 export type Project = GetStoreV1200Item;
 export type Pricing = GetPricingV1200Item;
@@ -71,12 +69,8 @@ export function ErrorBoundary() {
     <>
       <DitheringBackground />
       <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
-        <div className="w-full h-full absolute inset-0 flex items-center justify-center">
 
-          {/*<Brands />*/}
-
-        </div>
-        <div className="w-full h-fit mx-auto flex items-center justify-between">
+        <div className="flex flex-col w-full mx-auto gap-8">
           <div className="w-fit flex flex-row items-center gap-4">
             <Logo size={40} type="full" />
             <div className="flex flex-col gap-0">
@@ -84,7 +78,17 @@ export function ErrorBoundary() {
               <TimeOffset className="text-xs text-muted-foreground" />
             </div>
           </div>
-          <User />
+
+          <main className="space-y-6 max-w-4xl *:block">
+            <Title />
+            <Description />
+          </main>
+          <div className="w-full h-fit mx-auto flex items-end justify-between">
+            <div className="flex flex-row flex-wrap items-start gap-3">
+              <RecentProjectsSkeleton />
+            </div>
+            <User />
+          </div>
         </div>
 
       </div>
@@ -97,12 +101,8 @@ export function HydrateFallback() {
     <>
       <DitheringBackground />
       <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
-        <div className="w-full h-full absolute inset-0 flex items-center justify-center">
 
-          {/*<Brands />*/}
-
-        </div>
-        <div className="w-full h-fit mx-auto flex items-center justify-between">
+        <div className="flex flex-col w-full mx-auto gap-8">
           <div className="w-fit flex flex-row items-center gap-4">
             <Logo size={40} type="full" />
             <div className="flex flex-col gap-0">
@@ -110,7 +110,17 @@ export function HydrateFallback() {
               <TimeOffset className="text-xs text-muted-foreground" />
             </div>
           </div>
-          <User />
+
+          <main className="space-y-6 max-w-4xl *:block">
+            <Title />
+            <Description />
+          </main>
+          <div className="w-full h-fit mx-auto flex items-end justify-between">
+            <div className="flex flex-row flex-wrap items-start gap-3">
+              <RecentProjectsSkeleton />
+            </div>
+            <User />
+          </div>
         </div>
 
       </div>
@@ -159,76 +169,29 @@ export default function () {
 
         {/*</div>*/}
         <div className="flex flex-col w-full mx-auto gap-8">
-
-          <div className="flex flex-row flex-wrap items-start gap-3">
-            <Suspense fallback={<Skeleton className="h-14 w-40" />}>
-              <Await resolve={publications}>
-                {
-                  (publications) => {
-                    return (
-                      <>
-                        {
-                          publications
-                            .sort((a, b) => {
-                              const hasPublicUrlA = a.public_url !== null;
-                              const hasPublicUrlB = b.public_url !== null;
-                              if (hasPublicUrlA === hasPublicUrlB) return 0;
-                              if (hasPublicUrlA) return -1;
-                              return 1;
-                            })
-                            .map(pub => {
-                              const publicUrl = pub.public_url;
-                              const stage = pub.stage;
-                              return (
-                                <button
-                                  key={pub.id}
-                                  type="button"
-                                  className="w-fit h-14 group rounded-md bg-card flex items-center justify-center px-4 relative ring-2 ring-border/20 hover:ring-border transition-all"
-                                >
-                                  {
-                                    publicUrl &&
-                                    <Link
-                                      to={publicUrl}
-                                      target="_blank"
-                                      className="absolute inset-0"
-                                    />
-                                  }
-                                  <span className="text-4xl font-bold text-muted-foreground group-hover:text-foreground transition-colors">{pub.name}</span>
-                                  {
-                                    stage &&
-                                    <div className="absolute left-[90%] -top-1.5 flex items-center justify-center py-1 px-2 capitalize rounded-full bg-secondary border">
-                                      <span className="text-xs text-muted-foreground">{stage}</span>
-                                    </div>
-                                  }
-                                  {
-                                    publicUrl &&
-                                    <div className="absolute -right-1.5 -top-1.5 flex items-center justify-center p-1 rounded-full bg-secondary border text-muted-foreground group-hover:text-foreground transition-colors">
-                                      <ExternalLinkIcon size={12} />
-                                    </div>
-                                  }
-                                </button>
-                              )
-                            })
-                        }
-                      </>
-                    )
-                  }
-                }
-              </Await>
-            </Suspense>
+          <div className="w-fit flex flex-row items-center gap-4">
+            <Logo size={40} type="full" />
+            <div className="flex flex-col gap-0">
+              <Time className="text-lg font-medium text-foreground" />
+              <TimeOffset className="text-xs text-muted-foreground" />
+            </div>
           </div>
 
           <main className="space-y-6 max-w-4xl *:block">
             <Title />
             <Description />
           </main>
-          <div className="w-full h-fit mx-auto flex items-center justify-between">
-            <div className="w-fit flex flex-row items-center gap-4">
-              <Logo size={40} type="full" />
-              <div className="flex flex-col gap-0">
-                <Time className="text-lg font-medium text-foreground" />
-                <TimeOffset className="text-xs text-muted-foreground" />
-              </div>
+          <div className="w-full h-fit mx-auto flex items-end justify-between">
+            <div className="flex flex-row flex-wrap items-start gap-3">
+              <Suspense fallback={<RecentProjectsSkeleton />}>
+                <Await resolve={publications}>
+                  {
+                    (publications) => {
+                      return <RecentProjects projects={publications} />
+                    }
+                  }
+                </Await>
+              </Suspense>
             </div>
             <User />
           </div>
@@ -238,25 +201,6 @@ export default function () {
         {
           false &&
           <Brands />
-        }
-        {
-          false &&
-          <Section>
-            <div className="w-full p-6 max-w-[1600px] mx-auto">
-              <SectionTitle >Последние работы</SectionTitle>
-            </div>
-            <Suspense fallback={<RecentProjectsSkeleton />}>
-              <Await
-                resolve={publications}
-                errorElement={<RecentProjectsError />}
-              >
-                {
-                  (projects) =>
-                    <RecentProjects projects={projects} />
-                }
-              </Await>
-            </Suspense>
-          </Section>
         }
         <Separator className="w-full" />
         <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
