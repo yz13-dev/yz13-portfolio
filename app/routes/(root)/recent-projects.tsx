@@ -42,7 +42,7 @@ export default function ({ projects = [] }: { projects?: Project[] }) {
               className="absolute inset-0"
             />
           }
-          <span className="text-4xl font-bold text-muted-foreground group-hover:text-foreground transition-colors">{pub.name}</span>
+          <span className="md:text-4xl text-2xl font-bold text-muted-foreground group-hover:text-foreground transition-colors">{pub.name}</span>
           {
             stage &&
             <div className="absolute -right-6 -top-1.5 rotate-12 flex items-center justify-center py-1 px-2 capitalize rounded-full bg-secondary border">
