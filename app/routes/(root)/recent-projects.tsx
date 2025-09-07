@@ -1,6 +1,10 @@
 import { GetStoreV1200Item } from "@yz13/api/types";
+import { Badge } from "@yz13/ui/badge";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@yz13/ui/carousel";
 import { Skeleton } from "@yz13/ui/skeleton";
-import { ExternalLinkIcon } from "lucide-react";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
+import { ExternalLinkIcon, ImageMinusIcon } from "lucide-react";
 import { Link } from "react-router";
 
 type Project = GetStoreV1200Item;
@@ -10,7 +14,7 @@ export const RecentProjectsSkeleton = () => {
   return (
     <>
       {
-        arr.map(index => <Skeleton key={index} className="h-14 w-40" />)
+        arr.map(index => <Skeleton key={index} className="h-[310px] w-[395px]" />)
       }
     </>
   )
@@ -28,34 +32,79 @@ export default function ({ projects = [] }: { projects?: Project[] }) {
     .map(pub => {
       const publicUrl = pub.public_url;
       const stage = pub.stage;
+
+      const createdAt = new Date(pub.created_at);
+      const notCurrentYear = new Date().getFullYear() !== createdAt.getFullYear();
+
+      const attachments = pub.attachments ?? [];
+      const hasAttachments = attachments.length > 0;
+      const moreThatOneAttachment = attachments.length > 1;
+
       return (
-        <button
+        <div
           key={pub.id}
-          type="button"
-          className="w-fit h-14 group rounded-md bg-card flex items-center justify-start px-4 relative ring-2 ring-border/20 hover:ring-border transition-all"
+          className="w-full h-full group rounded-4xl hover:bg-card space-y-2 p-3 relative ring-2 ring-border/20 hover:ring-border transition-all"
         >
           {
             publicUrl &&
             <Link
               to={publicUrl}
               target="_blank"
-              className="absolute inset-0"
+              className="absolute inset-0 cursor-pointer"
             />
           }
-          <span className="md:text-4xl text-2xl font-bold text-muted-foreground group-hover:text-foreground transition-colors">{pub.name}</span>
-          {
-            stage &&
-            <div className="absolute -right-6 -top-1.5 rotate-12 flex items-center justify-center py-1 px-2 capitalize rounded-full bg-secondary border">
-              <span className="text-xs text-muted-foreground">{stage}</span>
+          <div className="w-full aspect-[4/2.6] rounded-xl border flex items-center justify-center">
+            {
+              hasAttachments
+                ?
+                <Carousel className="relative">
+                  <CarouselContent>
+                    {
+                      attachments
+                        .map(attachment => {
+                          return (
+                            <CarouselItem key={attachment.url} className="rounded-xl">
+                              <img
+                                src={attachment.url}
+                                className="rounded-xl"
+                                alt={pub.name}
+                              />
+                            </CarouselItem>
+                          )
+                        })
+                    }
+                  </CarouselContent>
+                  {
+                    moreThatOneAttachment &&
+                    <>
+                      <CarouselNext className="right-2" />
+                      <CarouselPrevious className="left-2" />
+                    </>
+                  }
+                </Carousel>
+                :
+                <ImageMinusIcon />
+            }
+          </div>
+          <div className="w-full space-y-0 *:text-start">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">{pub.name}</span>
+              {
+                publicUrl && <ExternalLinkIcon size={14} className="text-muted-foreground group-hover:text-foreground transition-colors" />
+              }
+              {
+                stage &&
+                <Badge variant="secondary" className="capitalize">{stage}</Badge>
+              }
             </div>
-          }
-          {
-            publicUrl &&
-            <div className="absolute -right-1.5 -top-1.5 flex items-center justify-center p-1 rounded-full bg-secondary border text-muted-foreground group-hover:text-foreground transition-colors">
-              <ExternalLinkIcon size={12} />
-            </div>
-          }
-        </button>
+            <span className="text-sm text-muted-foreground">{pub.description ?? "Без описания"}</span>
+          </div>
+          <Badge variant="secondary" className="capitalize">
+            {
+              format(createdAt, notCurrentYear ? "d MMMM yyyy" : "d MMMM", { locale: ru })
+            }
+          </Badge>
+        </div>
       )
     })
 }
