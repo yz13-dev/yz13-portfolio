@@ -1,6 +1,6 @@
 import Availability, { AvailabilitySkeleton } from "@/components/availability";
 import DitheringBackground from "@/components/dithering-background";
-import GithubContributions, { CalendarSkeleton } from "@/components/github-contributions";
+import GithubContributions from "@/components/github-contributions";
 import { Logo } from "@/components/logo";
 import { Time, TimeOffset } from "@/components/time/time";
 import User from "@/components/user";
@@ -10,15 +10,11 @@ import type { GetPricingV1200Item, GetStoreV1200Item } from "@yz13/api/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@yz13/ui/accordion";
 import { SlidingNumber } from "@yz13/ui/animated/sliding-number";
 import { Button } from "@yz13/ui/button";
-import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, ExternalLinkIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
-import { Brands } from "./brands";
-import { PricingDetailsSkeleton } from "./pricing-details";
-import { PricingDurationSkeleton } from "./pricing-duration";
 import RecentProjects, { RecentProjectsSkeleton } from "./recent-projects";
 import { Section, SectionContent, SectionTitle } from "./section";
 
@@ -33,11 +29,11 @@ const twitter = "https://x.com/yz13_dev"
 const github = "https://githib.com/yz13-dev"
 
 export const Title = () => {
-  return <h1 className="text-foreground xl:text-6xl lg:text-5xl md:text-4xl text-3xl font-semibold">YZ13 - Фронтенд который не&nbsp;подведет</h1>
+  return <h1 className="text-foreground text-4xl font-semibold">YZ13 - Фронтенд который не&nbsp;подведет</h1>
 }
 
 export const Description = () => {
-  return <p className="text-muted-foreground xl:text-4xl lg:text-3xl md:text-2xl text-xl font-medium">Разработаю сайт, страницы, приложение и&nbsp;компоненты разной сложности</p>
+  return <p className="text-muted-foreground text-xl font-medium">Разработаю сайт, страницы, приложение и&nbsp;компоненты разной сложности</p>
 }
 
 export const loader = async () => {
@@ -67,30 +63,40 @@ export function ErrorBoundary() {
 
   return (
     <>
-      <DitheringBackground />
-      <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
-
-        <div className="flex flex-col w-full mx-auto gap-8">
-          <div className="w-fit flex flex-row items-center gap-4">
-            <Logo size={40} type="full" />
-            <div className="flex flex-col gap-0">
-              <Time className="text-lg font-medium text-foreground" />
-              <TimeOffset className="text-xs text-muted-foreground" />
-            </div>
-          </div>
-
-          <main className="space-y-6 max-w-4xl *:block">
-            <Title />
-            <Description />
-          </main>
-          <div className="w-full h-fit mx-auto flex items-end justify-between">
-            <div className="flex flex-row flex-wrap items-start gap-3">
-              <RecentProjectsSkeleton />
-            </div>
-            <User />
+      <header className="p-6 flex max-w-4xl mx-auto items-center justify-between">
+        <div className="w-fit flex flex-row items-center gap-4">
+          <Logo size={40} type="full" />
+          <div className="flex flex-col gap-0">
+            <Time className="text-lg font-medium text-foreground" />
+            <TimeOffset className="text-xs text-muted-foreground" />
           </div>
         </div>
-
+        <User />
+      </header>
+      <div className="w-full max-w-4xl mx-auto flex lg:flex-row flex-col-reverse lg:*:w-1/2 *:w-full">
+        <main className="space-y-6 max-w-4xl mx-auto p-6">
+          <div className="w-full space-y-4 *:block">
+            <Title />
+            <Description />
+          </div>
+          <div className="w-full flex flex-col lg:*:w-fit *:w-full gap-3 *:h-10">
+            <Skeleton className="h-9 w-32" />
+            <AvailabilitySkeleton />
+          </div>
+        </main>
+        <div className="w-full lg:aspect-[9/12] aspect-[9/10] relative">
+          <DitheringBackground withGradientOverylay={false} className="h-full" />
+        </div>
+      </div>
+      <div className="grid lg:grid-cols-2 grid-cols-1 px-6 *:w-full py-16 gap-6 max-w-4xl mx-auto">
+        <RecentProjectsSkeleton />
+      </div>
+      <div className="w-full [&>section]:!py-16">
+        <Section className="space-y-6 p-6 max-w-4xl mx-auto">
+          <SectionContent>
+            <GithubContributions username="yz13-dev" loading />
+          </SectionContent>
+        </Section>
       </div>
     </>
   )
@@ -99,58 +105,40 @@ export function ErrorBoundary() {
 export function HydrateFallback() {
   return (
     <>
-      <DitheringBackground />
-      <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
-
-        <div className="flex flex-col w-full mx-auto gap-8">
-          <div className="w-fit flex flex-row items-center gap-4">
-            <Logo size={40} type="full" />
-            <div className="flex flex-col gap-0">
-              <Time className="text-lg font-medium text-foreground" />
-              <TimeOffset className="text-xs text-muted-foreground" />
-            </div>
+      <header className="p-6 flex max-w-4xl mx-auto items-center justify-between">
+        <div className="w-fit flex flex-row items-center gap-4">
+          <Logo size={40} type="full" />
+          <div className="flex flex-col gap-0">
+            <Time className="text-lg font-medium text-foreground" />
+            <TimeOffset className="text-xs text-muted-foreground" />
           </div>
-
-          <main className="space-y-6 max-w-4xl *:block">
+        </div>
+        <User />
+      </header>
+      <div className="w-full max-w-4xl mx-auto flex lg:flex-row flex-col-reverse lg:*:w-1/2 *:w-full">
+        <main className="space-y-6 max-w-4xl mx-auto p-6">
+          <div className="w-full space-y-4 *:block">
             <Title />
             <Description />
-          </main>
-          <div className="w-full h-fit mx-auto flex items-end justify-between">
-            <div className="flex flex-row flex-wrap items-start gap-3">
-              <RecentProjectsSkeleton />
-            </div>
-            <User />
           </div>
+          <div className="w-full flex flex-col lg:*:w-fit *:w-full gap-3 *:h-10">
+            <Skeleton className="h-9 w-32" />
+            <AvailabilitySkeleton />
+          </div>
+        </main>
+        <div className="w-full lg:aspect-[9/12] aspect-[9/10] relative">
+          <DitheringBackground withGradientOverylay={false} className="h-full" />
         </div>
-
       </div>
-      <div className="w-full max-w-[1600px] mt-[5%] mx-auto">
-
-        <Separator className="w-full" />
-
-        <Section className="space-y-6">
-          <SectionContent className="w-full">
-            <span >Последние работы</span>
-          </SectionContent>
-          <RecentProjectsSkeleton />
-        </Section>
-
-        <Section className="space-y-6 p-6">
+      <div className="grid lg:grid-cols-2 grid-cols-1 px-6 *:w-full py-16 gap-6 max-w-4xl mx-auto">
+        <RecentProjectsSkeleton />
+      </div>
+      <div className="w-full [&>section]:!py-16">
+        <Section className="space-y-6 p-6 max-w-4xl mx-auto">
           <SectionContent>
-            <CalendarSkeleton loading />
+            <GithubContributions username="yz13-dev" loading />
           </SectionContent>
         </Section>
-
-        <div className="space-y-6">
-          <div className="w-full">
-            <span >Услуги и цены</span>
-          </div>
-          <PricingDurationSkeleton />
-        </div>
-        <div className="space-y-6">
-          <PricingDetailsSkeleton />
-        </div>
-
       </div>
     </>
   )
@@ -161,69 +149,66 @@ export default function () {
 
   return (
     <>
-      <DitheringBackground />
-      <div className="w-full md:min-h-fit h-dvh flex flex-col items-center justify-end relative">
-
-        <div className="flex flex-col w-full mx-auto gap-8 max-w-[1600px] p-6">
-          <div className="w-fit flex flex-row items-center gap-4">
-            <Logo size={40} type="full" />
-            <div className="flex flex-col gap-0">
-              <Time className="text-lg font-medium text-foreground" />
-              <TimeOffset className="text-xs text-muted-foreground" />
-            </div>
-          </div>
-
-          <main className="space-y-6 max-w-4xl *:block">
-            <Title />
-            <Description />
-          </main>
-          <div className="w-full h-fit mx-auto flex items-end justify-between">
-            <div className="flex flex-row flex-wrap items-start gap-3">
-              <Suspense
-                fallback={<RecentProjectsSkeleton />}>
-                <Await
-                  resolve={publications}
-                  errorElement={null}
-                >
-                  {
-                    (publications) => {
-                      return <RecentProjects projects={publications} />
-                    }
-                  }
-                </Await>
-              </Suspense>
-            </div>
-            <User />
+      <header className="p-6 flex max-w-4xl mx-auto items-center justify-between">
+        <div className="w-fit flex flex-row items-center gap-4">
+          <Logo size={40} type="full" />
+          <div className="flex flex-col gap-0">
+            <Time className="text-lg font-medium text-foreground" />
+            <TimeOffset className="text-xs text-muted-foreground" />
           </div>
         </div>
+        <User />
+      </header>
+      <div className="w-full max-w-4xl mx-auto flex lg:flex-row flex-col-reverse lg:*:w-1/2 *:w-full">
+        <main className="space-y-6 max-w-4xl mx-auto p-6">
+          <div className="w-full space-y-4 *:block">
+            <Title />
+            <Description />
+          </div>
+          <div className="w-full flex flex-col lg:*:w-fit *:w-full gap-3 *:h-10">
+            <Suspense fallback={<Skeleton className="h-9 w-32" />}>
+              <Await resolve={available}>
+                {(available) => <Button disabled={!available}>
+                  <span className="sm:inline hidden">Запланировать видеозвонок</span>
+                  <span className="sm:hidden inline">Видеозвонок</span>
+                  <ArrowRightIcon />
+                </Button>}
+              </Await>
+            </Suspense>
+            <Suspense fallback={<AvailabilitySkeleton />}>
+              <Await resolve={available}>
+                {(available) => <Availability size="default" enabled={available} className="justify-center" />}
+              </Await>
+            </Suspense>
+          </div>
+        </main>
+        <div className="w-full lg:aspect-[9/12] aspect-[9/10] relative">
+          <DitheringBackground withGradientOverylay={false} className="h-full" />
+        </div>
       </div>
-      <div className="w-full">
-        {
-          false &&
-          <Brands />
-        }
-        <Separator className="w-full" />
-        <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
+      <div className="grid lg:grid-cols-2 grid-cols-1 px-6 *:w-full py-16 gap-6 max-w-4xl mx-auto">
+        <Suspense
+          fallback={<RecentProjectsSkeleton />}>
+          <Await
+            resolve={publications}
+            errorElement={null}
+          >
+            {
+              (publications) => {
+                return <RecentProjects projects={publications} />
+              }
+            }
+          </Await>
+        </Suspense>
+      </div>
+      <div className="w-full [&>section]:!py-16">
+        <Section className="space-y-6 p-6 max-w-4xl mx-auto">
           <SectionContent>
             <GithubContributions username="yz13-dev" />
           </SectionContent>
         </Section>
-        <div className="w-full">
-          <Suspense fallback={
-            <>
-              <Separator className="w-full" />
-              <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
-                <div className="w-full">
-                  <SectionTitle >Услуги и цены</SectionTitle>
-                </div>
-                <PricingDurationSkeleton />
-              </Section>
-              <Separator className="w-full" />
-              <Section className="space-y-6 p-6 max-w-[1600px] border-x mx-auto">
-                <PricingDetailsSkeleton />
-              </Section>
-            </>
-          }>
+        <div className="w-full [&>section]:!py-16">
+          <Suspense fallback={null}>
             <Await
               resolve={pricing}
             >
@@ -238,43 +223,31 @@ export default function () {
                     return aDuration - bDuration
                   })
                   return (
-                    <>
-                      <Separator className="w-full" />
-                      <Section className="p-6 max-w-[1600px] mx-auto border-x space-y-6">
-                        <div className="w-full">
-                          <SectionTitle >Услуги и цены</SectionTitle>
-                        </div>
-                        <PricingDuration pricing={sorted} />
-                      </Section>
-                      <Separator className="w-full" />
-                      <Section className="max-w-[1600px] mx-auto">
-                        <PricingDetails pricing={sorted} />
-                      </Section>
-                    </>
+                    <Section className="p-6 max-w-4xl mx-auto space-y-6">
+                      <PricingDuration pricing={sorted} />
+                    </Section>
                   )
                 }
               }
             </Await>
           </Suspense>
-          <Separator className="w-full" />
-          <Section className="flex lg:flex-row flex-col border-x max-w-[1600px] mx-auto gap-4">
-            <div className="lg:w-1/3 w-full p-6">
+          <Section className="flex flex-col *:px-6 max-w-4xl mx-auto gap-4">
+            <div className="w-full">
               <SectionTitle>Вопросы и ответы</SectionTitle>
             </div>
-            <SectionContent className="lg:w-2/3 w-full border-l py-12">
+            <SectionContent className="w-full">
               <Accordion
                 type="multiple"
-                className="border-y"
               >
-                <AccordionItem value="q-1" className="*:px-5 *:text-base">
+                <AccordionItem value="q-1" className="*:text-base group">
                   <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
-                    Как быстро начнется разработка?
+                    <span>Как быстро начнется разработка?</span>
                   </AccordionTrigger>
                   <AccordionContent>
                     После определения задач разработки (1-2 созвона), работа обычно начнется на следующий день. Кроме выходных дней.
                   </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="q-2" className="*:px-5 *:text-base">
+                <AccordionItem value="q-2" className="*:text-base group">
                   <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
                     Есть ли лимит к поправкам?
                   </AccordionTrigger>
@@ -282,7 +255,7 @@ export default function () {
                     К небольшим поправкам - нет. К большим поправкам - да. В ценниках указана сумма за большие поправки. Небольшие идут бесплатно.
                   </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="q-3" className="*:px-5 *:text-base">
+                <AccordionItem value="q-3" className="*:text-base group">
                   <AccordionTrigger className="text-base data-[state=open]:text-muted-foreground">
                     Что я получу в конце разработки?
                   </AccordionTrigger>
@@ -295,11 +268,10 @@ export default function () {
             </SectionContent>
           </Section>
         </div>
-        <Separator className="w-full" />
         <div className="w-full">
           <footer className={cn(
             "flex md:flex-row flex-col-reverse w-full h-git",
-            "*:p-6 *:gap-6 md:divide-x divide-x-0 max-w-[1600px] mx-auto border-x"
+            "*:p-6 *:gap-6 max-w-4xl mx-auto"
           )}>
             <div className="flex flex-col">
               <div className="w-full flex flex-col gap-3">
@@ -330,7 +302,6 @@ export default function () {
                 </Suspense>
               </div>
             </div>
-            <Separator className="md:hidden !p-0 block" />
             <div className="w-full h-fit flex sm:flex-row flex-col md:*:w-1/2 *:w-full">
               <div className="w-1/3 flex flex-col gap-3">
                 <span>Ссылки</span>
@@ -367,8 +338,7 @@ export default function () {
             </div>
           </footer>
         </div>
-        <Separator className="w-full" />
-        <div className="flex p-6 items-center justify-between max-w-[1600px] border-x mx-auto">
+        <div className="flex p-6 items-center justify-between max-w-4xl mx-auto">
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground">YZ13</span>
             <SlidingNumber number={(new Date).getFullYear()} className="text-xs text-muted-foreground" />

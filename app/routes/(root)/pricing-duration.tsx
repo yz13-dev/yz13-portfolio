@@ -1,12 +1,17 @@
+import { formatPrice } from "@/utils/pricing"
 import { formatDuration } from "@/utils/pricing-durations"
 import { Badge } from "@yz13/ui/badge"
+import { Button } from "@yz13/ui/button"
 import { Skeleton } from "@yz13/ui/skeleton"
+import { ArrowRightIcon, NotebookTabsIcon } from "lucide-react"
 import { memo } from "react"
+import { Link } from "react-router"
 import type { Pricing } from "./page"
+import { SectionTitle } from "./section"
 
 const Grid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="w-full grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2 *:px-3 *:py-1 *:h-11">
+    <div className="w-full grid xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-2 *:px-3 *:py-1 *:h-11">
       {children}
     </div>
   )
@@ -38,21 +43,44 @@ export const PricingDurationSkeleton = () => {
 }
 
 const PricingDuration = memo(({ pricing }: Props) => {
+
+  const cheapest = pricing.sort((a, b) => a.price - b.price)[0];
+
   return (
-    <Grid>
-      {
-        pricing
-          .map(price => {
-            const duration = formatDuration(price.duration);
-            return (
-              <Badge key={price.id} variant="outline" className="flex items-center bg-card justify-between w-full">
-                <span className="lg:text-2xl text-lg font-medium">{price.name}</span>
-                <span className="ld:text-base text-sm text-muted-foreground/60">От {duration}</span>
-              </Badge>
-            )
-          })
-      }
-    </Grid>
+    <div className="w-full space-y-8">
+      <div className="h-full flex flex-col justify-center gap-6">
+        <SectionTitle className="shrink-0">
+          Цены начинаются
+          от {formatPrice(cheapest.price ?? 0)}
+        </SectionTitle>
+        <div className="flex items-center gap-4">
+          <Button size="lg" asChild>
+            <Link to="/pricing" prefetch="render">
+              <NotebookTabsIcon />
+              Цены
+            </Link>
+          </Button>
+          <Button size="lg" variant="secondary" disabled>
+            Запланировать видеозвонок
+            <ArrowRightIcon />
+          </Button>
+        </div>
+      </div>
+      <Grid>
+        {
+          pricing
+            .map(price => {
+              const duration = formatDuration(price.duration);
+              return (
+                <Badge key={price.id} variant="outline" className="flex items-center bg-card justify-between w-full">
+                  <span className="lg:text-2xl text-lg font-medium">{price.name}</span>
+                  <span className="ld:text-base text-sm text-muted-foreground/60">От {duration}</span>
+                </Badge>
+              )
+            })
+        }
+      </Grid>
+    </div>
   )
 })
 

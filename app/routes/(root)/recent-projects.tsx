@@ -32,7 +32,7 @@ export default function ({ projects = [] }: { projects?: Project[] }) {
         <button
           key={pub.id}
           type="button"
-          className="w-fit h-14 group rounded-md bg-card flex items-center justify-center px-4 relative ring-2 ring-border/20 hover:ring-border transition-all"
+          className="w-fit h-14 group rounded-md bg-card flex items-center justify-start px-4 relative ring-2 ring-border/20 hover:ring-border transition-all"
         >
           {
             publicUrl &&
