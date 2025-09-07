@@ -162,13 +162,9 @@ export default function () {
   return (
     <>
       <DitheringBackground />
-      <div className="w-full max-w-[1600px] mx-auto md:min-h-fit h-dvh flex flex-col items-center justify-end *:p-6 relative">
-        {/*<div className="w-full h-full absolute inset-0 flex items-center justify-center">*/}
+      <div className="w-full md:min-h-fit h-dvh flex flex-col items-center justify-end relative">
 
-        {/*<Brands />*/}
-
-        {/*</div>*/}
-        <div className="flex flex-col w-full mx-auto gap-8">
+        <div className="flex flex-col w-full mx-auto gap-8 max-w-[1600px] p-6">
           <div className="w-fit flex flex-row items-center gap-4">
             <Logo size={40} type="full" />
             <div className="flex flex-col gap-0">
@@ -183,8 +179,12 @@ export default function () {
           </main>
           <div className="w-full h-fit mx-auto flex items-end justify-between">
             <div className="flex flex-row flex-wrap items-start gap-3">
-              <Suspense fallback={<RecentProjectsSkeleton />}>
-                <Await resolve={publications}>
+              <Suspense
+                fallback={<RecentProjectsSkeleton />}>
+                <Await
+                  resolve={publications}
+                  errorElement={null}
+                >
                   {
                     (publications) => {
                       return <RecentProjects projects={publications} />
