@@ -8,11 +8,12 @@ import { available } from "@/utils/flags";
 import { getPricingV1, getStoreV1 } from "@yz13/api";
 import type { GetPricingV1200Item, GetStoreV1200Item } from "@yz13/api/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@yz13/ui/accordion";
+import { CopyButton } from "@yz13/ui/animated/copy";
 import { SlidingNumber } from "@yz13/ui/animated/sliding-number";
 import { Button } from "@yz13/ui/button";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
-import { ArrowRightIcon, ExternalLinkIcon } from "lucide-react";
+import { ArrowRightIcon, ExternalLinkIcon, MailIcon, SendIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from "react-router";
 import RecentProjects, { RecentProjectsSkeleton } from "./recent-projects";
@@ -148,6 +149,7 @@ export function HydrateFallback() {
 export default function () {
   const { publications, available, pricing } = useLoaderData<typeof loader>();
 
+  const chat = "https://t.me/yz13_dev"
   return (
     <>
       <header className="p-6 flex max-w-4xl mx-auto items-center justify-between">
@@ -171,22 +173,47 @@ export default function () {
             <Title />
             <Description />
           </div>
-          <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
-
-            <Suspense fallback={<Skeleton className="h-9 w-32" />}>
-              <Await resolve={available}>
-                {(available) => <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
-                  <span className="sm:inline hidden">Запланировать видеозвонок</span>
-                  <span className="sm:hidden inline">Видеозвонок</span>
-                  <ArrowRightIcon />
-                </Button>}
-              </Await>
-            </Suspense>
-            <Suspense fallback={<AvailabilitySkeleton />}>
-              <Await resolve={available}>
-                {(available) => <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />}
-              </Await>
-            </Suspense>
+          <div className="space-y-4">
+            <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
+              <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" asChild>
+                <Link to={chat} target="_blank">
+                  <SendIcon />
+                  <span>Открыть чат</span>
+                </Link>
+              </Button>
+              <Suspense fallback={<Skeleton className="h-9 w-32" />}>
+                <Await resolve={available}>
+                  {(available) => <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
+                    <span className="sm:inline hidden">Запланировать видеозвонок</span>
+                    <span className="sm:hidden inline">Видеозвонок</span>
+                    <ArrowRightIcon />
+                  </Button>}
+                </Await>
+              </Suspense>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" variant="outline" asChild>
+                  <Link to="mailto:yz13.dev@gmail.com">
+                    <MailIcon />
+                  </Link>
+                </Button>
+                <Button className="h-12 text-lg w-fit [&>span>svg]:!size-5 px-4 text-foreground" size="lg" variant="outline" asChild>
+                  <CopyButton
+                    content="yz13.dev@gmail.com"
+                  />
+                </Button>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-muted-foreground">Вы можете написать на почту!</span>
+                  <span className="text-xs text-muted-foreground">Даже если не принимаю новые заказы</span>
+                </div>
+              </div>
+              <Suspense fallback={<AvailabilitySkeleton />}>
+                <Await resolve={available}>
+                  {(available) => <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />}
+                </Await>
+              </Suspense>
+            </div>
           </div>
         </main>
       </div>
