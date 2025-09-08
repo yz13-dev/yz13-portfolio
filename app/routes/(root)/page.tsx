@@ -114,20 +114,22 @@ export function HydrateFallback() {
         </div>
         <User />
       </header>
-      <div className="w-full max-w-4xl mx-auto flex lg:flex-row flex-col-reverse lg:*:w-1/2 *:w-full">
+      <div className="w-full max-w-4xl mx-auto flex flex-col *:w-full">
+        <div className="px-6 w-full">
+          <div className="w-full aspect-video relative">
+            <DitheringBackground withGradientOverylay={false} className="h-full" />
+          </div>
+        </div>
         <main className="space-y-6 max-w-4xl mx-auto p-6">
           <div className="w-full space-y-4 *:block">
             <Title />
             <Description />
           </div>
-          <div className="w-full flex flex-col lg:*:w-fit *:w-full gap-3 *:h-10">
+          <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
             <Skeleton className="h-9 w-32" />
             <AvailabilitySkeleton />
           </div>
         </main>
-        <div className="w-full lg:aspect-[9/12] aspect-[9/10] relative">
-          <DitheringBackground withGradientOverylay={false} className="h-full" />
-        </div>
       </div>
       <div className="grid lg:grid-cols-2 grid-cols-1 px-6 *:w-full py-16 gap-6 max-w-4xl mx-auto">
         <RecentProjectsSkeleton />
