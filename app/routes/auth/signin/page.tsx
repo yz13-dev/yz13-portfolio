@@ -36,7 +36,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 export function HydrateFallback() {
   return (
     <div className="w-full h-dvh relative flex flex-col items-center justify-center">
-      <DitheringBackground />
+      <DitheringBackground withGradientOverylay={false} />
       <Skeleton className="max-w-3xl w-full h-72 rounded-4xl" />
     </div>
   )
@@ -89,7 +89,7 @@ export default function () {
 
   return (
     <div className="w-full h-dvh relative flex flex-col items-center justify-center">
-      <DitheringBackground />
+      <DitheringBackground withGradientOverylay={false} />
       <div className="max-w-3xl w-full h-fit border bg-background flex md:flex-row flex-col rounded-4xl">
         <div className="md:w-1/2 w-full md:h-full h-fit pt-20 relative">
           <div className="flex items-start gap-1 absolute top-6 left-6">
