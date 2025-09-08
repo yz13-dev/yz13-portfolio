@@ -18,7 +18,6 @@ import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from 
 import RecentProjects, { RecentProjectsSkeleton } from "./recent-projects";
 import { Section, SectionContent, SectionTitle } from "./section";
 
-const PricingDetails = lazy(() => import("./pricing-details"));
 const PricingDuration = lazy(() => import("./pricing-duration"));
 
 export type Project = GetStoreV1200Item;
@@ -170,10 +169,11 @@ export default function () {
             <Title />
             <Description />
           </div>
-          <div className="w-full flex flex-col lg:*:w-fit *:w-full gap-3 *:h-10">
+          <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
+
             <Suspense fallback={<Skeleton className="h-9 w-32" />}>
               <Await resolve={available}>
-                {(available) => <Button disabled={!available}>
+                {(available) => <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
                   <span className="sm:inline hidden">Запланировать видеозвонок</span>
                   <span className="sm:hidden inline">Видеозвонок</span>
                   <ArrowRightIcon />
@@ -182,7 +182,7 @@ export default function () {
             </Suspense>
             <Suspense fallback={<AvailabilitySkeleton />}>
               <Await resolve={available}>
-                {(available) => <Availability size="default" enabled={available} className="justify-center" />}
+                {(available) => <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />}
               </Await>
             </Suspense>
           </div>
