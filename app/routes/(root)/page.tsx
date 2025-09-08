@@ -18,7 +18,7 @@ import { Await, isRouteErrorResponse, Link, useLoaderData, useRouteError } from 
 import RecentProjects, { RecentProjectsSkeleton } from "./recent-projects";
 import { Section, SectionContent, SectionTitle } from "./section";
 
-const PricingDuration = lazy(() => import("./pricing-duration"));
+const Pricing = lazy(() => import("./pricing"));
 
 export type Project = GetStoreV1200Item;
 export type Pricing = GetPricingV1200Item;
@@ -160,9 +160,9 @@ export default function () {
         </div>
         <User />
       </header>
-      <div className="w-full max-w-4xl mx-auto flex flex-col *:w-full">
-        <div className="px-6 w-full">
-          <div className="w-full aspect-video relative">
+      <div className="w-full md:h-fit h-[calc(100dvh-96px)] max-w-4xl mx-auto flex flex-col *:w-full">
+        <div className="px-6 w-full md:h-fit h-full">
+          <div className="w-full md:h-fit h-full md:aspect-video aspect-auto relative">
             <DitheringBackground withGradientOverylay={false} className="h-full" />
           </div>
         </div>
@@ -195,21 +195,24 @@ export default function () {
           <GithubContributions username="yz13-dev" />
         </SectionContent>
       </Section>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 px-6 *:w-full py-16 gap-6 max-w-7xl mx-auto">
-        <Suspense
-          fallback={<RecentProjectsSkeleton />}>
-          <Await
-            resolve={publications}
-            errorElement={null}
-          >
-            {
-              (publications) => {
-                return <RecentProjects projects={publications} />
+      <Section className="px-6 py-16 space-y-6 max-w-7xl mx-auto">
+        <SectionTitle>Проекты</SectionTitle>
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 *:w-full gap-6">
+          <Suspense
+            fallback={<RecentProjectsSkeleton />}>
+            <Await
+              resolve={publications}
+              errorElement={null}
+            >
+              {
+                (publications) => {
+                  return <RecentProjects projects={publications} />
+                }
               }
-            }
-          </Await>
-        </Suspense>
-      </div>
+            </Await>
+          </Suspense>
+        </div>
+      </Section>
       <Suspense fallback={null}>
         <Await
           resolve={pricing}
@@ -226,7 +229,7 @@ export default function () {
               })
               return (
                 <Section className="px-6 py-16 max-w-4xl mx-auto space-y-6">
-                  <PricingDuration pricing={sorted} />
+                  <Pricing pricing={sorted} />
                 </Section>
               )
             }

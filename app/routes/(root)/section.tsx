@@ -16,7 +16,7 @@ export const Section = ({ children, className = "" }: SectionCommonProps) => {
 
 export const SectionTitle = ({ children, className = "" }: SectionCommonProps) => {
 
-  return <h2 className={cn("lg:text-4xl text-2xl font-semibold", className)}>{children}</h2>
+  return <h2 className={cn("lg:text-4xl text-3xl font-semibold", className)}>{children}</h2>
 }
 
 export const SectionContent = ({ children, className = "" }: SectionCommonProps) => {

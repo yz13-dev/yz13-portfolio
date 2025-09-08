@@ -43,7 +43,7 @@ export default function ({ projects = [] }: { projects?: Project[] }) {
       return (
         <div
           key={pub.id}
-          className="w-full h-full group rounded-4xl hover:bg-card space-y-2 p-3 relative ring-2 ring-border/20 hover:ring-border transition-all"
+          className="w-full h-fit group rounded-4xl hover:bg-card p-3 relative ring-2 ring-border/20 hover:ring-border transition-all"
         >
           {
             publicUrl &&
@@ -86,24 +86,26 @@ export default function ({ projects = [] }: { projects?: Project[] }) {
                 <ImageMinusIcon />
             }
           </div>
-          <div className="w-full space-y-0 *:text-start">
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">{pub.name}</span>
-              {
-                publicUrl && <ExternalLinkIcon size={14} className="text-muted-foreground group-hover:text-foreground transition-colors" />
-              }
-              {
-                stage &&
-                <Badge variant="secondary" className="capitalize">{stage}</Badge>
-              }
+          <div className="space-y-2 w-full p-3">
+            <div className="w-full space-y-0 *:text-start">
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">{pub.name}</span>
+                {
+                  publicUrl && <ExternalLinkIcon size={14} className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                }
+                {
+                  stage &&
+                  <Badge variant="secondary" className="capitalize">{stage}</Badge>
+                }
+              </div>
+              <span className="text-sm text-muted-foreground">{pub.description ?? "Без описания"}</span>
             </div>
-            <span className="text-sm text-muted-foreground">{pub.description ?? "Без описания"}</span>
+            <Badge variant="secondary" className="capitalize">
+              {
+                format(createdAt, notCurrentYear ? "d MMMM yyyy" : "d MMMM", { locale: ru })
+              }
+            </Badge>
           </div>
-          <Badge variant="secondary" className="capitalize">
-            {
-              format(createdAt, notCurrentYear ? "d MMMM yyyy" : "d MMMM", { locale: ru })
-            }
-          </Badge>
         </div>
       )
     })
