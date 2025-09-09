@@ -62,132 +62,11 @@ export function ErrorBoundary() {
   const errorDescription = error instanceof Error ? error.stack : isRouteErrorResponse(error) ? error.data : undefined;
 
   return (
-    <div className="w-full h-dvh mx-auto flex flex-col *:w-full">
-      <div className="w-full h-full flex md:flex-col flex-col-reverse">
-        <div className="md:px-0 px-6 w-full h-full">
-          <div className="w-full h-full relative">
-            <DitheringBackground withGradientOverylay={false} className="h-full" />
-          </div>
-        </div>
-        <header className="p-6 flex w-full max-w-7xl mx-auto items-center justify-between">
-          <div className="w-fit flex flex-row items-center gap-4">
-            <Logo size={40} type="full" />
-            <div className="flex flex-col gap-0">
-              <Time className="text-lg font-medium text-foreground" />
-              <TimeOffset className="text-xs text-muted-foreground" />
-            </div>
-          </div>
-          <User />
-        </header>
-      </div>
-      <main className="space-y-6 max-w-7xl mx-auto p-6">
-        <AvailabilitySkeleton />
-        <div className="w-full space-y-4 *:block">
-          <Title />
-          <Description />
-        </div>
-        <div className="space-y-4">
-          <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
-            <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
-              <SendIcon />
-              <span>Открыть чат</span>
-            </Button>
-            <Skeleton className="h-9 w-32" />
-          </div>
-          <div className="flex items-center gap-2">
-            <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" variant="outline" asChild>
-              <Link to="mailto:yz13.dev@gmail.com">
-                <MailIcon />
-              </Link>
-            </Button>
-            <Button className="h-12 text-lg w-fit [&>span>svg]:!size-5 px-4 text-foreground" size="lg" variant="outline" asChild>
-              <CopyButton
-                content="yz13.dev@gmail.com"
-                className="shadow-none"
-              />
-            </Button>
-            <div className="flex flex-col gap-1">
-              <span className="text-xs text-muted-foreground">Вы можете написать на почту!</span>
-              <span className="text-xs text-muted-foreground">Даже если не принимаю новые заказы</span>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-  )
-}
-
-export function HydrateFallback() {
-  return (
-    <div className="w-full h-dvh mx-auto flex flex-col *:w-full">
-      <div className="w-full h-full flex md:flex-col flex-col-reverse">
-        <div className="md:px-0 px-6 w-full h-full">
-          <div className="w-full h-full relative">
-            <DitheringBackground withGradientOverylay={false} className="h-full" />
-          </div>
-        </div>
-        <header className="p-6 flex w-full max-w-7xl mx-auto items-center justify-between">
-          <div className="w-fit flex flex-row items-center gap-4">
-            <Logo size={40} type="full" />
-            <div className="flex flex-col gap-0">
-              <Time className="text-lg font-medium text-foreground" />
-              <TimeOffset className="text-xs text-muted-foreground" />
-            </div>
-          </div>
-          <User />
-        </header>
-      </div>
-      <main className="space-y-6 max-w-7xl mx-auto p-6">
-        <AvailabilitySkeleton />
-        <div className="w-full space-y-4 *:block">
-          <Title />
-          <Description />
-        </div>
-        <div className="space-y-4">
-          <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
-            <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
-              <SendIcon />
-              <span>Открыть чат</span>
-            </Button>
-            <Skeleton className="h-9 w-32" />
-          </div>
-          <div className="flex items-center gap-2">
-            <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" variant="outline" asChild>
-              <Link to="mailto:yz13.dev@gmail.com">
-                <MailIcon />
-              </Link>
-            </Button>
-            <Button className="h-12 text-lg w-fit [&>span>svg]:!size-5 px-4 text-foreground" size="lg" variant="outline" asChild>
-              <CopyButton
-                content="yz13.dev@gmail.com"
-                className="shadow-none"
-              />
-            </Button>
-            <div className="flex flex-col gap-1">
-              <span className="text-xs text-muted-foreground">Вы можете написать на почту!</span>
-              <span className="text-xs text-muted-foreground">Даже если не принимаю новые заказы</span>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-  )
-}
-
-export default function () {
-  const { publications, available, pricing } = useLoaderData<typeof loader>();
-
-  const chat = "https://t.me/yz13_dev"
-  return (
     <>
-      <div className="w-full h-dvh mx-auto flex flex-col *:w-full">
-        <div className="w-full h-full flex md:flex-col flex-col-reverse">
-          <div className="md:px-0 px-6 w-full h-full">
-            <div className="w-full h-full relative">
-              <DitheringBackground withGradientOverylay={false} className="h-full" />
-            </div>
-          </div>
-          <header className="p-6 flex w-full max-w-7xl mx-auto items-center justify-between">
+      <DitheringBackground withGradientOverylay={false} />
+      <div className="w-full h-dvh mx-auto flex flex-col justify-end *:w-full">
+        <div className="w-full max-w-4xl mx-auto rounded-t-4xl bg-gradient-to-b  from-background/60 to-background backdrop-blur-md">
+          <header className="p-6 flex w-full mx-auto items-center justify-between">
             <div className="w-fit flex flex-row items-center gap-4">
               <Logo size={40} type="full" />
               <div className="flex flex-col gap-0">
@@ -197,62 +76,175 @@ export default function () {
             </div>
             <User />
           </header>
-        </div>
-        <main className="space-y-6 max-w-7xl mx-auto p-6">
-          <Suspense fallback={<AvailabilitySkeleton />}>
-            <Await resolve={available}>
-              {(available) => <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />}
-            </Await>
-          </Suspense>
-          <div className="w-full space-y-4 *:block">
-            <Title />
-            <Description />
-          </div>
-          <div className="space-y-4">
-            <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
-              <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" asChild>
-                <Link to={chat} target="_blank">
+          <main className="space-y-6 mx-auto p-6">
+            <AvailabilitySkeleton />
+            <div className="w-full space-y-4 *:block">
+              <Title />
+              <Description />
+            </div>
+            <div className="space-y-4">
+              <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
+                <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
                   <SendIcon />
                   <span>Открыть чат</span>
-                </Link>
-              </Button>
-              <Suspense fallback={<Skeleton className="h-9 w-32" />}>
-                <Await resolve={available}>
-                  {(available) => <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
-                    <span className="sm:inline hidden">Запланировать видеозвонок</span>
-                    <span className="sm:hidden inline">Видеозвонок</span>
-                    <ArrowRightIcon />
-                  </Button>}
-                </Await>
-              </Suspense>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" variant="outline" asChild>
-                <Link to="mailto:yz13.dev@gmail.com">
-                  <MailIcon />
-                </Link>
-              </Button>
-              <Button className="h-12 text-lg w-fit [&>span>svg]:!size-5 px-4 text-foreground" size="lg" variant="outline" asChild>
-                <CopyButton
-                  content="yz13.dev@gmail.com"
-                  className="shadow-none"
-                />
-              </Button>
-              <div className="flex flex-col gap-1">
-                <span className="text-xs text-muted-foreground">Вы можете написать на почту!</span>
-                <span className="text-xs text-muted-foreground">Даже если не принимаю новые заказы</span>
+                </Button>
+                <Skeleton className="h-9 w-32" />
+              </div>
+              <div className="flex items-center gap-2">
+                <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" variant="outline" asChild>
+                  <Link to="mailto:yz13.dev@gmail.com">
+                    <MailIcon />
+                  </Link>
+                </Button>
+                <Button className="h-12 text-lg w-fit [&>span>svg]:!size-5 px-4 text-foreground" size="lg" variant="outline" asChild>
+                  <CopyButton
+                    content="yz13.dev@gmail.com"
+                    className="shadow-none"
+                  />
+                </Button>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-muted-foreground">Вы можете написать на почту!</span>
+                  <span className="text-xs text-muted-foreground">Даже если не принимаю новые заказы</span>
+                </div>
               </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export function HydrateFallback() {
+  return (
+    <>
+      <DitheringBackground withGradientOverylay={false} />
+      <div className="w-full h-dvh mx-auto flex flex-col justify-end *:w-full">
+        <div className="w-full max-w-4xl mx-auto rounded-t-4xl bg-gradient-to-b  from-background/60 to-background backdrop-blur-md">
+          <header className="p-6 flex w-full mx-auto items-center justify-between">
+            <div className="w-fit flex flex-row items-center gap-4">
+              <Logo size={40} type="full" />
+              <div className="flex flex-col gap-0">
+                <Time className="text-lg font-medium text-foreground" />
+                <TimeOffset className="text-xs text-muted-foreground" />
+              </div>
+            </div>
+            <User />
+          </header>
+          <main className="space-y-6 mx-auto p-6">
+            <AvailabilitySkeleton />
+            <div className="w-full space-y-4 *:block">
+              <Title />
+              <Description />
+            </div>
+            <div className="space-y-4">
+              <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
+                <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg">
+                  <SendIcon />
+                  <span>Открыть чат</span>
+                </Button>
+                <Skeleton className="h-9 w-32" />
+              </div>
+              <div className="flex items-center gap-2">
+                <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" variant="outline" asChild>
+                  <Link to="mailto:yz13.dev@gmail.com">
+                    <MailIcon />
+                  </Link>
+                </Button>
+                <Button className="h-12 text-lg w-fit [&>span>svg]:!size-5 px-4 text-foreground" size="lg" variant="outline" asChild>
+                  <CopyButton
+                    content="yz13.dev@gmail.com"
+                    className="shadow-none"
+                  />
+                </Button>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-muted-foreground">Вы можете написать на почту!</span>
+                  <span className="text-xs text-muted-foreground">Даже если не принимаю новые заказы</span>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default function () {
+  const { publications, available, pricing } = useLoaderData<typeof loader>();
+
+  const chat = "https://t.me/yz13_dev"
+  return (
+    <>
+      <DitheringBackground withGradientOverylay={false} />
+      <div className="w-full h-dvh mx-auto flex flex-col justify-end *:w-full">
+        <div className="w-full max-w-4xl mx-auto rounded-t-4xl bg-gradient-to-b  from-background/60 to-background backdrop-blur-md">
+          <header className="p-6 flex w-full mx-auto items-center justify-between">
+            <div className="w-fit flex flex-row items-center gap-4">
+              <Logo size={40} type="full" />
+              <div className="flex flex-col gap-0">
+                <Time className="text-lg font-medium text-foreground" />
+                <TimeOffset className="text-xs text-muted-foreground" />
+              </div>
+            </div>
+            <User />
+          </header>
+          <main className="space-y-6 mx-auto p-6">
+            <Suspense fallback={<AvailabilitySkeleton />}>
+              <Await resolve={available}>
+                {(available) => <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />}
+              </Await>
+            </Suspense>
+            <div className="w-full space-y-4 *:block">
+              <Title />
+              <Description />
+            </div>
+            <div className="space-y-4">
+              <div className="w-full flex sm:flex-row flex-col sm:*:w-fit *:w-full gap-3">
+                <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" asChild>
+                  <Link to={chat} target="_blank">
+                    <SendIcon />
+                    <span>Открыть чат</span>
+                  </Link>
+                </Button>
+                <Suspense fallback={<Skeleton className="h-9 w-32" />}>
+                  <Await resolve={available}>
+                    {(available) => <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
+                      <span className="sm:inline hidden">Запланировать видеозвонок</span>
+                      <span className="sm:hidden inline">Видеозвонок</span>
+                      <ArrowRightIcon />
+                    </Button>}
+                  </Await>
+                </Suspense>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" variant="outline" asChild>
+                  <Link to="mailto:yz13.dev@gmail.com">
+                    <MailIcon />
+                  </Link>
+                </Button>
+                <Button className="h-12 text-lg w-fit [&>span>svg]:!size-5 px-4 text-foreground" size="lg" variant="outline" asChild>
+                  <CopyButton
+                    content="yz13.dev@gmail.com"
+                    className="shadow-none"
+                  />
+                </Button>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-muted-foreground">Вы можете написать на почту!</span>
+                  <span className="text-xs text-muted-foreground">Даже если не принимаю новые заказы</span>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
       </div>
 
-      <Section className="space-y-6 px-6 py-16 max-w-7xl mx-auto">
+      <Section className="space-y-6 px-6 py-16 max-w-4xl mx-auto">
         <SectionContent>
           <GithubContributions username="yz13-dev" />
         </SectionContent>
       </Section>
-      <Section className="px-6 py-16 space-y-6 max-w-7xl mx-auto">
+      <Section className="px-6 py-16 space-y-6 max-w-4xl mx-auto">
         <SectionTitle>Проекты</SectionTitle>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 *:w-full gap-6">
           <Suspense
@@ -285,7 +277,7 @@ export default function () {
                 return aDuration - bDuration
               })
               return (
-                <Section className="px-6 py-16 max-w-7xl mx-auto space-y-6">
+                <Section className="px-6 py-16 max-w-4xl mx-auto space-y-6">
                   <Pricing pricing={sorted} />
                 </Section>
               )
@@ -293,7 +285,7 @@ export default function () {
           }
         </Await>
       </Suspense>
-      <Section className="flex flex-col *:px-6 py-16 max-w-7xl mx-auto gap-4">
+      <Section className="flex flex-col *:px-6 py-16 max-w-4xl mx-auto gap-4">
         <div className="w-full">
           <SectionTitle>Вопросы и ответы</SectionTitle>
         </div>
@@ -331,7 +323,7 @@ export default function () {
       </Section>
       <footer className={cn(
         "flex md:flex-row flex-col-reverse w-full h-git",
-        "*:p-6 *:gap-6 max-w-7xl mx-auto py-16"
+        "*:p-6 *:gap-6 max-w-4xl mx-auto py-16"
       )}>
         <div className="flex flex-col">
           <div className="w-full flex flex-col gap-3">
@@ -397,7 +389,7 @@ export default function () {
           </div>
         </div>
       </footer>
-      <footer className="flex p-6 items-center justify-between max-w-7xl mx-auto">
+      <footer className="flex p-6 items-center justify-between max-w-4xl mx-auto">
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground">YZ13</span>
           <SlidingNumber number={(new Date).getFullYear()} className="text-xs text-muted-foreground" />

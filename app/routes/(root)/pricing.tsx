@@ -11,7 +11,7 @@ import { SectionTitle } from "./section"
 
 const Grid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="w-full grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2 *:px-3 *:py-1 *:h-11">
+    <div className="w-full grid xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-2 *:px-3 *:py-1 *:h-11">
       {children}
     </div>
   )
