@@ -246,7 +246,7 @@ export default function () {
       </Section>
       <Section className="px-6 py-16 space-y-6 max-w-4xl mx-auto">
         <SectionTitle>Проекты</SectionTitle>
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 *:w-full gap-6">
+        <div className="grid md:grid-cols-2 grid-cols-1 *:w-full gap-6">
           <Suspense
             fallback={<RecentProjectsSkeleton />}>
             <Await
