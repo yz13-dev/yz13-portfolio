@@ -1,3 +1,4 @@
+import Availability, { AvailabilitySkeleton } from "@/components/availability";
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
 import { Time, TimeOffset } from "@/components/time/time";
@@ -142,6 +143,11 @@ export default function () {
             <Title />
             <Description />
           </div>
+          <Suspense fallback={<AvailabilitySkeleton className="!h-12" />}>
+            <Await resolve={available}>
+              {(available) => <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />}
+            </Await>
+          </Suspense>
           <div className="w-full flex flex-col *:w-full gap-3">
             <Button className="h-12 text-lg w-fit [&>svg]:!size-5" size="lg" asChild>
               <Link to={telegram} target="_blank">

@@ -140,7 +140,7 @@ const Availability = ({
   );
 };
 
-export const AvailabilitySkeleton = ({ size = "default" }: { size?: AvailabilityProps["size"] }) => {
+export const AvailabilitySkeleton = ({ size = "default", className = "" }: { size?: AvailabilityProps["size"], className?: string }) => {
   return (
     <Skeleton
       data-size={size}
@@ -149,6 +149,7 @@ export const AvailabilitySkeleton = ({ size = "default" }: { size?: Availability
         "data-[size=sm]:h-[22px]",
         "data-[size=default]:h-[30px]",
         "data-[size=lg]:h-[38px]",
+        className
       )}
     />
   );
