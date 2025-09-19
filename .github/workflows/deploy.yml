@@ -56,10 +56,10 @@ jobs:
             --concurrency 10 \
             --zone-instances-limit 10 \
             --zone-requests-limit 10 \
-            --memory 512MB \
+            --memory 256MB \
             --cores 1 \
             --min-instances 1 \
-            --core-fraction 100 \
+            --core-fraction 50 \
             --execution-timeout 60s \
             --service-account-id $SERVICE_ACCOUNT_ID \
             --environment VITE_SUPABASE_URL=${{secrets.SUPABASE_URL}},VITE_EDGE_CONFIG=${{secrets.EDGE_CONFIG}}
