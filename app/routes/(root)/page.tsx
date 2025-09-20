@@ -56,7 +56,7 @@ export function ErrorBoundary() {
 
   return (
     <>
-      <DitheringBackground withGradientOverylay={false} />
+      <DitheringBackground withGradientOverylay={false} className="opacity-20" />
       <div className="w-full h-dvh mx-auto flex flex-col p-4 justify-end">
         <div className="w-full max-w-lg border-2 h-fit mx-auto p-6 space-y-6 rounded-4xl bg-gradient-to-b  from-background/80 to-background backdrop-blur-md">
           <header className="flex w-full mx-auto items-center justify-between">
@@ -89,7 +89,7 @@ export function ErrorBoundary() {
 export function HydrateFallback() {
   return (
     <>
-      <DitheringBackground withGradientOverylay={false} />
+      <DitheringBackground withGradientOverylay={false} className="opacity-20" />
       <div className="w-full h-dvh mx-auto flex flex-col p-4 justify-end">
         <div className="w-full max-w-lg border-2 h-fit mx-auto p-6 space-y-6 rounded-4xl bg-gradient-to-b  from-background/80 to-background backdrop-blur-md">
           <header className="flex w-full mx-auto items-center justify-between">
@@ -126,7 +126,7 @@ export default function () {
 
   return (
     <>
-      <DitheringBackground withGradientOverylay={false} />
+      <DitheringBackground withGradientOverylay={false} className="opacity-20" />
       <div className="w-full h-dvh mx-auto flex flex-col p-4 justify-end">
         <div className="w-full max-w-lg border-2 h-fit mx-auto p-6 space-y-6 rounded-4xl bg-gradient-to-b  from-background/80 to-background backdrop-blur-md">
           <header className="flex w-full mx-auto items-center justify-between">
