@@ -1,5 +1,5 @@
-import { Typewriter } from "@/components/text-writter";
 import { randomNumber } from "@/utils/random-number";
+import { TypingText } from "@yz13/ui/animated/typing";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { useEffect, useMemo, useState } from "react";
@@ -106,9 +106,9 @@ const Availability = ({
             ?
             animated
               ?
-              <Typewriter
+              <TypingText
                 text={text}
-                speed={100}
+                duration={100}
                 loop={true}
                 className={cn(
                   "group-data-[size=sm]:text-xs",

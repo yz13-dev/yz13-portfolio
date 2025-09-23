@@ -5,7 +5,7 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-  route("/", "./routes/(root)/page.tsx"),
+  route("/", "./routes/page.tsx"),
   route("/pricing", "./routes/pricing/page.tsx"),
   layout("./routes/auth/layout.tsx", [
     route("/auth/signin", "./routes/auth/signin/page.tsx"),
