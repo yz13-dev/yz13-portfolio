@@ -1,6 +1,8 @@
-import { Project } from "@/routes/(root)/page";
 import { cdn } from "@/utils/cdn";
+import { GetStoreV1200Item } from "@yz13/api/types";
 import { cn } from "@yz13/ui/utils";
+
+export type Project = GetStoreV1200Item;
 
 export const ProjectLogo = ({ project, className = "" }: { project: Project, className?: string }) => {
 
