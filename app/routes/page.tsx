@@ -1,4 +1,5 @@
 import Availability, { AvailabilitySkeleton } from "@/components/availability";
+import GithubContributions from "@/components/github-contributions";
 import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/project-logo";
 import { Time, TimeOffset } from "@/components/time/time";
@@ -86,6 +87,17 @@ export default function () {
         </div>
       </main>
       <div className="w-full *:p-6">
+        <section className="space-y-6">
+          <div className="w-full space-y-2 *:block">
+            <h3 className="text-4xl font-medium">Активность</h3>
+            <p className="text-base text-muted-foreground">
+              Тепловая карта мой активности на GitHub.
+            </p>
+          </div>
+          <Suspense fallback={<GithubContributions username="yz13-dev" loading />}>
+            <GithubContributions username="yz13-dev" />
+          </Suspense>
+        </section>
         <section className="space-y-6">
           <div className="w-full space-y-2 *:block">
             <h3 className="text-4xl font-medium">Проекты</h3>
