@@ -213,7 +213,7 @@ export default function () {
               <ul className="space-y-1.5 w-full">
                 <li>
                   <Button disabled size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
-                    <span>Созвониться</span><ArrowRightIcon className="xl:size-6 size-5" />
+                    <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
                   </Button>
                 </li>
                 <li>
