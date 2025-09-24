@@ -3,6 +3,7 @@ import GithubContributions from "@/components/github-contributions";
 import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/project-logo";
 import { Time, TimeOffset } from "@/components/time/time";
+import User from "@/components/user";
 import { available } from "@/utils/flags";
 import { getStoreV1 } from "@yz13/api";
 import { Badge } from "@yz13/ui/badge";
@@ -42,12 +43,13 @@ export default function () {
   return (
     <div className="w-full lg:*:w-1/2 *:w-full flex lg:flex-row flex-col">
       <main className="h-dvh flex flex-col lg:sticky lg:top-0 static justify-between gap-6 p-6">
-        <div className="space-y-4">
+        <header className="flex items-center justify-between">
           <div className="flex flex-col gap-0">
             <Time className="text-lg font-medium text-foreground" />
             <TimeOffset className="text-xs text-muted-foreground" />
           </div>
-        </div>
+          <User />
+        </header>
         <div className="space-y-4">
           <div className="space-y-4">
             <Suspense fallback={<AvailabilitySkeleton className="!h-12" />}>
@@ -208,7 +210,13 @@ export default function () {
           </div>
           <div className="w-full flex lg:flex-row flex-col-reverse gap-5">
             <Logo size={128} type="full" />
-            <div className="flex flex-col gap-3">
+            <div className="flex md:flex-col flex-row md:items-start items-center gap-3 shrink-0">
+              <Link to={github} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                Github <ExternalLinkIcon size={16} />
+              </Link>
+              <Link to={twitter} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                Twitter/X <ExternalLinkIcon size={16} />
+              </Link>
               <span className="text-xs text-muted-foreground">© YZ13 2025</span>
             </div>
           </div>
