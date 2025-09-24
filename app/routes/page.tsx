@@ -32,7 +32,7 @@ export const loader = async () => {
 
 const telegram = "https://t.me/yz13_dev"
 const twitter = "https://x.com/yz13_dev"
-const github = "https://githib.com/yz13-dev"
+const github = "https://github.com/yz13-dev"
 
 const email = "yz13.dev@gmail.com"
 const emailTo = (email: string) => `mailto:${email}`
@@ -94,7 +94,7 @@ export default function () {
           <div className="w-full space-y-2 *:block">
             <h3 className="text-4xl font-medium">Активность</h3>
             <p className="text-base text-muted-foreground">
-              Тепловая карта мой активности на GitHub.
+              Тепловая карта мой активности на <Link to={github} target="_blank" className="hover:underline text-foreground inline-flex items-center gap-1">GitHub <ExternalLinkIcon size={14} /></Link>.
             </p>
           </div>
           <Suspense fallback={<GithubContributions username="yz13-dev" loading />}>
