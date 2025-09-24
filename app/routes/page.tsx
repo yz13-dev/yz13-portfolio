@@ -4,6 +4,7 @@ import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/project-logo";
 import { Time, TimeOffset } from "@/components/time/time";
 import User from "@/components/user";
+import WorkflowLoop from "@/components/workflow-loop";
 import { available } from "@/utils/flags";
 import { getStoreV1 } from "@yz13/api";
 import { Badge } from "@yz13/ui/badge";
@@ -100,6 +101,23 @@ export default function () {
             <GithubContributions username="yz13-dev" />
           </Suspense>
         </section>
+        <section className="space-y-6">
+          <div className="w-full space-y-2 *:block">
+            <h3 className="text-4xl font-medium">Безотказный цикл разработки и обратной связи</h3>
+            <p className="text-base text-muted-foreground">
+              Приблизительный цикл разработки и обратной связи (может меняться в будущем).
+            </p>
+          </div>
+          <WorkflowLoop />
+        </section>
+        {
+          false &&
+          <div className="w-full aspect-video bg-secondary rounded-l-md relative overflow-hidden">
+            <div className="size-full shrink-0 p-6 absolute top-6 left-6 rounded-tl-md bg-card border-t border-l">
+              <Logo size={36} type="full" />
+            </div>
+          </div>
+        }
         <section className="space-y-6">
           <div className="w-full space-y-2 *:block">
             <h3 className="text-4xl font-medium">Проекты</h3>
