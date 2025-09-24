@@ -72,7 +72,7 @@ const WorkflowLoopItem = ({
   return (
     <div
       className={cn(
-        "w-full flex flex-row gap-2 p-3 hover:bg-secondary/40 transition-colors rounded-md hover:cursor-pointer",
+        "w-full flex flex-row gap-3 p-3 hover:bg-secondary/40 transition-colors rounded-md hover:cursor-pointer",
         activeIndex === index && "bg-secondary/40"
       )}
       onPointerEnter={() => onActiveIndexChange(index)}
