@@ -101,6 +101,17 @@ export default function () {
             <GithubContributions username="yz13-dev" />
           </Suspense>
         </section>
+        {/*<section className="space-y-6">
+          <div className="w-full space-y-2 *:block">
+            <h3 className="text-4xl font-medium">Теплейты</h3>
+            <p className="text-base text-muted-foreground">
+              ---
+            </p>
+          </div>
+          <div className="w-full flex items-center gap-4">
+            <Templates />
+          </div>
+        </section>*/}
         <section className="space-y-6">
           <div className="w-full space-y-2 *:block">
             <h3 className="text-4xl font-medium">Безотказный цикл разработки и обратной связи</h3>
