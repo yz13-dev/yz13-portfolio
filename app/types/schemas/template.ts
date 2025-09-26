@@ -13,6 +13,7 @@ export const templateSchema = z.object({
   thumbnail: z.string(),
   attachments: z.array(z.string()),
   status: z.string(),
+  orientation: z.string(),
 })
 
 export type Template = z.infer<typeof templateSchema>;

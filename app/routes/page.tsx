@@ -1,24 +1,26 @@
-import Availability, { AvailabilitySkeleton } from "@/components/availability";
-import GithubContributions from "@/components/github-contributions";
+const Availability = lazy(() => import("@/components/availability"));
+import { AvailabilitySkeleton } from "@/components/availability";
 import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/project-logo";
 import { Time, TimeOffset } from "@/components/time/time";
-import User from "@/components/user";
-import WorkflowLoop from "@/components/workflow-loop";
 import { available } from "@/utils/flags";
 import { getStoreV1 } from "@yz13/api";
 import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { ArrowRightIcon, ExternalLinkIcon, PlusIcon, SendIcon } from "lucide-react";
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Await, Link, useLoaderData } from "react-router";
+const GithubContributions = lazy(() => import("@/components/github-contributions"));
+const User = lazy(() => import("@/components/user"));
+const WorkflowLoop = lazy(() => import("@/components/workflow-loop"));
 
 export const loader = async () => {
   try {
 
     const isAvailable = available();
-    const projects = await getStoreV1();
+    const projects = getStoreV1();
+    // const templates = showTemplates();
 
     return { available: isAvailable, publications: projects }
   } catch (error) {
@@ -26,6 +28,7 @@ export const loader = async () => {
     return {
       publications: [],
       available: false,
+      templates: false
     }
   }
 }
@@ -101,17 +104,26 @@ export default function () {
             <GithubContributions username="yz13-dev" />
           </Suspense>
         </section>
-        {/*<section className="space-y-6">
-          <div className="w-full space-y-2 *:block">
-            <h3 className="text-4xl font-medium">Теплейты</h3>
-            <p className="text-base text-muted-foreground">
-              ---
-            </p>
-          </div>
-          <div className="w-full flex items-center gap-4">
-            <Templates />
-          </div>
-        </section>*/}
+        {/*<Await resolve={templates}>
+          {
+            (templates) => {
+              if (!templates) return null;
+              return (
+                <section className="space-y-6">
+                  <div className="w-full space-y-2 *:block">
+                    <h3 className="text-4xl font-medium">Теплейты</h3>
+                    <p className="text-base text-muted-foreground">
+                      ---
+                    </p>
+                  </div>
+                  <div className="w-full flex items-center gap-4 overflow-x-auto">
+                    <Templates />
+                  </div>
+                </section>
+              )
+            }
+          }
+        </Await>*/}
         <section className="space-y-6">
           <div className="w-full space-y-2 *:block">
             <h3 className="text-4xl font-medium">Безотказный цикл разработки и обратной связи</h3>
