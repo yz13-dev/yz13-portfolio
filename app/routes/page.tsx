@@ -106,7 +106,7 @@ export default function () {
           </div>
         </div>
       </main>
-      <div className="w-full *:px-6 *:py-12">
+      <div className="w-full *:px-6 *:py-12 [&>section]:first:p-6">
         <section className="space-y-6">
           <div className="w-full space-y-2 *:block">
             <h3 className="text-4xl font-medium">Активность</h3>
