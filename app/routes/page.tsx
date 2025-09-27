@@ -64,7 +64,7 @@ export default function () {
             </Suspense>
             <div className="w-full space-x-2 space-y-3 *:block max-w-2xl">
               <h1 className="lg:*:text-5xl text-3xl *:font-semibold">
-                <span>YZ13</span><span>-</span><span>Фронтенд который не подведет.</span><br /><span></span>
+                <span>YZ13</span><span>-</span><span>Фронтенд который не&nbsp;подведет.</span><br /><span></span>
               </h1>
               <p className="text-2xl font-medium text-muted-foreground">Разработаю сайт, страницы, приложение и компоненты разной сложности</p>
             </div>
