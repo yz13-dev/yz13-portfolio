@@ -36,6 +36,7 @@ export const loader = async () => {
 const telegram = "https://t.me/yz13_dev"
 const twitter = "https://x.com/yz13_dev"
 const github = "https://github.com/yz13-dev"
+const call = "https://cal.com/yz13-dev"
 
 const email = "yz13.dev@gmail.com"
 const emailTo = (email: string) => `mailto:${email}`
@@ -78,11 +79,24 @@ export default function () {
               </Button>
               <Suspense fallback={<Skeleton className="h-12 w-32" />}>
                 <Await resolve={available}>
-                  {(available) => <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
-                    <span className="sm:inline hidden">Запланировать видеозвонок</span>
-                    <span className="sm:hidden inline">Видеозвонок</span>
-                    <ArrowRightIcon />
-                  </Button>}
+                  {(available) => {
+                    if (available) return (
+                      <Button asChild className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
+                        <Link to={call} target="_blank">
+                          <span className="sm:inline hidden">Запланировать видеозвонок</span>
+                          <span className="sm:hidden inline">Видеозвонок</span>
+                          <ArrowRightIcon />
+                        </Link>
+                      </Button>
+                    )
+                    return (
+                      <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
+                        <span className="sm:inline hidden">Запланировать видеозвонок</span>
+                        <span className="sm:hidden inline">Видеозвонок</span>
+                        <ArrowRightIcon />
+                      </Button>
+                    )
+                  }}
                 </Await>
               </Suspense>
             </div>
@@ -92,7 +106,7 @@ export default function () {
           </div>
         </div>
       </main>
-      <div className="w-full *:p-6">
+      <div className="w-full *:px-6 *:py-12">
         <section className="space-y-6">
           <div className="w-full space-y-2 *:block">
             <h3 className="text-4xl font-medium">Активность</h3>
@@ -229,15 +243,31 @@ export default function () {
               <span className="text-xs block text-muted-foreground uppercase">Ресуры</span>
               <ul>
                 <li><span className="text-2xl text-muted-foreground font-medium">Блог</span></li>
+                <li><span className="text-2xl text-muted-foreground font-medium">Шаблоны</span></li>
               </ul>
             </div>
             <div className="w-fit space-y-1.5">
               <span className="text-xs block text-muted-foreground uppercase">Действия</span>
               <ul className="space-y-1.5 w-full">
                 <li>
-                  <Button disabled size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
-                    <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
-                  </Button>
+                  <Await resolve={available}>
+                    {
+                      (available) => {
+                        if (available) return (
+                          <Button asChild size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
+                            <Link to={call} target="_blank">
+                              <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
+                            </Link>
+                          </Button>
+                        )
+                        return (
+                          <Button disabled={!available} size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
+                            <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
+                          </Button>
+                        )
+                      }
+                    }
+                  </Await>
                 </li>
                 <li>
                   <Button size="lg" variant="outline" className="xl:text-2xl text-lg font-medium py-2 h-fit" asChild>
