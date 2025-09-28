@@ -3,6 +3,7 @@ import { AvailabilitySkeleton } from "@/components/availability";
 import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/project-logo";
 import { Time, TimeOffset } from "@/components/time/time";
+import { call, email, emailTo, github, telegram, twitter } from "@/const/socials";
 import { available } from "@/utils/flags";
 import { getStoreV1 } from "@yz13/api";
 import { Badge } from "@yz13/ui/badge";
@@ -32,14 +33,6 @@ export const loader = async () => {
     }
   }
 }
-
-const telegram = "https://t.me/yz13_dev"
-const twitter = "https://x.com/yz13_dev"
-const github = "https://github.com/yz13-dev"
-const call = "https://cal.com/yz13-dev"
-
-const email = "yz13.dev@gmail.com"
-const emailTo = (email: string) => `mailto:${email}`
 
 export default function () {
 

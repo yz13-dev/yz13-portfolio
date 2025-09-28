@@ -1,28 +1,33 @@
 import { Logo } from "@/components/logo";
 import { Time, TimeOffset } from "@/components/time/time";
 import User from "@/components/user";
+import { call, github, telegram, twitter } from "@/const/socials";
 import { getAbc, sortByAbc, sortLetters } from "@/utils/abc";
+import { available } from "@/utils/flags";
 import { getStoreV1 } from "@yz13/api";
-import { ExternalLinkIcon } from "lucide-react";
+import { Button } from "@yz13/ui/button";
+import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
 import { Await, Link, useLoaderData } from "react-router";
 
 export const loader = async () => {
   try {
 
     const projects = getStoreV1();
+    const isAvailable = available();
 
-    return { publications: projects }
+    return { publications: projects, available: isAvailable }
   } catch (error) {
     console.error(error)
     return {
       publications: [],
+      available: false,
     }
   }
 }
 
 export default function () {
 
-  const { publications } = useLoaderData<typeof loader>();
+  const { publications, available } = useLoaderData<typeof loader>();
 
   return (
     <>
@@ -47,7 +52,7 @@ export default function () {
 
             return (
               <>
-                <div className="max-w-7xl w-full mx-auto px-6 py-3 flex lg:flex-row flex-col lg:gap-0 gap-4">
+                <div className="max-w-7xl w-full mx-auto p-6 sticky top-0 bg-background flex lg:flex-row flex-col lg:gap-0 gap-4">
                   <div className="lg:w-1/4 w-full">
                     <span className="text-xs text-muted-foreground uppercase">
                       проекты yz13
@@ -65,7 +70,7 @@ export default function () {
                     }
                   </div>
                 </div>
-                <div className="max-w-7xl w-full mx-auto px-6 py-3">
+                <div className="max-w-7xl w-full mx-auto px-6 py-12">
                   {
                     letters
                       .map(letter => {
@@ -103,6 +108,67 @@ export default function () {
           }
         }
       </Await>
+      <footer className="w-full max-w-7xl mx-auto space-y-6">
+        <div className="w-full flex lg:flex-row flex-col gap-5 lg:*:w-1/3 *:w-full">
+          <div className="w-fit space-y-1.5">
+            <span className="text-xs block text-muted-foreground uppercase">Платформа</span>
+            <ul>
+              <li><span className="text-2xl text-muted-foreground font-medium">Проекты</span></li>
+            </ul>
+          </div>
+          <div className="w-fit space-y-1.5">
+            <span className="text-xs block text-muted-foreground uppercase">Ресуры</span>
+            <ul>
+              <li><span className="text-2xl text-muted-foreground font-medium">Блог</span></li>
+              <li><span className="text-2xl text-muted-foreground font-medium">Шаблоны</span></li>
+            </ul>
+          </div>
+          <div className="w-fit space-y-1.5">
+            <span className="text-xs block text-muted-foreground uppercase">Действия</span>
+            <ul className="space-y-1.5 w-full">
+              <li>
+                <Await resolve={available}>
+                  {
+                    (available) => {
+                      if (available) return (
+                        <Button asChild size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
+                          <Link to={call} target="_blank">
+                            <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
+                          </Link>
+                        </Button>
+                      )
+                      return (
+                        <Button disabled={!available} size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
+                          <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
+                        </Button>
+                      )
+                    }
+                  }
+                </Await>
+              </li>
+              <li>
+                <Button size="lg" variant="outline" className="xl:text-2xl text-lg font-medium py-2 h-fit" asChild>
+                  <Link to={telegram} target="_blank">
+                    <SendIcon className="xl:size-6 size-5" /><span>Перейти в чат</span>
+                  </Link>
+                </Button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="w-full flex lg:flex-row flex-col-reverse gap-5">
+          <Logo size={128} type="full" />
+          <div className="flex md:flex-col flex-row md:items-start items-center gap-3 shrink-0">
+            <Link to={github} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+              Github <ExternalLinkIcon size={16} />
+            </Link>
+            <Link to={twitter} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+              Twitter/X <ExternalLinkIcon size={16} />
+            </Link>
+            <span className="text-xs text-muted-foreground">© YZ13 2025</span>
+          </div>
+        </div>
+      </footer>
     </>
   )
 }
