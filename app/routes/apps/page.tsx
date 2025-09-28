@@ -108,7 +108,7 @@ export default function () {
           }
         }
       </Await>
-      <footer className="w-full max-w-7xl mx-auto space-y-6">
+      <footer className="w-full max-w-7xl mx-auto space-y-6 px-6">
         <div className="w-full flex lg:flex-row flex-col gap-5 lg:*:w-1/3 *:w-full">
           <div className="w-fit space-y-1.5">
             <span className="text-xs block text-muted-foreground uppercase">Платформа</span>
