@@ -1,4 +1,5 @@
 import { Logo } from "@/components/logo";
+import { Project } from "@/components/project-logo";
 import { Time, TimeOffset } from "@/components/time/time";
 import User from "@/components/user";
 import { call, github, telegram, twitter } from "@/const/socials";
@@ -6,7 +7,11 @@ import { getAbc, sortByAbc, sortLetters } from "@/utils/abc";
 import { available } from "@/utils/flags";
 import { getStoreV1 } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
+import { cn } from "@yz13/ui/utils";
+import { useInViewport } from "ahooks";
 import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
+import { parseAsString, useQueryState } from "nuqs";
+import { useEffect, useRef } from "react";
 import { Await, Link, useLoaderData } from "react-router";
 
 export const loader = async () => {
@@ -25,9 +30,56 @@ export const loader = async () => {
   }
 }
 
+const LetterRow = ({ letter, projects }: { letter: string, projects: Project[] }) => {
+
+  const [_, setQ] = useQueryState("letter", parseAsString)
+
+  const length = projects?.length ?? 0;
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView] = useInViewport(ref, {
+    // threshold: [.25, .5, .75],
+    // root: () => document.getElementById("root"),
+    rootMargin: '-15% 0px -85% 0px',
+  });
+
+  useEffect(() => {
+    if (inView) setQ(letter)
+  }, [letter, inView])
+  return (
+    <div
+      key={letter}
+      ref={ref}
+      className={cn(
+        "w-full flex flex-row py-24 rounded-lg",
+      )}
+    >
+      <div className="w-1/4 flex flex-row gap-1">
+        <span className={cn("text-2xl font-medium", inView ? "text-foreground" : "text-muted-foreground")}>{letter}</span>
+        <span className="text-xs text-muted-foreground align-super">{length}</span>
+      </div>
+      <div className="w-3/4 gap-3 grid xl:grid-cols-3 ld:grid-cols-2 grid-cols-1">
+        {
+          projects.map(project => {
+            const url = project.public_url;
+            if (url) return (
+              <Link key={project.id} to={url} className="inline-flex items-center gap-1.5 hover:underline">
+                <span className="text-2xl font-medium">{project.name}</span>
+                <ExternalLinkIcon className="size-5" />
+              </Link>
+            )
+            return <span key={project.id} className="text-2xl font-medium">{project.name} </span>
+          })
+        }
+      </div>
+    </div>
+  )
+}
+
 export default function () {
 
   const { publications, available } = useLoaderData<typeof loader>();
+
+  const [q] = useQueryState("letter", parseAsString)
 
   return (
     <>
@@ -60,13 +112,25 @@ export default function () {
                   </div>
                   <div className="lg:w-3/4 w-full grid grid-cols-12 gap-2">
                     {
-                      abc.map(letter => <div
-                        key={letter}
-                        className="size-8 rounded-[6px] cursor-pointer hover:bg-muted flex items-center justify-center border-2 !border-transparent hover:!border-foreground transition-colors"
-                      >
-                        {letter}
-                      </div>
-                      )
+                      abc
+                        .map(letter => {
+
+                          const isActive = q === letter;
+                          return (
+                            <div
+                              key={letter}
+                              className={cn(
+                                "cursor-pointer border-2 !border-transparent transition-colors",
+                                "size-8 rounded-[6px] flex items-center justify-center",
+                                "hover:bg-muted hover:!border-foreground text-muted-foreground",
+                                isActive && "bg-secondary text-foreground !border-foreground"
+                              )}
+                            >
+                              {letter}
+                            </div>
+                          )
+                        }
+                        )
                     }
                   </div>
                 </div>
@@ -75,31 +139,8 @@ export default function () {
                     letters
                       .map(letter => {
                         const projects = sorted.get(letter);
-                        const length = projects?.length ?? 0;;
                         if (!projects) return null;
-                        return (
-                          <div key={letter} className="w-full flex flex-row py-12">
-                            <div className="w-1/4 flex flex-row gap-1">
-                              <span className="text-2xl font-medium">{letter}</span>
-                              <span className="text-xs text-muted-foreground align-super">{length}</span>
-                            </div>
-                            <div className="w-3/4 gap-3 grid xl:grid-cols-3 ld:grid-cols-2 grid-cols-1">
-                              {
-                                projects.map(project => {
-                                  const url = project.public_url;
-                                  if (url) return (
-                                    <Link key={project.id} to={url} className="inline-flex items-center gap-1.5 hover:underline">
-                                      <span className="text-2xl font-medium">{project.name}</span>
-                                      <ExternalLinkIcon className="size-5" />
-                                    </Link>
-                                  )
-                                  return <span key={project.id} className="text-2xl font-medium">{project.name} </span>
-                                }
-                                )
-                              }
-                            </div>
-                          </div>
-                        )
+                        return <LetterRow key={letter} letter={letter} projects={projects} />
                       })
                   }
                 </div>
