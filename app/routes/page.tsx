@@ -62,9 +62,9 @@ export default function () {
                 {(available) => <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />}
               </Await>
             </Suspense>
-            <div className="w-full space-x-2 space-y-3 *:block max-w-2xl">
+            <div className="w-full space-x-2 space-y-3 *:block max-w-4xl">
               <h1 className="lg:*:text-5xl text-3xl *:font-semibold">
-                <span>YZ13</span><span>-</span><span>Фронтенд который не&nbsp;подведет.</span><br /><span></span>
+                <span>YZ13</span><span> - </span><span>Фронтенд который не&nbsp;подведет.</span><br /><span></span>
               </h1>
               <p className="text-2xl font-medium text-muted-foreground">Разработаю сайт, страницы, приложение и компоненты разной сложности</p>
             </div>
@@ -156,8 +156,11 @@ export default function () {
           </div>
         }
         <section className="space-y-6">
-          <div className="w-full space-y-2 *:block">
-            <h3 className="text-4xl font-medium">Проекты</h3>
+          <div className="w-full space-y-2">
+            <div className="flex items-center justify-between w-full gap-2">
+              <h3 className="text-4xl font-medium">Проекты</h3>
+              <Button asChild size="sm" variant="secondary"><Link to="/apps"><ArrowRightIcon /></Link></Button>
+            </div>
             <p className="text-base text-muted-foreground">
               Есть множество проектов над которыми я работаю.
             </p>
