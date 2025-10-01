@@ -227,7 +227,7 @@ export default function () {
               </li>
             </ul>
           </section>
-          <section className="w-full h-full gap-6 @container rounded-4xl bg-muted flex flex-col justify-between p-6">
+          <section className="w-full h-full gap-6 @container flex flex-col justify-between">
             <span className="text-4xl font-medium">
               Вы всегда можете сразу перейти в чат
             </span>
