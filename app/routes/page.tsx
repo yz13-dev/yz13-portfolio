@@ -1,7 +1,7 @@
-const Availability = lazy(() => import("@/components/availability"));
 import { AvailabilitySkeleton } from "@/components/availability";
 import { Logo } from "@/components/logo";
 import { ProjectLogo } from "@/components/project-logo";
+import Qr from "@/components/qr";
 import { Time, TimeOffset } from "@/components/time/time";
 import { call, email, emailTo, github, telegram, twitter } from "@/const/socials";
 import { available } from "@/utils/flags";
@@ -12,9 +12,16 @@ import { Skeleton } from "@yz13/ui/skeleton";
 import { ArrowRightIcon, ExternalLinkIcon, PlusIcon, SendIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Await, Link, useLoaderData } from "react-router";
+
+
+
+const Availability = lazy(() => import("@/components/availability"));
 const GithubContributions = lazy(() => import("@/components/github-contributions"));
 const User = lazy(() => import("@/components/user"));
 const WorkflowLoop = lazy(() => import("@/components/workflow-loop"));
+
+
+
 
 export const loader = async () => {
   try {
@@ -200,25 +207,41 @@ export default function () {
             </Await>
           </ul>
         </section>
-        <section className="space-y-6">
-          <div className="w-full space-y-2 *:block">
-            <h3 className="text-4xl font-medium">Множество вариантов для сотрудничества</h3>
-            <p className="text-base text-muted-foreground">
-              Есть множество вариантов для сотрудничества от разработки сайтов, страниц, приложений и компонентов.
-            </p>
-          </div>
-          <ul className="w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-3 gap-y-6">
-            <li className="flex items-center gap-1">
-              <PlusIcon size={20} className="text-muted-foreground" /><span className="text-foreground text-base">Компоненты</span>
-            </li>
-            <li className="flex items-center gap-1">
-              <PlusIcon size={20} className="text-muted-foreground" /><span className="text-foreground text-base">Сайты</span>
-            </li>
-            <li className="flex items-center gap-1">
-              <PlusIcon size={20} className="text-muted-foreground" /><span className="text-foreground text-base">Приложения</span>
-            </li>
-          </ul>
-        </section>
+        <div className="w-full flex 2xl:flex-row flex-col gap-6 2xl:*:w-1/2 *:w-full">
+          <section className="space-y-6">
+            <div className="w-full space-y-2 *:block">
+              <h3 className="text-4xl font-medium">Множество вариантов для сотрудничества</h3>
+              <p className="text-base text-muted-foreground">
+                Есть множество вариантов для сотрудничества от разработки сайтов, страниц, приложений и компонентов.
+              </p>
+            </div>
+            <ul className="w-full grid grid-cols-1 gap-y-6">
+              <li className="flex items-center gap-1">
+                <PlusIcon size={20} className="text-muted-foreground" /><span className="text-foreground text-base">Компоненты</span>
+              </li>
+              <li className="flex items-center gap-1">
+                <PlusIcon size={20} className="text-muted-foreground" /><span className="text-foreground text-base">Сайты</span>
+              </li>
+              <li className="flex items-center gap-1">
+                <PlusIcon size={20} className="text-muted-foreground" /><span className="text-foreground text-base">Приложения</span>
+              </li>
+            </ul>
+          </section>
+          <section className="w-full h-full gap-6 @container rounded-4xl bg-muted flex flex-col justify-between p-6">
+            <span className="text-4xl font-medium">
+              Вы всегда можете сразу перейти в чат
+            </span>
+            <div className="w-full flex @max-sm:flex-col flex-row @max-sm:items-start items-center gap-4">
+              <div className="p-3 size-fit rounded-md bg-foreground">
+                <Qr className="aspect-square size-36" variant="secondary" />
+              </div>
+              <div className="flex flex-col gap-3">
+                <span className="text-2xl font-medium">Открыть через QR-код</span>
+                <span className="text-lg text-muted-foreground">Отсканируйте QR-код с помощью телефона, чтобы открыть чат</span>
+              </div>
+            </div>
+          </section>
+        </div>
         <section className="space-y-6">
           <div className="w-full space-y-2 *:block">
             <h3 className="text-4xl font-medium">Блог</h3>
