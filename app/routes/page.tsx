@@ -1,4 +1,4 @@
-import { AvailabilitySkeleton } from "@/components/availability";
+import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
 import Nav from "@/components/nav";
 import { ProjectLogo } from "@/components/project-logo";
@@ -25,7 +25,7 @@ import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { ArrowRightIcon, BoldIcon, ExternalLinkIcon, ItalicIcon, PlusIcon, SearchIcon, SendIcon, UnderlineIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
-import { Await, Link } from "react-router";
+import { Link } from "react-router";
 
 
 const Availability = lazy(() => import("@/components/availability"));
@@ -55,13 +55,12 @@ export default function () {
           </div>
           <User />
         </header>
+        <div className="size-full relative">
+          <DitheringBackground className="size-full" withGradientOverylay={false} />
+        </div>
         <div className="space-y-4">
           <div className="space-y-4">
-            <Suspense fallback={<AvailabilitySkeleton className="!h-12" />}>
-              <Await resolve={available}>
-                {(available) => <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />}
-              </Await>
-            </Suspense>
+            <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />
             <div className="w-full space-x-2 space-y-3 *:block max-w-4xl">
               <h1 className="lg:*:text-5xl text-3xl *:font-semibold">
                 <span>YZ13</span><span> - </span><span>Фронтенд который не&nbsp;подведет.</span><br /><span></span>
@@ -77,28 +76,23 @@ export default function () {
                   <span>Открыть чат</span>
                 </Link>
               </Button>
-              <Suspense fallback={<Skeleton className="h-12 w-32" />}>
-                <Await resolve={available}>
-                  {(available) => {
-                    if (available) return (
-                      <Button asChild className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
-                        <Link to={call} target="_blank">
-                          <span className="sm:inline hidden">Запланировать видеозвонок</span>
-                          <span className="sm:hidden inline">Видеозвонок</span>
-                          <ArrowRightIcon />
-                        </Link>
-                      </Button>
-                    )
-                    return (
-                      <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
-                        <span className="sm:inline hidden">Запланировать видеозвонок</span>
-                        <span className="sm:hidden inline">Видеозвонок</span>
-                        <ArrowRightIcon />
-                      </Button>
-                    )
-                  }}
-                </Await>
-              </Suspense>
+              {
+                available
+                  ?
+                  <Button asChild className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
+                    <Link to={call} target="_blank">
+                      <span className="sm:inline hidden">Запланировать видеозвонок</span>
+                      <span className="sm:hidden inline">Видеозвонок</span>
+                      <ArrowRightIcon />
+                    </Link>
+                  </Button>
+                  :
+                  <Button disabled={!available} className="h-12 text-lg w-fit [&>svg]:!size-5" variant="secondary" size="lg">
+                    <span className="sm:inline hidden">Запланировать видеозвонок</span>
+                    <span className="sm:hidden inline">Видеозвонок</span>
+                    <ArrowRightIcon />
+                  </Button>
+              }
             </div>
             <span className="text-sm text-muted-foreground">
               По вопросам и предложениям можно связаться по электронной почте <Link to={emailTo(email)} className="hover:text-foreground transition-colors" target="_blank">{email}</Link> или чату.
@@ -154,45 +148,43 @@ export default function () {
             </p>
           </div>
           <ul className="space-y-6">
-            <Await resolve={publications}>
-              {
-                (publications) =>
-                  publications
-                    .sort((a, b) => {
-                      const aHavePublicUrl = a.public_url !== null;
-                      const bHavePublicUrl = b.public_url !== null;
-                      if (aHavePublicUrl && !bHavePublicUrl) return -1;
-                      if (!aHavePublicUrl && bHavePublicUrl) return 1;
-                      return 0;
-                    })
-                    .map((publication, index) => <li key={publication.id}>
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2">
-                            <div className="size-7 rounded-[8px] bg-secondary border relative overflow-hidden">
-                              <ProjectLogo project={publication} />
-                            </div>
-                            <span className="text-2xl font-medium">{publication.name}</span>
-                            {publication.public_url && <ExternalLinkIcon size={18} />}
-                            {
-                              publication.stage &&
-                              <Badge variant="secondary" className="capitalize">{publication.stage}</Badge>
-                            }
-                          </div>
-                          <span className="text-base text-muted-foreground">{publication.description}</span>
+            {
+              publications
+                .sort((a, b) => {
+                  const aHavePublicUrl = a.public_url !== null;
+                  const bHavePublicUrl = b.public_url !== null;
+                  if (aHavePublicUrl && !bHavePublicUrl) return -1;
+                  if (!aHavePublicUrl && bHavePublicUrl) return 1;
+                  return 0;
+                })
+                .map((publication, index) => <li key={publication.id}>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <div className="size-7 rounded-[8px] bg-secondary border relative overflow-hidden">
+                          <ProjectLogo project={publication} />
                         </div>
+                        <span className="text-2xl font-medium">{publication.name}</span>
+                        {publication.public_url && <ExternalLinkIcon size={18} />}
                         {
-                          publication.public_url &&
-                          <Button variant="secondary" size="sm" asChild>
-                            <Link to={publication.public_url} target="_blank">
-                              <span>Открыть</span><ArrowRightIcon />
-                            </Link>
-                          </Button>
+                          publication.stage &&
+                          <Badge variant="secondary" className="capitalize">{publication.stage}</Badge>
                         }
                       </div>
-                    </li>)
-              }
-            </Await>
+                      <span className="text-base text-muted-foreground">{publication.description}</span>
+                    </div>
+                    {
+                      publication.public_url &&
+                      <Button variant="secondary" size="sm" asChild>
+                        <Link to={publication.public_url} target="_blank">
+                          <span>Открыть</span><ArrowRightIcon />
+                        </Link>
+                      </Button>
+                    }
+                  </div>
+                </li>
+                )
+            }
           </ul>
         </section>
         <section className="space-y-6">
@@ -305,40 +297,35 @@ export default function () {
               Время от времени добавляю что-то новое в блог.
             </p>
           </div>
-          <Suspense fallback={<Skeleton className="w-full h-24" />}>
-            <Await resolve={blog}>
-              {
-                (blog) => {
-                  return blog.map(post => {
+          {
+            blog
+              .map(post => {
 
-                    const created_at = new Date(post.updated_at);
+                const created_at = new Date(post.updated_at);
 
-                    return (
-                      <div key={post.id} className="w-full flex items-center justify-between gap-4 relative ">
-                        <div className="flex items-center gap-2">
-                          <div className="w-full flex flex-col gap-1">
-                            <Link to={`https://blog.yz13.ru/${post.id}`} className="font-medium text-2xl inline-flex items-center gap-2">
-                              {/* @ts-expect-error */}
-                              {post.title}
-                              <ExternalLinkIcon className="size-5" />
-                            </Link>
-                            {/* @ts-expect-error */}
-                            <span className="text-muted-foreground">{post.summary}</span>
-                          </div>
-                        </div>
-                        <Badge
-                          variant="outline"
-                          className="text-base"
-                        >
-                          {format(created_at, "dd MMMM", { locale: ru })}
-                        </Badge>
+                return (
+                  <div key={post.id} className="w-full flex items-center justify-between gap-4 relative ">
+                    <div className="flex items-center gap-2">
+                      <div className="w-full flex flex-col gap-1">
+                        <Link to={`https://blog.yz13.ru/${post.id}`} className="font-medium text-2xl inline-flex items-center gap-2">
+                          {/* @ts-expect-error */}
+                          {post.title}
+                          <ExternalLinkIcon className="size-5" />
+                        </Link>
+                        {/* @ts-expect-error */}
+                        <span className="text-muted-foreground">{post.summary}</span>
                       </div>
-                    )
-                  })
-                }
-              }
-            </Await>
-          </Suspense>
+                    </div>
+                    <Badge
+                      variant="outline"
+                      className="text-base"
+                    >
+                      {format(created_at, "dd MMMM", { locale: ru })}
+                    </Badge>
+                  </div>
+                )
+              })
+          }
         </section>
         <footer className="w-full max-w-7xl mx-auto space-y-6">
           <div className="w-full flex lg:flex-row flex-col gap-5 lg:*:w-1/3 *:w-full">
@@ -359,24 +346,19 @@ export default function () {
               <span className="text-xs block text-muted-foreground uppercase">Действия</span>
               <ul className="space-y-1.5 w-full">
                 <li>
-                  <Await resolve={available}>
-                    {
-                      (available) => {
-                        if (available) return (
-                          <Button asChild size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
-                            <Link to={call} target="_blank">
-                              <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
-                            </Link>
-                          </Button>
-                        )
-                        return (
-                          <Button disabled={!available} size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
-                            <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
-                          </Button>
-                        )
-                      }
-                    }
-                  </Await>
+                  {
+                    available
+                      ?
+                      <Button asChild size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
+                        <Link to={call} target="_blank">
+                          <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
+                        </Link>
+                      </Button>
+                      :
+                      <Button disabled={!available} size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
+                        <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
+                      </Button>
+                  }
                 </li>
                 <li>
                   <Button size="lg" variant="outline" className="xl:text-2xl text-lg font-medium py-2 h-fit" asChild>
