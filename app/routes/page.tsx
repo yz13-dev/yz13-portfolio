@@ -6,7 +6,7 @@ import Qr from "@/components/qr";
 import { Time, TimeOffset } from "@/components/time/time";
 import { call, email, emailTo, github, telegram, twitter } from "@/const/socials";
 import { available } from "@/utils/flags";
-import { getStoreV1 } from "@yz13/api";
+import { getBlogV1Posts, getStoreV1 } from "@yz13/api";
 import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
 import { Calendar } from "@yz13/ui/calendar";
@@ -20,6 +20,8 @@ import {
   ToggleGroupItem,
 } from "@yz13/ui/toggle-group";
 import { cn } from "@yz13/ui/utils";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
 import { ArrowRightIcon, BoldIcon, ExternalLinkIcon, ItalicIcon, PlusIcon, SearchIcon, SendIcon, UnderlineIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Await, Link, useLoaderData } from "react-router";
@@ -38,13 +40,15 @@ export const loader = async () => {
 
     const isAvailable = available();
     const projects = getStoreV1();
+    const blog = getBlogV1Posts();
     // const templates = showTemplates();
 
-    return { available: isAvailable, publications: projects }
+    return { available: isAvailable, publications: projects, blog }
   } catch (error) {
     console.error(error)
     return {
       publications: [],
+      blog: [],
       available: false,
       templates: false
     }
@@ -53,7 +57,7 @@ export const loader = async () => {
 
 export default function () {
 
-  const { available, publications } = useLoaderData<typeof loader>();
+  const { available, publications, blog } = useLoaderData<typeof loader>();
 
   return (
     <div className="w-full lg:*:w-1/2 *:w-full flex lg:flex-row flex-col">
@@ -321,6 +325,40 @@ export default function () {
               Время от времени добавляю что-то новое в блог.
             </p>
           </div>
+          <Suspense fallback={<Skeleton className="w-full h-24" />}>
+            <Await resolve={blog}>
+              {
+                (blog) => {
+                  return blog.map(post => {
+
+                    const created_at = new Date(post.updated_at);
+
+                    return (
+                      <div key={post.id} className="w-full flex items-center justify-between gap-4 relative ">
+                        <div className="flex items-center gap-2">
+                          <div className="w-full flex flex-col gap-1">
+                            <Link to={`https://blog.yz13.ru/${post.id}`} className="font-medium text-2xl inline-flex items-center gap-2">
+                              {/* @ts-expect-error */}
+                              {post.title}
+                              <ExternalLinkIcon className="size-5" />
+                            </Link>
+                            {/* @ts-expect-error */}
+                            <span className="text-muted-foreground">{post.summary}</span>
+                          </div>
+                        </div>
+                        <Badge
+                          variant="outline"
+                          className="text-base"
+                        >
+                          {format(created_at, "dd MMMM", { locale: ru })}
+                        </Badge>
+                      </div>
+                    )
+                  })
+                }
+              }
+            </Await>
+          </Suspense>
         </section>
         <footer className="w-full max-w-7xl mx-auto space-y-6">
           <div className="w-full flex lg:flex-row flex-col gap-5 lg:*:w-1/3 *:w-full">
