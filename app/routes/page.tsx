@@ -218,7 +218,7 @@ export default function () {
               Есть множество вариантов для сотрудничества от разработки сайтов, страниц, приложений и компонентов.
             </p>
           </div>
-          <ul className="w-full grid xl:grid-cols-2 grid-cols-1 gap-6">
+          <ul className="w-full grid 2xl:grid-cols-2 grid-cols-1 gap-6">
             <li className="space-y-3 size-full @container">
               <button type="button" className="flex items-center h-9 gap-1">
                 <PlusIcon size={20} className="text-muted-foreground" /><span className="text-foreground text-base">Компоненты</span>
