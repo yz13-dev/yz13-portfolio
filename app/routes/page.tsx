@@ -5,8 +5,9 @@ import { ProjectLogo } from "@/components/project-logo";
 import Qr from "@/components/qr";
 import { Time, TimeOffset } from "@/components/time/time";
 import { call, email, emailTo, github, telegram, twitter } from "@/const/socials";
-import { available } from "@/utils/flags";
-import { getBlogV1Posts, getStoreV1 } from "@yz13/api";
+import useAvailable from "@/hooks/use-available";
+import useBlog from "@/hooks/use-blog";
+import usePublications from "@/hooks/use-publications";
 import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
 import { Calendar } from "@yz13/ui/calendar";
@@ -24,7 +25,7 @@ import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { ArrowRightIcon, BoldIcon, ExternalLinkIcon, ItalicIcon, PlusIcon, SearchIcon, SendIcon, UnderlineIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
-import { Await, Link, useLoaderData } from "react-router";
+import { Await, Link } from "react-router";
 
 
 const Availability = lazy(() => import("@/components/availability"));
@@ -32,32 +33,11 @@ const GithubContributions = lazy(() => import("@/components/github-contributions
 const User = lazy(() => import("@/components/user"));
 const WorkflowLoop = lazy(() => import("@/components/workflow-loop"));
 
-
-
-
-export const loader = async () => {
-  try {
-
-    const isAvailable = available();
-    const projects = getStoreV1();
-    const blog = getBlogV1Posts();
-    // const templates = showTemplates();
-
-    return { available: isAvailable, publications: projects, blog }
-  } catch (error) {
-    console.error(error)
-    return {
-      publications: [],
-      blog: [],
-      available: false,
-      templates: false
-    }
-  }
-}
-
 export default function () {
 
-  const { available, publications, blog } = useLoaderData<typeof loader>();
+  const [available] = useAvailable();
+  const [blog] = useBlog();
+  const [publications] = usePublications();
 
   return (
     <div className="w-full lg:*:w-1/2 *:w-full flex lg:flex-row flex-col">
