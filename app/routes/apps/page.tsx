@@ -1,4 +1,5 @@
 import { Logo } from "@/components/logo";
+import Nav from "@/components/nav";
 import { Project } from "@/components/project-logo";
 import { Time, TimeOffset } from "@/components/time/time";
 import User from "@/components/user";
@@ -92,6 +93,7 @@ export default function () {
             <Time className="text-lg font-medium text-foreground" />
             <TimeOffset className="text-xs text-muted-foreground" />
           </div>
+          <Nav />
         </div>
         <User />
       </header>
