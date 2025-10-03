@@ -37,7 +37,7 @@ export default function () {
 
       const publications = await getStoreV1();
 
-      setPublications(publications);
+      if (publications) setPublications(publications);
 
     } catch (error) {
       console.error(error);

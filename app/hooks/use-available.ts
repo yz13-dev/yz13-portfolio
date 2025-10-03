@@ -34,7 +34,7 @@ export default function () {
 
       const isAvailable = await getAvailable()
 
-      setAvailable(isAvailable)
+      if (isAvailable) setAvailable(isAvailable)
 
     } catch (error) {
       console.error(error)

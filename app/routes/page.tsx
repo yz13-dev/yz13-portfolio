@@ -23,7 +23,7 @@ import {
 import { cn } from "@yz13/ui/utils";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { ArrowRightIcon, BoldIcon, ExternalLinkIcon, ItalicIcon, PlusIcon, SearchIcon, SendIcon, UnderlineIcon } from "lucide-react";
+import { ArrowRightIcon, BoldIcon, ExternalLinkIcon, ImageIcon, ItalicIcon, PlusIcon, SearchIcon, SendIcon, UnderlineIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Link } from "react-router";
 
@@ -254,10 +254,51 @@ export default function () {
                 <PlusIcon size={20} className="text-muted-foreground" /><span className="text-foreground text-base">Сайты</span>
               </button>
               <div className="w-full h-[calc(100%-36px)] shrink rounded-md border space-y-3 p-3">
-                <div className="size-full grid grid-cols-3 grid-rows-3 gap-3 *:rounded-md *:border">
-                  <div className="size-full bg-muted col-span-full" />
-                  <div className="size-full bg-muted row-span-2" />
-                  <div className="size-full bg-muted col-span-2 row-span-2" />
+                <div className="w-full p-2 border rounded-md flex items-center justify-between">
+                  <div className="w-16 h-9 rounded-sm bg-muted" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-16 h-9 rounded-sm bg-muted" />
+                    <div className="w-16 h-9 rounded-sm bg-muted" />
+                    <div className="w-16 h-9 rounded-sm bg-muted" />
+                  </div>
+                </div>
+                <div className="w-full h-[calc(100%-54px-12px)] grid grid-cols-1 grid-rows-2 gap-3 *:rounded-md">
+                  <div className="size-full border-2 flex">
+                    <div className="h-full p-2">
+                      <div className="h-full aspect-square border-2 rounded-sm flex items-center justify-center">
+                        <ImageIcon size={36} className="text-muted-foreground" />
+                      </div>
+                    </div>
+                    <div className="w-full h-full *:h-1/3 *:p-1 py-1">
+                      <div className="w-full">
+                        <div className="w-1/2 h-full border-2 rounded-sm" />
+                      </div>
+                      <div className="w-full">
+                        <div className="w-3/4 h-full border-2 rounded-sm" />
+                      </div>
+                      <div className="w-full">
+                        <div className="w-3/4 h-full border-2 rounded-sm" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="size-full border-2 flex">
+                    <div className="h-full p-2">
+                      <div className="h-full aspect-square border-2 rounded-sm flex items-center justify-center">
+                        <ImageIcon size={36} className="text-muted-foreground" />
+                      </div>
+                    </div>
+                    <div className="w-full h-full *:h-1/3 *:p-1 py-1">
+                      <div className="w-full">
+                        <div className="w-1/2 h-full border-2 rounded-sm" />
+                      </div>
+                      <div className="w-full">
+                        <div className="w-3/4 h-full border-2 rounded-sm" />
+                      </div>
+                      <div className="w-full">
+                        <div className="w-3/4 h-full border-2 rounded-sm" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
@@ -281,9 +322,49 @@ export default function () {
                     <Button variant="ghost">Metrics</Button>
                     <Button variant="ghost">Settings</Button>
                   </div>
-                  <div className="@max-sm:w-full w-3/4 flex flex-col gap-3 *:bg-muted *:rounded-md">
-                    <div className="w-full aspect-video" />
-                    <div className="w-full aspect-video" />
+                  <div className="@max-sm:w-full w-3/4 flex flex-col gap-3 *:rounded-md">
+
+                    <div className="w-full border-2">
+                      <div className="w-full p-2 flex items-center gap-3">
+                        <div className="size-16 border-2 rounded-full shrink-0" />
+                        <div className="flex flex-col w-full gap-1.5 *:rounded-full">
+                          <div className="w-1/2 h-6 bg-muted" />
+                          <div className="w-2/3 h-4 bg-muted" />
+                          <div className="w-1/3 h-4 bg-muted" />
+                        </div>
+                      </div>
+                      <div className="w-full p-2 grid @max-sm:grid-cols-2 grid-cols-1 gap-3">
+
+                        <div className="flex w-full p-2 bg-muted/20 rounded-sm border flex-col gap-2">
+                          <div className="h-6 rounded-full w-36 border-2" />
+                          <div className="flex items-center gap-2">
+                            <div className="h-6 rounded-full w-12 border-2" />
+                            <div className="h-6 rounded-full w-16 border-2" />
+                          </div>
+                          <div className="w-full flex items-center gap-1 *:h-2">
+                            <div className="rounded-full bg-muted w-3/7" />
+                            <div className="rounded-full bg-muted w-2/7" />
+                            <div className="rounded-full bg-muted w-1/7" />
+                            <div className="rounded-full bg-muted w-1/7" />
+                          </div>
+                        </div>
+
+                        <div className="flex w-full p-2 bg-muted/20 rounded-sm border flex-col gap-2">
+                          <div className="h-6 rounded-full w-36 border-2" />
+                          <div className="flex items-center gap-2">
+                            <div className="h-6 rounded-full w-12 border-2" />
+                            <div className="h-6 rounded-full w-16 border-2" />
+                          </div>
+                          <div className="w-full flex items-center gap-1 *:h-2">
+                            <div className="rounded-full bg-muted w-3/7" />
+                            <div className="rounded-full bg-muted w-2/7" />
+                            <div className="rounded-full bg-muted w-1/7" />
+                            <div className="rounded-full bg-muted w-1/7" />
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

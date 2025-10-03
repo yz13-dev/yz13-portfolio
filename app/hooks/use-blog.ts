@@ -37,8 +37,7 @@ export default function () {
     try {
 
       const blog = await getBlogV1Posts();
-
-      setBlog(blog);
+      if (blog) setBlog(blog);
 
     } catch (error) {
       console.error(error);
