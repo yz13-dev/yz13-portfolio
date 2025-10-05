@@ -1,9 +1,11 @@
-import useProjects from "@/hooks/use-projects"
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@yz13/ui/navigation-menu"
-import type { ComponentProps } from "react"
-import { Link } from "react-router"
+import useProjects from "@/hooks/use-projects";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@yz13/ui/navigation-menu";
+import { cn } from "@yz13/ui/utils";
+import { ExternalLinkIcon } from "lucide-react";
+import type { ComponentProps } from "react";
+import { Link } from "react-router";
 
-const isDev = import.meta.env.NODE_ENV === "development"
+const isDev = import.meta.env.DEV;
 
 export type Props = ComponentProps<"nav">
 export default function ({ className = "", ...props }: Props) {
@@ -12,17 +14,27 @@ export default function ({ className = "", ...props }: Props) {
 
   if (!isDev) return;
   return (
-    <nav className={className} {...props}>
+    <nav className={cn("z-10", className)} {...props}>
       <NavigationMenu viewport={false}>
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Продукты</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="w-md grid grid-cols-2 gap-3 *:rounded-md">
-                <li className="w-full h-16 bg-secondary"></li>
-                <li className="w-full h-16 bg-secondary"></li>
-                <li className="w-full h-16 bg-secondary"></li>
-                <li className="w-full h-16 bg-secondary"></li>
+              <ul className="w-lg grid grid-cols-2 gap-3 *:rounded-md">
+                {
+                  projects
+                    .map(project => {
+                      return (
+                        <li key={project.id} className="w-full h-fit bg-secondary p-2">
+                          <div className="w-full items-center gap-2 flex">
+                            <span className="text-lg font-medium">{project.name}</span>
+                            <ExternalLinkIcon className="size-4" />
+                          </div>
+                          <span className="text-sm text-muted-foreground line-clamp-2">{project.description}</span>
+                        </li>
+                      )
+                    })
+                }
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
