@@ -2,7 +2,6 @@ import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
 import Nav from "@/components/nav";
 import { ProjectLogo } from "@/components/project-logo";
-import Qr from "@/components/qr";
 import { Time, TimeOffset } from "@/components/time/time";
 import { call, email, emailTo, github, telegram, twitter } from "@/const/socials";
 import useAvailable from "@/hooks/use-available";
@@ -100,32 +99,33 @@ export default function () {
           <Suspense fallback={<GithubContributions username="yz13-dev" loading />}>
             <GithubContributions username="yz13-dev" />
           </Suspense>
+          <div className="flex flex-row gap-4">
+            <Badge variant="secondary" asChild>
+              <Link to={telegram} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                Telegram <ExternalLinkIcon size={16} />
+              </Link>
+            </Badge>
+            <Badge variant="secondary" asChild>
+              <Link to={github} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                Github <ExternalLinkIcon size={16} />
+              </Link>
+            </Badge>
+            <Badge variant="secondary" asChild>
+              <Link to={twitter} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                Twitter/X <ExternalLinkIcon size={16} />
+              </Link>
+            </Badge>
+          </div>
         </section>
-        <div className="w-full flex 2xl:flex-row flex-col gap-6 2xl:*:w-1/2 *:w-full">
-          <section className="space-y-6">
-            <div className="w-full space-y-2 *:block">
-              <h3 className="text-4xl font-medium">Безотказный цикл разработки и обратной связи</h3>
-              <p className="text-base text-muted-foreground">
-                Приблизительный цикл разработки и обратной связи (может меняться в будущем).
-              </p>
-            </div>
-            <WorkflowLoop />
-          </section>
-          <section className="w-full h-full gap-6 @container flex flex-col justify-between">
-            <span className="text-4xl font-medium">
-              Вы всегда можете сразу перейти в чат
-            </span>
-            <div className="w-full flex @max-sm:flex-col flex-row @max-sm:items-start items-center gap-4">
-              <div className="p-3 size-fit rounded-md bg-foreground">
-                <Qr className="aspect-square size-36" variant="secondary" />
-              </div>
-              <div className="flex flex-col gap-3">
-                <span className="text-2xl font-medium">Открыть через QR-код</span>
-                <span className="text-lg text-muted-foreground">Отсканируйте QR-код с помощью телефона, чтобы открыть чат</span>
-              </div>
-            </div>
-          </section>
-        </div>
+        <section className="space-y-6">
+          <div className="w-full space-y-2 *:block">
+            <h3 className="text-4xl font-medium">Безотказный цикл разработки и обратной связи</h3>
+            <p className="text-base text-muted-foreground">
+              Приблизительный цикл разработки и обратной связи (может меняться в будущем).
+            </p>
+          </div>
+          <WorkflowLoop />
+        </section>
         <section className="space-y-6">
           <div className="w-full space-y-2">
             <div className="flex items-center justify-between w-full gap-2">
@@ -218,14 +218,20 @@ export default function () {
             <div className="w-fit space-y-1.5">
               <span className="text-xs block text-muted-foreground uppercase">Платформа</span>
               <ul>
-                <li><span className="text-2xl text-muted-foreground font-medium">Проекты</span></li>
+                <li>
+                  <Link to="/apps" className="text-2xl inline-flex items-center gap-1.5 font-medium hover:underline">Проекты</Link>
+                </li>
               </ul>
             </div>
             <div className="w-fit space-y-1.5">
               <span className="text-xs block text-muted-foreground uppercase">Ресуры</span>
               <ul>
-                <li><span className="text-2xl text-muted-foreground font-medium">Блог</span></li>
-                <li><span className="text-2xl text-muted-foreground font-medium">Шаблоны</span></li>
+                <li>
+                  <Link to="/blog" className="text-2xl inline-flex items-center gap-1.5 font-medium hover:underline">Блог</Link>
+                </li>
+                <li>
+                  <span className="text-2xl text-muted-foreground font-medium">Шаблоны</span>
+                </li>
               </ul>
             </div>
             <div className="w-fit space-y-1.5">
@@ -257,16 +263,7 @@ export default function () {
             </div>
           </div>
           <div className="w-full flex lg:flex-row flex-col-reverse gap-5">
-            <Logo size={128} type="full" />
-            <div className="flex md:flex-col flex-row md:items-start items-center gap-3 shrink-0">
-              <Link to={github} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
-                Github <ExternalLinkIcon size={16} />
-              </Link>
-              <Link to={twitter} target="_blank" className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
-                Twitter/X <ExternalLinkIcon size={16} />
-              </Link>
-              <span className="text-xs text-muted-foreground">© YZ13 2025</span>
-            </div>
+            <Logo size={128} type="full" className="shrink-0 w-full opacity-10 [&>img]:size-full" />
           </div>
         </footer>
       </div>

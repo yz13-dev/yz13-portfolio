@@ -23,12 +23,22 @@ export default function ({ className = "", ...props }: Props) {
               <ul className="w-lg grid grid-cols-2 gap-3 *:rounded-md">
                 {
                   projects
+                    .sort((a, b) => {
+                      if (a.public_url && !b.public_url) return -1;
+                      if (!a.public_url && b.public_url) return 1;
+                      return (b.description?.length ?? 0) - (a.description?.length ?? 0);
+                    })
                     .map(project => {
+                      const publicUrl = project.public_url ?? null;
                       return (
-                        <li key={project.id} className="w-full h-fit bg-secondary p-2">
+                        <li key={project.id} className="w-full h-fit hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
+                          {publicUrl && <Link to={publicUrl} className="absolute inset-0" />}
                           <div className="w-full items-center gap-2 flex">
                             <span className="text-lg font-medium">{project.name}</span>
-                            <ExternalLinkIcon className="size-4" />
+                            {
+                              publicUrl &&
+                              <ExternalLinkIcon className="size-4" />
+                            }
                           </div>
                           <span className="text-sm text-muted-foreground line-clamp-2">{project.description}</span>
                         </li>

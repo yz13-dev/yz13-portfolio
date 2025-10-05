@@ -25,11 +25,6 @@ const Logo = ({
   const size = provided ?? defaultSize;
   const width = type === "icon" ? size : size * 4.15625;
   const height = size;
-  const Label = () => (
-    <span className="text-xs text-foreground absolute -top-2 left-[105%]">
-      {label}
-    </span>
-  );
   if (size) {
     return (
       <div className={cn("relative", className)}>
@@ -49,7 +44,6 @@ const Logo = ({
           src={darkSrc}
           alt="YZ13"
         />
-        {label && <Label />}
       </div>
     );
   }
@@ -65,7 +59,6 @@ const Logo = ({
         src={darkSrc}
         alt="YZ13-LOGO"
       />
-      {label && <Label />}
     </div>
   );
 };
