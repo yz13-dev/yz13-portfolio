@@ -1,5 +1,6 @@
 import DitheringBackground from "@/components/dithering-background";
 import { Logo } from "@/components/logo";
+import LogoSvg from "@/components/logo-svg";
 import Nav from "@/components/nav";
 import { ProjectLogo } from "@/components/project-logo";
 import { Time, TimeOffset } from "@/components/time/time";
@@ -263,7 +264,7 @@ export default function () {
             </div>
           </div>
           <div className="w-full flex lg:flex-row flex-col-reverse gap-5">
-            <Logo size={128} type="full" className="shrink-0 w-full opacity-10 [&>img]:size-full" />
+            <LogoSvg className="w-full opacity-10" />
           </div>
         </footer>
       </div>
