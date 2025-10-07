@@ -1,18 +1,16 @@
 import { cn } from "@yz13/ui/utils";
+import yz_full_dark from "/logo/dark-full.png?url";
 import yz_dark from "/logo/dark.png?url";
-import yz_full_dark from "/logo/full-dark.png?url";
-import yz_full_light from "/logo/full-light.png?url";
+import yz_full_light from "/logo/light-full.png?url";
 import yz_light from "/logo/light.png?url";
 
 
 const Logo = ({
-  label,
   className = "",
   type = "icon",
   imgClassName,
   size: provided,
 }: {
-  label?: string;
   className?: string;
   imgClassName?: string;
   type?: "icon" | "full";
@@ -23,11 +21,11 @@ const Logo = ({
   // const isSizeToSmall = provided && provided < 40;
   const defaultSize = 36;
   const size = provided ?? defaultSize;
-  const width = type === "icon" ? size : size * 4.15625;
+  const width = type === "icon" ? size * 1.52 : size * 3.85483871;
   const height = size;
   if (size) {
     return (
-      <div className={cn("relative", className)}>
+      <div className={cn("relative", className)} data-type={type}>
         <img
           className={cn(imgClassName, "light-mode-image")}
           width={width}
@@ -48,7 +46,7 @@ const Logo = ({
     );
   }
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative", className)} data-type={type}>
       <img
         className={cn(imgClassName, "light-mode-image")}
         src={lightSrc}
