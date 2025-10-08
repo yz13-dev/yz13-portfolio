@@ -21,7 +21,7 @@ export default function ({ className = "", ...props }: Props) {
           <NavigationMenuItem className="md:list-item hidden">
             <NavigationMenuTrigger>Проекты</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="w-lg grid grid-cols-2 gap-3 *:rounded-md">
+              <ul className="w-lg grid grid-cols-2 gap-3 *:rounded-md *:size-full">
                 {
                   projects
                     .sort((a, b) => {
@@ -32,7 +32,7 @@ export default function ({ className = "", ...props }: Props) {
                     .map(project => {
                       const publicUrl = project.public_url ?? null;
                       return (
-                        <li key={project.id} className="w-full h-fit hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
+                        <li key={project.id} className="hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
                           {publicUrl && <Link to={publicUrl} className="absolute inset-0" />}
                           <div className="w-full items-center gap-2 flex">
                             <span className="text-lg font-medium">{project.name}</span>
@@ -48,14 +48,14 @@ export default function ({ className = "", ...props }: Props) {
                 }
                 {
                   isEven
-                    ? <li className="w-full col-span-full h-fit hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
+                    ? <li className="col-span-full hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
                       <Link to="/apps" className="absolute inset-0" />
                       <div className="size-full flex items-center justify-between">
                         <span className="text-lg font-medium">Все проекты</span>
                         <ArrowRightIcon className="size-4" />
                       </div>
                     </li>
-                    : <li className="w-full h-fit hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
+                    : <li className="hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
                       <Link to="/apps" className="absolute inset-0" />
                       <div className="size-full flex items-center justify-between">
                         <span className="tgext-lg font-medium">Все проекты</span>
