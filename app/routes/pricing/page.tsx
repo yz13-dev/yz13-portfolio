@@ -1,4 +1,6 @@
 import DitheringBackground from "@/components/dithering-background"
+import Footer from "@/components/footer"
+import Header from "@/components/header"
 import { Logo } from "@/components/logo"
 import { useMobile } from "@/hooks/use-mobile"
 import { formatPrice } from "@/utils/pricing"
@@ -57,25 +59,17 @@ export default function () {
 
   return (
     <>
-      <header className="max-w-[1600px] h-14 px-6 mx-auto">
-        <div className="border-x w-full h-full flex items-center px-6">
-          <Link to="/">
-            <Logo size={28} type="full" />
-          </Link>
+      <Header className="max-w-[1600px] p-6 mx-auto" />
+      <div className="max-w-[1600px] px-6 mx-auto">
+        <div className="*:block space-y-2 py-10">
+          <h1 className="text-4xl font-semibold">
+            Цены
+          </h1>
+          <p className="text-2xl text-muted-foreground">
+            От компонентов до MVP
+          </p>
         </div>
-      </header>
-      <div className="max-w-[1600px] divide-y px-6 mx-auto">
-        <div className="p-6 border">
-          <div className="*:block space-y-2">
-            <h1 className="text-4xl font-semibold">
-              Цены
-            </h1>
-            <p className="text-2xl text-muted-foreground">
-              От компонентов до MVP
-            </p>
-          </div>
-        </div>
-        <div className="w-full h-[400px] border-x relative">
+        <div className="w-full h-[400px] relative">
           <DitheringBackground className="h-full w-full" withGradientOverylay={false} />
         </div>
         <Suspense fallback={<Loading />}>
@@ -83,8 +77,8 @@ export default function () {
             {
               (pricing) => {
                 return (
-                  <div className="w-full divide-y *:border-x border-b">
-                    <div className="lg:grid hidden grid-cols-7 w-full *:h-full divide-x *:p-3">
+                  <div className="w-full py-10">
+                    <div className="lg:grid hidden grid-cols-7 w-full *:h-full *:p-3">
                       <div className="w-full h-full">
                         <span className="text-base text-muted-foreground font-normal">
                           Опции и описание
@@ -147,6 +141,7 @@ export default function () {
           </Await>
         </Suspense>
       </div>
+      <Footer className="max-w-[1600px] mx-auto px-6 mt-[10%]" />
     </>
   )
 }
@@ -167,7 +162,7 @@ const PricingRow = ({ pricing = [], label, priceId }: {
 
   if (isModile) {
     return (
-      <div className="divide-y *:h-9 *:px-4">
+      <div className="*:h-9 *:px-4">
         <div className="w-full flex items-center">
           <span className="text-base text-muted-foreground font-normal">
             {label}
@@ -210,7 +205,7 @@ const PricingRow = ({ pricing = [], label, priceId }: {
     )
   }
   return (
-    <div className="grid grid-cols-7 w-full *: h-full divide-x *:p-3">
+    <div className="grid grid-cols-7 w-full *: h-full *:p-3">
       <div className="w-full">
         <span className="text-base text-muted-foreground font-normal">
           {label}

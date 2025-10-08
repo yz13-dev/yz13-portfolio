@@ -1,9 +1,7 @@
 import DitheringBackground from "@/components/dithering-background";
-import { Logo } from "@/components/logo";
-import LogoSvg from "@/components/logo-svg";
-import Nav from "@/components/nav";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import { ProjectLogo } from "@/components/project-logo";
-import { Time, TimeOffset } from "@/components/time/time";
 import { call, email, emailTo, github, telegram, twitter } from "@/const/socials";
 import useAvailable from "@/hooks/use-available";
 import useBlog from "@/hooks/use-blog";
@@ -31,19 +29,7 @@ export default function () {
   return (
     <div className="w-full lg:*:w-1/2 *:w-full flex lg:flex-row flex-col">
       <main className="h-dvh flex flex-col lg:sticky lg:top-0 static justify-between gap-6 p-6">
-        <header className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link to="/">
-              <Logo type="full" size={36} />
-            </Link>
-            <div className="flex flex-col gap-0">
-              <Time className="text-lg font-medium text-foreground" />
-              <TimeOffset className="text-xs text-muted-foreground" />
-            </div>
-            <Nav className="md:block hidden" />
-          </div>
-          <User />
-        </header>
+        <Header />
         <div className="size-full relative">
           <DitheringBackground className="size-full" withGradientOverylay={false} />
         </div>
@@ -214,59 +200,7 @@ export default function () {
               })
           }
         </section>
-        <footer className="w-full max-w-7xl mx-auto space-y-6">
-          <div className="w-full flex lg:flex-row flex-col gap-5 lg:*:w-1/3 *:w-full">
-            <div className="w-fit space-y-1.5">
-              <span className="text-xs block text-muted-foreground uppercase">Платформа</span>
-              <ul>
-                <li>
-                  <Link to="/apps" className="text-2xl inline-flex items-center gap-1.5 font-medium hover:underline">Проекты</Link>
-                </li>
-              </ul>
-            </div>
-            <div className="w-fit space-y-1.5">
-              <span className="text-xs block text-muted-foreground uppercase">Ресуры</span>
-              <ul>
-                <li>
-                  <Link to="/blog" className="text-2xl inline-flex items-center gap-1.5 font-medium hover:underline">Блог</Link>
-                </li>
-                <li>
-                  <span className="text-2xl text-muted-foreground font-medium">Шаблоны</span>
-                </li>
-              </ul>
-            </div>
-            <div className="w-fit space-y-1.5">
-              <span className="text-xs block text-muted-foreground uppercase">Действия</span>
-              <ul className="space-y-1.5 w-full">
-                <li>
-                  {
-                    available
-                      ?
-                      <Button asChild size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
-                        <Link to={call} target="_blank">
-                          <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
-                        </Link>
-                      </Button>
-                      :
-                      <Button disabled={!available} size="lg" variant="secondary" className="xl:text-2xl text-lg font-medium py-2 h-fit">
-                        <span>Видеозвонок</span><ArrowRightIcon className="xl:size-6 size-5" />
-                      </Button>
-                  }
-                </li>
-                <li>
-                  <Button size="lg" variant="outline" className="xl:text-2xl text-lg font-medium py-2 h-fit" asChild>
-                    <Link to={telegram} target="_blank">
-                      <SendIcon className="xl:size-6 size-5" /><span>Перейти в чат</span>
-                    </Link>
-                  </Button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="w-full flex lg:flex-row flex-col-reverse gap-5">
-            <LogoSvg className="w-full opacity-10" />
-          </div>
-        </footer>
+        <Footer className="max-w-7xl mx-auto" />
       </div>
     </div>
   )

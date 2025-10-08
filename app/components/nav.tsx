@@ -5,20 +5,19 @@ import { ExternalLinkIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { Link } from "react-router";
 
-const isDev = import.meta.env.DEV;
+// const isDev = import.meta.env.DEV;
 
 export type Props = ComponentProps<"nav">
 export default function ({ className = "", ...props }: Props) {
 
   const [projects, loading] = useProjects();
 
-  if (!isDev) return;
   return (
     <nav className={cn("z-10", className)} {...props}>
       <NavigationMenu viewport={false}>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Продукты</NavigationMenuTrigger>
+            <NavigationMenuTrigger>Проекты</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-lg grid grid-cols-2 gap-3 *:rounded-md">
                 {
