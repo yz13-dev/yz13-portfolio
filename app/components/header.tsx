@@ -15,16 +15,20 @@ export default function ({ className = "", ...props }: Props) {
         "w-full flex items-center justify-between",
         className
       )}
+      {...props}
     >
       <div className="flex items-center gap-4">
-        <Link to="/">
+        <Link to="/" className="md:hidden block">
+          <Logo type="icon" size={36} />
+        </Link>
+        <Link to="/" className="md:block hidden">
           <Logo type="full" size={36} />
         </Link>
-        <div className="flex flex-col gap-0">
+        <div className="md:flex hidden flex-col gap-0">
           <Time className="text-lg font-medium text-foreground" />
           <TimeOffset className="text-xs text-muted-foreground" />
         </div>
-        <Nav className="md:block hidden" />
+        <Nav />
       </div>
       <User />
     </header>

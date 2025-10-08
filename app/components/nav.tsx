@@ -1,7 +1,7 @@
 import useProjects from "@/hooks/use-projects";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@yz13/ui/navigation-menu";
 import { cn } from "@yz13/ui/utils";
-import { ExternalLinkIcon } from "lucide-react";
+import { ArrowRightIcon, ExternalLinkIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { Link } from "react-router";
 
@@ -12,11 +12,13 @@ export default function ({ className = "", ...props }: Props) {
 
   const [projects, loading] = useProjects();
 
+  const isEven = projects.length % 2 === 0;
+
   return (
     <nav className={cn("z-10", className)} {...props}>
-      <NavigationMenu viewport={false}>
+      <NavigationMenu viewport={true}>
         <NavigationMenuList>
-          <NavigationMenuItem>
+          <NavigationMenuItem className="md:list-item hidden">
             <NavigationMenuTrigger>Проекты</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-lg grid grid-cols-2 gap-3 *:rounded-md">
@@ -44,8 +46,31 @@ export default function ({ className = "", ...props }: Props) {
                       )
                     })
                 }
+                {
+                  isEven
+                    ? <li className="w-full col-span-full h-fit hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
+                      <Link to="/apps" className="absolute inset-0" />
+                      <div className="size-full flex items-center justify-between">
+                        <span className="text-lg font-medium">Все проекты</span>
+                        <ArrowRightIcon className="size-4" />
+                      </div>
+                    </li>
+                    : <li className="w-full h-fit hover:bg-secondary bg-secondary/60 transition-colors p-3 relative">
+                      <Link to="/apps" className="absolute inset-0" />
+                      <div className="size-full flex items-center justify-between">
+                        <span className="tgext-lg font-medium">Все проекты</span>
+                        <ArrowRightIcon className="size-4" />
+                      </div>
+                    </li>
+
+                }
               </ul>
             </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem className="md:hidden list-item">
+            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+              <Link to="/apps">Проекты</Link>
+            </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>

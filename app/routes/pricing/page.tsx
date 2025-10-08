@@ -6,8 +6,7 @@ import { useMobile } from "@/hooks/use-mobile"
 import { formatPrice } from "@/utils/pricing"
 import { getPricingV1 } from "@yz13/api"
 import { GetPricingV1200Item } from "@yz13/api/types"
-import { Button } from "@yz13/ui/button"
-import { ArrowRightIcon, CheckIcon, MinusIcon } from "lucide-react"
+import { CheckIcon, MinusIcon } from "lucide-react"
 import { Suspense } from "react"
 import { Await, Link, useLoaderData } from "react-router"
 import Loading from "./loading"
@@ -101,19 +100,19 @@ export default function () {
                                 className="w-full flex 2xl:flex-row flex-col 2xl:items-center items-start shrink-0 justify-between 2xl:gap-3 gap-1.5 h-fit"
                               >
                                 <div className="*:block xl:space-y-1 space-y-0 shrink-0">
-                                  <span className="xl:text-base text-sm line-clamp-1 text-muted-foreground font-medium">{price.name}</span>
-                                  <span className="block xl:text-2xl text-lg font-medium">
+                                  <span className="text-2xl line-clamp-1 text-foreground font-medium">{price.name}</span>
+                                  {/*<span className="block xl:text-2xl text-lg font-medium">
                                     От {formatPrice(price.price)}
-                                  </span>
+                                  </span>*/}
                                 </div>
-                                <Button
+                                {/*<Button
                                   className="2xl:w-fit w-full"
                                   variant={isFourth ? "default" : "outline"}
                                   disabled
                                 >
                                   <span className="2xl:hidden inline">Заказать</span>
                                   <ArrowRightIcon />
-                                </Button>
+                                </Button>*/}
                               </div>
                             )
                           })
