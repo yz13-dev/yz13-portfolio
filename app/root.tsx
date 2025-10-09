@@ -1,7 +1,11 @@
 import { TooltipProvider } from "@yz13/ui/tooltip";
+import { cn } from "@yz13/ui/utils";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { Links, LinksFunction, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration } from "react-router";
+import Modal from "./components/settings/modal";
+import ThemeWatcher from "./components/theme-watcher";
 import { DateProvider } from "./components/time/time";
+import { useStore, useThemeStore } from "./hooks/use-theme";
 import "./styles/globals.css";
 
 export const links: LinksFunction = () => [
@@ -60,8 +64,18 @@ export const meta: MetaFunction = () => {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
+
+  const theme = useStore(useThemeStore, (state) => state)
+
   return (
-    <html lang="en" className="overscroll-none">
+    <html
+      lang="en"
+      className={cn(
+        "overscroll-none",
+        theme?.theme === "dark" && "dark",
+        theme?.theme === "light" && "light",
+      )}
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -69,9 +83,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="inter-sans pixelify-sans jetbrains-mono">
+        <ThemeWatcher />
         <NuqsAdapter>
           <DateProvider>
             <TooltipProvider>
+              <Modal />
               {children}
             </TooltipProvider>
           </DateProvider>

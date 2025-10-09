@@ -4,9 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@yz13/ui/avatar"
 import { Button } from "@yz13/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@yz13/ui/dropdown-menu"
 import { Skeleton } from "@yz13/ui/skeleton"
-import { LogInIcon, LogOutIcon } from "lucide-react"
+import { LogInIcon, LogOutIcon, SettingsIcon } from "lucide-react"
 import type { ReactNode } from "react"
 import { Link, useNavigate } from "react-router"
+import { useSettings } from "./settings/store"
 
 
 export default function () {
@@ -41,6 +42,7 @@ const UserDropdown = ({ children }: UserDropdownProps) => {
 
   const [refresh] = useRefreshUser()
   const nav = useNavigate()
+  const setOpen = useSettings(state => state.setOpen);
 
   const signout = async () => {
     try {
@@ -59,10 +61,10 @@ const UserDropdown = ({ children }: UserDropdownProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild={!!children}>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-64 *:h-10 *:text-base *:[&>svg]:!size-5">
-        {/*<DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setOpen(true)}>
           <SettingsIcon />
           <span>Настройки</span>
-        </DropdownMenuItem>*/}
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={signout}>
           <LogOutIcon />
           <span>Выйти</span>

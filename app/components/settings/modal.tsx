@@ -1,69 +1,61 @@
 import { Button } from "@yz13/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@yz13/ui/dialog";
-import { Input } from "@yz13/ui/input";
-import { PaletteIcon, SearchIcon, UserCircleIcon } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@yz13/ui/dialog";
+import { useState } from "react";
+import { useSettings } from "./store";
+import { defaultSection, getContent, getName, getTabs } from "./structure";
 
 
+export const ModalTrigger = ({ children }: { children?: React.ReactNode }) => {
+  const setOpen = useSettings(state => state.setOpen)
+  return <Button asChild={!!children} onClick={() => setOpen(true)}>{children}</Button>
+}
 
-export default function ({ children }: { children?: React.ReactNode }) {
+export default function () {
+
+  const open = useSettings(state => state.open);
+  const setOpen = useSettings(state => state.setOpen);
+
+  const [section, setSection] = useState<string>(defaultSection)
+
+  const tags = getTabs();
+
+  const name = getName(section) || "Настройки";
+  const content = getContent(section);
+
   return (
-    <Dialog>
-      <DialogTrigger asChild={!!children}>{children}</DialogTrigger>
-      <DialogContent className="!max-w-3xl rounded-lg p-2 w-full">
-        <DialogHeader className="py-2 px-3 border-b h-10">
-          <DialogTitle>Настройки</DialogTitle>
-        </DialogHeader>
-        <div className="w-full flex min-h-96">
-          <aside className="w-1/4 flex flex-col gap-1 *:justify-start">
-            <div className="flex items-center gap-2 h-9">
-              <SearchIcon size={16} className="absolute left-5 text-muted-foreground" />
-              <Input placeholder="Поиск" className="w-full pl-9" />
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="!max-w-3xl rounded-xl p-0 max-h-dvh w-full md:min-h-96 min-h-fit overflow-y-auto">
+        <div className="w-full flex md:flex-row flex-col md:h-full h-fit md:*:h-full *:h-fit">
+          <aside className="md:w-1/4 w-full flex flex-col p-3 gap-3 *:justify-start md:border-r border-r-0">
+            <div className="gap-1 *:justify-start flex md:flex-col flex-row md:*:w-full *:w-fit">
+              {
+                tags.map(tab => {
+                  const Icon = tab.icon;
+                  const selected = section === tab.id;
+                  return (
+                    <Button
+                      variant={selected ? "secondary" : "ghost"}
+                      key={tab.id}
+                      onClick={() => setSection(tab.id)}
+                    >
+                      <Icon />
+                      <span>{tab.name}</span>
+                    </Button>
+                  )
+                })
+              }
+
             </div>
-            <Button variant="ghost">
-              <UserCircleIcon />
-              <span>Профиль</span>
-            </Button>
-            <Button variant="ghost">
-              <PaletteIcon />
-              <span>Внешний вид</span>
-            </Button>
           </aside>
-          <div className="w-3/4 px-3">
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col">
-                <span className="text-base uppercase">Тема</span>
-                <span className="text-sm text-muted-foreground">
-                  Выберите тему, светлую, темную или системную.
-                </span>
-              </div>
-              <div className="w-full h-28 grid grid-cols-3 gap-3">
-                <div className="w-full h-full border rounded-lg [&>div]:rounded-lg">
-                  <div className="w-full h-full bg-white relative overflow-hidden">
-                    <div className="w-full h-full absolute top-4 left-4 rounded-lg bg-neutral-200" />
-                  </div>
-                </div>
-                <div className="w-full h-full border rounded-lg [&>div]:rounded-lg">
-                  <div className="w-full h-full bg-black relative overflow-hidden">
-                    <div className="w-full h-full absolute top-4 left-4 rounded-lg bg-neutral-800" />
-                  </div>
-                </div>
-                <div className="w-full h-full border rounded-lg [&>div]:first:rounded-l-lg [&>div]:last:rounded-r-lg flex">
-                  <div className="w-1/2 h-full bg-white relative overflow-hidden">
-                    <div className="w-full h-full absolute top-4 left-4 rounded-lg bg-neutral-200" />
-                  </div>
-                  <div className="w-1/2 h-full bg-black relative overflow-hidden">
-                    <div className="w-full h-full absolute top-4 right-4 rounded-lg bg-neutral-800" />
-                  </div>
-                </div>
-              </div>
+          <div className="md:w-3/4 w-full">
+            <DialogHeader className="py-2 px-3 border-b h-14 flex flex-row items-center">
+              <DialogTitle>{name}</DialogTitle>
+            </DialogHeader>
+            <div className="w-full h-[calc(100%-56px)] p-3">
+              {content}
             </div>
           </div>
         </div>
-        <DialogFooter className="py-2 px-3">
-          <DialogClose asChild>
-            <Button variant="secondary">Закрыть</Button>
-          </DialogClose>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
