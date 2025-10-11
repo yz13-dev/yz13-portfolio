@@ -12,7 +12,7 @@
         "@react-three/fiber": "^9.3.0",
         "@types/three": "^0.179.0",
         "@vercel/edge-config": "^1.4.0",
-        "@yz13/api": "^0.2.18",
+        "@yz13/api": "^0.2.19",
         "@yz13/flags": "^0.0.3",
         "@yz13/ui": "^0.2.3",
         "ahooks": "^3.9.0",
@@ -544,7 +544,7 @@
 
     "@webgpu/types": ["@webgpu/types@0.1.64", "", {}, "sha512-84kRIAGV46LJTlJZWxShiOrNL30A+9KokD7RB3dRCIqODFjodS5tCD5yyiZ8kIReGVZSDfA3XkkwyyOIF6K62A=="],
 
-    "@yz13/api": ["@yz13/api@0.2.18", "", { "dependencies": { "axios": "^1.10.0", "date-fns": "^4.1.0", "next": "^15.3.0", "tsup": "^6.7.0", "typescript-config": "*" } }, "sha512-QeWrLcMf6syR0g+xHtI75X3VT+D5WIYS8u/5BGrzA9LO5SZckmAUIDvDEGYI9Kv7Q7MDqJkyUYI4/S1HXrW6Tg=="],
+    "@yz13/api": ["@yz13/api@0.2.19", "", { "dependencies": { "axios": "^1.10.0", "date-fns": "^4.1.0", "next": "^15.3.0", "tsup": "^6.7.0", "typescript-config": "*" } }, "sha512-S4Ii4AasuyDEkkDNKoCSHzzVgoi/Wm5rac1ME3g37wtwA0O2E4oOJY7gHPA10MIMpBXQjCLycC3o4hXVE96iPw=="],
 
     "@yz13/flags": ["@yz13/flags@0.0.3", "", { "dependencies": { "clsx": "^2.1.1", "react": "^19.1.0", "tsup": "^6.7.0" } }, "sha512-ixyLVZFDbZYm4FWvmHOkIYZONYXFeXXY3Z6qeiqmoGuzr/1f0MIYAkKiEMNePkqR1oFyUvmwiIZEC6aS4zRj/Q=="],
 
