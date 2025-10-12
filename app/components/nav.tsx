@@ -15,7 +15,7 @@ export default function ({ className = "", ...props }: Props) {
   const isEven = projects.length % 2 === 0;
 
   return (
-    <nav className={cn("z-10", className)} {...props}>
+    <nav className={cn("z-30", className)} {...props}>
       <NavigationMenu viewport={true}>
         <NavigationMenuList>
           <NavigationMenuItem className="md:list-item hidden">
