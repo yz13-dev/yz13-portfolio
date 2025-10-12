@@ -1,10 +1,10 @@
 import { cn } from "@yz13/ui/utils";
-import { ComponentProps } from "react";
+import { ComponentProps, lazy } from "react";
 import { Link } from "react-router";
 import { Logo } from "./logo";
-import Nav from "./nav";
 import { Time, TimeOffset } from "./time/time";
-import User from "./user";
+const Nav = lazy(() => import("@/components/nav"));
+const User = lazy(() => import("@/components/user"));
 
 
 type Props = ComponentProps<"header">;

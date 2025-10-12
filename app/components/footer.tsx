@@ -71,7 +71,7 @@ export default function ({ className = "", ...props }: Props) {
         </div>
       </div>
       <div className="w-full flex lg:flex-row flex-col-reverse gap-5">
-        <LogoSvg className="w-full opacity-10" />
+        <LogoSvg className="w-full opacity-10 hover:opacity-100 transition-opacity" />
       </div>
     </footer>
   )
