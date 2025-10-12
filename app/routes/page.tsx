@@ -8,7 +8,7 @@ import { call, email, emailTo, github, telegram, twitter } from "@/const/socials
 import useAvailable from "@/hooks/use-available";
 import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
-import { ArrowRightIcon, ExternalLinkIcon, SendIcon } from "lucide-react";
+import { ArrowRightIcon, ExternalLink, ExternalLinkIcon, SendIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Link } from "react-router";
 
@@ -37,9 +37,9 @@ export default function () {
             <Availability enabled={available} className="h-12 justify-center rounded-lg text-lg w-fit [&>svg]:!size-5" size="lg" />
             <div className="w-full space-x-2 space-y-3 *:block max-w-4xl">
               <h1 className="lg:*:text-5xl text-3xl *:font-semibold">
-                <span>YZ13</span><span> - </span><span>Фронтенд который не&nbsp;подведет.</span><br /><span></span>
+                <span>YZ13</span><span> - </span><span>Создаю интерфейсы, которые работают на результат</span><br /><span></span>
               </h1>
-              <p className="text-2xl font-medium text-muted-foreground">Разработаю сайт, страницы, приложение и компоненты разной сложности</p>
+              <p className="text-2xl font-medium text-muted-foreground">Специализируюсь на React-экосистеме: от лендингов до сложных веб-приложений</p>
             </div>
           </div>
           <div className="space-y-2 w-full">
@@ -69,7 +69,14 @@ export default function () {
               }
             </div>
             <span className="text-sm text-muted-foreground">
-              По вопросам и предложениям можно связаться по электронной почте <Link to={emailTo(email)} className="hover:text-foreground transition-colors" target="_blank">{email}</Link> или чату.
+            Свяжитесь со мной для обсуждения ваших идей{" "}
+            <Link to={emailTo(email)} className="hover:text-foreground hover:underline transition-colors inline-flex items-center gap-1" target="_blank">
+            {email}<ExternalLink className="size-3" />
+            </Link> {""}
+            или {""}
+            <Link to={telegram} target="_blank" className="hover:text-foreground hover:underline transition-colors inline-flex items-center gap-1">
+            @yz13_dev<ExternalLink className="size-3" />
+            </Link>.
             </span>
           </div>
         </div>
@@ -80,7 +87,7 @@ export default function () {
             title="Активность"
             description={
               <>
-                Тепловая карта мой активности на{" "}
+                Тепловая карта моей активности на{" "}
                 <Link to={github} target="_blank" className="hover:underline text-foreground inline-flex items-center gap-1">GitHub <ExternalLinkIcon size={14} /></Link>
               </>
             }
@@ -111,8 +118,8 @@ export default function () {
         {/**/}
         <Section>
           <SectionHeader
-            title="Безотказный цикл разработки и обратной связи"
-            description="Приблизительный цикл разработки и обратной связи (может меняться в будущем)."
+            title="Эффективный цикл разработки и обратной связи"
+            description="Гибкий подход к разработке с регулярной обратной связью"
           />
           <SectionContent className="border *:py-3 *:px-4 bg-card rounded-3xl divide-y [&>div]:rounded-none overflow-hidden">
             <WorkflowLoop />
