@@ -124,10 +124,13 @@ export default function ({
     fetchData()
   }, [username])
 
+  const BLOCK_SIZE = 12;
+  const BLOCK_RADIUS = 2;
+
   if (loading) return <Skeleton
     loading
-    blockSize={24}
-    blockRadius={6}
+    blockSize={BLOCK_SIZE}
+    blockRadius={BLOCK_RADIUS}
   />
   return (
     <Calendar
@@ -135,8 +138,8 @@ export default function ({
       ref={ref}
       data={calendar}
       labels={labels}
-      blockSize={24}
-      blockRadius={6}
+      blockSize={BLOCK_SIZE}
+      blockRadius={BLOCK_RADIUS}
       showWeekdayLabels={["mon", "fri"]}
       totalCount={transformFn && transformTotalCount ? undefined : totalCount}
       weekStart={0}

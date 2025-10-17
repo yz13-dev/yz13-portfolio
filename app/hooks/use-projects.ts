@@ -1,9 +1,9 @@
-import { Project } from "@/components/project-logo";
 import { getStoreV1 } from "@yz13/api";
+import { GetStoreV1200Item } from "@yz13/api/types";
 import { useEffect } from "react";
 import { create } from "zustand";
 
-
+type Project = GetStoreV1200Item;
 
 
 type State = {

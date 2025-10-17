@@ -97,6 +97,9 @@ const Availability = ({
         )} />
       </div>
       <div data-status={status} className={cn(
+        "group-data-[size=sm]:h-4",
+        "group-data-[size=default]:h-5",
+        "group-data-[size=lg]:h-6",
         "flex items-center gap-1",
         "data-[status=available]:text-foreground",
         "data-[status=unavailable]:text-muted-foreground",
