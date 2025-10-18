@@ -115,14 +115,14 @@ const Availability = ({
                 loop={true}
                 className={cn(
                   "group-data-[size=sm]:text-xs",
-                  "group-data-[size=default]:text-sm",
+                  "group-data-[size=default]:text-xs",
                   "group-data-[size=lg]:text-base",
                 )}
               />
               : <span
                 className={cn(
                   "group-data-[size=sm]:text-xs",
-                  "group-data-[size=default]:text-sm",
+                  "group-data-[size=default]:text-xs",
                   "group-data-[size=lg]:text-base",
                 )}
               >
@@ -131,7 +131,7 @@ const Availability = ({
             : <span
               className={cn(
                 "group-data-[size=sm]:text-xs",
-                "group-data-[size=default]:text-sm",
+                "group-data-[size=default]:text-xs",
                 "group-data-[size=lg]:text-base",
               )}
             >

@@ -22,7 +22,7 @@ export default function () {
           <Link to={public_url} className="absolute inset-0" />
         }
         <div className="flex items-center gap-2">
-          <div className="size-5">
+          <div className="size-5 rounded-full bg-card border overflow-hidden">
             <img src={cdn(`/apps${icon.light}`)} className="size-full light-mode-image" alt="light-mode-image" />
             <img src={cdn(`/apps${icon.dark}`)} className="size-full dark-mode-image" alt="dark-mode-image" />
           </div>
