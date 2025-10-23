@@ -35,6 +35,17 @@
   font-style: normal;
 }
 
+.dashed-line {
+  flex: 1 1 0;
+  min-height: 6px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, transparent 4px, var(--color-border) 5px, var(--color-border) 6px);
+  background-repeat: repeat-x;
+  background-size: 6px 1px;
+  background-position: 0 48%;
+}
+
 
 .infinite-scroll-track {
   --duration: 20s;

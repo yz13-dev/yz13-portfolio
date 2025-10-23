@@ -1,5 +1,5 @@
 import { cn } from "@yz13/ui/utils";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 
 type Props = ComponentProps<"svg">;
 export default function ({ className, ...props }: Props) {
