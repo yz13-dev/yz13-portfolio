@@ -8,7 +8,7 @@ on:
 env:
   IMAGE_NAME: yz13-portfolio
   IMAGE_TAG: latest
-  CONTAINER_NAME: yz13
+  CONTAINER_NAME: yz13-dev
 
 jobs:
   deploy:
